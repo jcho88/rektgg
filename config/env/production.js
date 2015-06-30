@@ -4,7 +4,7 @@
  */
 
 module.exports = {
-  db: process.env.MONGOHQ_URL,
+  db: process.env.VCAP_SERVICES.mongolab.credentials.uri,
   facebook: {
     clientID: process.env.FACEBOOK_CLIENTID,
     clientSecret: process.env.FACEBOOK_SECRET,
