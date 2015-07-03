@@ -79,11 +79,10 @@ UserSchema.path('email').validate(function (email, fn) {
   } else fn(true);
 }, 'Email already exists');
 
-/*
 UserSchema.path('username').validate(function (username) {
   if (this.skipValidation()) return true;
   return username.length;
-}, 'Username cannot be blank');*/
+}, 'Username cannot be blank');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   if (this.skipValidation()) return true;
