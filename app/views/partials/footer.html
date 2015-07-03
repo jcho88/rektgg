@@ -1,0 +1,15 @@
+<!-- views/partials/footer.ejs -->
+
+<div class="container">
+
+	{% if (isActive('signup')) %}
+	<div class="footerfieldreg">
+		<p class="text-center text-muted">© Copyright 2015 Rekt LLC</p>
+	</div>
+	{% else %}
+	<div class="footerfield">
+		<p class="text-center text-muted">© Copyright 2015 Rekt LLC</p>
+	</div>
+	{% endif %}
+
+</div>

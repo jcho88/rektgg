@@ -1,0 +1,66 @@
+.navbar-default {
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+  font-family:"Helvetica Neue";
+}
+
+.checkboxpos {
+	float:left;
+    clear:both;
+}
+
+.searchfield {
+	position: relative;
+	margin-top: 50px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	height:auto;
+	font-family:"Helvetica Neue";
+}
+
+.searchfield input {
+	height: 32px;
+  	width: 350px;
+}
+
+.logofield {
+	margin-top: 200px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+}
+
+.logofieldreg {
+	margin-top: 100px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;	
+}
+
+.regfield {
+	margin-top: 50px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	font-family:"Helvetica Neue";
+}
+
+.regfield input {
+	width: 350px;
+}
+
+.footerfield {
+	margin-top: 350px;
+}
+
+.footerfieldreg {
+	margin-top: 150px;
+}
+
+.button-green {
+  	color: white;
+  	border-radius: 4px;
+  	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  	background: rgb(28, 184, 65);
+}

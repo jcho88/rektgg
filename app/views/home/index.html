@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+
+  <!-- Head -->
+
+  {% include '../partials/head.html' %}
+
+  <title>RektGG - Get Rekt</title>
+
+</head>
+
+<style>
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .searchfield input {
+    width: 250px;
+  }
+
+  .logofield {
+    margin-top: 100px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+  }
+
+  .footerfield {
+    margin-top: 150px;
+  }
+
+}
+
+</style>
+
+<body>
+
+      <!-- Header -->
+
+      {% include '../partials/header.html' %}
+
+      <!-- Body -->
+
+      <div class="container">
+        <center>
+          <div class="logofield">
+            <a href="/"><img src="img/templogo.png"></a>
+          </div>
+        </center>
+        <div class="searchfield">
+          <center>
+            <form class="form-inline">
+              <div class="form-group">
+                <input type="text" name="summoner" id="summoner" placeholder="Search Summoner or User">
+              </div>
+              <button type="button" class="btn btn-default">Search</button>
+            </form>
+          </center>
+        </div>
+      </div>
+
+      <!-- Footer -->  
+
+      {% include '../partials/footer.html' %}
+
+</body>
+
+</html>

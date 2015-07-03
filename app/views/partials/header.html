@@ -1,0 +1,80 @@
+
+<!-- views/partials/header.ejs -->
+
+      <!-- Header -->
+
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) %}
+              <a class="navbar-brand" href="/">Rekt GG</a>
+            {% else %}
+              <a href="/"><img src="../img/templogosmall.png"></a>
+            {% endif %}
+
+          </div>
+
+          <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/signup">Register</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+              </li>
+            </ul>
+
+            {% if (!isActive('/')) %}
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+              </form>
+            {% endif %}
+
+            {% if (req.isAuthenticated()) %}
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="../navbar/">My Profile</a></li>
+                <li class="active"><a href="./">Help <span class="sr-only">(current)</span></a></li>
+                <li><a href="/logout" title="logout">Log out</a></li>
+              </ul>
+            {% else %}
+              <form action="/users/session", method="post" class="navbar-form navbar-right" role="form">
+                <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+                <center>
+                  <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="E-mail">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-info login">Log In</button>
+                </center>
+                <!-- <p>Not a member? <a href="registration">Register</a></p>
+                <div class="checkbox checkboxpos">
+                  <label>
+                    <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                  </label>
+                </div>--> 
+              </form>
+            {% endif %}
+
+          </div>
+        </div>
+      </nav>
