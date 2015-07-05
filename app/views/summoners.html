@@ -1,0 +1,190 @@
+data = {
+    user: {
+        name: 'Tyco',
+        rank: 30327,
+        wins: 355,
+        losses: 333,
+        kills: 5.6,
+        deaths: 5.1,
+        assists: 7,
+        champions: [
+            {
+                name: 'Vayne',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183
+            },
+            {
+                name: 'Tristana',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183
+            },
+            {
+                name: 'Kalista',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183
+            }
+        ]
+    },
+    matches: [
+        {
+            id: 0,
+            type: 'Normal 5v5',
+            kills: 10,
+            deaths: 3,
+            assists: 10,
+            date: new Date()
+        },
+        {
+            id: 1,
+            type: 'Ranked Solo 5v5',
+            kills: 6,
+            deaths: 2,
+            assists: 7,
+            date: new Date()
+        }
+    ]
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title><%= user.name %></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/summoners.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="#">Home</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title"><%= user.name %></h1>
+        <p class="lead blog-description">Rank #<%= user.rank %></p>
+      </div>
+
+      <div class="row">
+	
+		<div class="col-sm-4 blog-sidebar">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<h3 class="panel-title">Ranked Stats</h3>
+			  </div>
+			  <div class="panel-body">
+			    <p><%= user.wins %> Wins <%= user.losses %> Losses</p>
+			  </div>
+			  <ul class="list-group">
+			  </ul>
+			</div>
+
+          	<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<h3 class="panel-title">Most Played Champions</h3>
+			  </div>
+			  <ul class="list-group">
+				  <% var i, champion;	
+				  for (i = 0, champion = user.champions[0]; i < user.champions.length; i++, champion = user.champions[i]) { %> 
+					 <li class="list-group-item">
+						<p><%= champion.name %></p>
+						<p><%= champion.kills %> / <%= champion.deaths %> / <%= champion.assists %> KDA</p>
+						<p><%= champion.cs %>
+					</li>
+				  <% } %>
+			  </ul>
+			</div>
+        </div><!-- /.blog-sidebar -->
+
+        <div class="col-sm-8 blog-main">
+	
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<h3 class="panel-title">Recent Game Stats</h3>
+			  </div>
+			  <div class="panel-body">
+			    <p>kills / deaths / assists</p>
+				<p><%= user.kills %> / <%= user.deaths %> / <%= user.assists %></p>
+			  </div>
+			</div>
+
+
+		  <% var i, match;	
+		  for (i = 0, match = matches[0]; i < matches.length; i++, match = matches[i]) { %> 
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<h3 class="panel-title"><%= match.type %></h3>
+			  </div>
+			  <div class="panel-body">
+			    <p><%= match.kills %> Kills</p>
+				<p><%= match.deaths %> Deaths</p>
+				<p><%= match.assists %> Assists</p>
+			  </div>
+			</div>
+		  <% } %>
+
+          <nav>
+            <ul class="pager">
+              <li><a href="#">Previous</a></li>
+              <li><a href="#">Next</a></li>
+            </ul>
+          </nav>
+
+        </div><!-- /.blog-main -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
