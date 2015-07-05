@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
  * Article Schema
  */
 
-var ArticleSchema = new Schema({
+var SummonerSchema = new Schema({
   //summoner's info	
   name: {type : String, default : '', trim : true},
   id: {type : String, default : '', trim : true},
