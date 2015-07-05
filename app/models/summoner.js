@@ -22,7 +22,7 @@ var SummonerSchema = new Schema({
   				championId: {type : String, default : '', trim : true},
   				teamId: {type : String, default : '', trim : true},
   				summonerId: {type : String, default : '', trim : true}
-  			}]
+  			}],
 
   			//Game type. (Legal values: CUSTOM_GAME, MATCHED_GAME, TUTORIAL_GAME)
   			gameType: {type : String, default : '', trim : true},
