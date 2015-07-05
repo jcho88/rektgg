@@ -78,7 +78,7 @@ var SummonerSchema = new Schema({
 
   			queue: {type : String, default : '', trim : true},
   			name: {type : String, default : '', trim : true},
-  			entries[{
+  			entries: [{
   				leaguePoints: {type : String, default : '', trim : true},
   				isFreshBlood: {type : String, default : '', trim : true},
   				isHotStreak: {type : String, default : '', trim : true},
@@ -128,7 +128,7 @@ var SummonerSchema = new Schema({
 		  		}
 
 		  	}]
-  }
+  },
 
 
   	pastSeason: {
@@ -163,10 +163,10 @@ var SummonerSchema = new Schema({
 		  		}
 
 		  	}]
-  }
+  },
 
   createdAt  : {type : Date, default : Date.now}
 
 });
 
-mongoose.model('summoners_profile', UserSchema);
+mongoose.model('summoners_profile', SummonerSchema);
