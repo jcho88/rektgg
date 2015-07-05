@@ -184,4 +184,4 @@ UserSchema.statics = {
   }
 }
 
-mongoose.model('User', UserSchema);
+mongoose.model('users', UserSchema);

@@ -168,3 +168,5 @@ var SummonerSchema = new Schema({
   createdAt  : {type : Date, default : Date.now}
 
 });
+
+mongoose.model('summoners_profile', UserSchema);
