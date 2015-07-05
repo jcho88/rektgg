@@ -12,6 +12,8 @@ var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , agent = request.agent(app)
 
+var request1 = require("request");
+
 var count
 
 /**
@@ -20,6 +22,19 @@ var count
 
 describe('Articles', function () {
   before(function (done) {
+       
+
+    var summoner = new Summoner({
+
+      name: "1",
+      id: "1",
+      profileIconId: "1",
+      revisionDate: "1",
+      summonerLevel: "1"
+
+
+    })
+    summoner.save(done)
     // create a user
     var user = new User({
       email: 'foobar@example.com',
