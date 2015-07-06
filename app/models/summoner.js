@@ -11,7 +11,6 @@ var Schema = mongoose.Schema;
 var SummonerSchema = new Schema({
   //summoner's info	
   name: {type : String, default : '', trim : true},
-  id: {type : String, default : '', trim : true},
   profileIconId: {type : String, default : '', trim : true},
   revisionDate: {type : String, default : '', trim : true},
   summonerLevel: {type : String, default : '', trim : true},
@@ -168,5 +167,44 @@ var SummonerSchema = new Schema({
   createdAt  : {type : Date, default : Date.now}
 
 });
+
+SummonerSchema.statics = {
+
+  /**
+   * Find article by id
+   *
+   * @param {ObjectId} id
+   * @param {Function} cb
+   * @api private
+   */
+
+  load: function (id, cb) {
+    console.log("ID IN LOAD: " + id);
+    this.findOne({ _id : id })
+      .populate('name')
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },
+
+  /**
+   * List articles
+   *
+   * @param {Object} options
+   * @param {Function} cb
+   * @api private
+   */
+
+  // list: function (options, cb) {
+  //   var criteria = options.criteria || {}
+
+  //   this.find(criteria)
+  //     .populate('user', 'name username')
+  //     .sort({'createdAt': -1}) // sort by date
+  //     .limit(options.perPage)
+  //     .skip(options.perPage * options.page)
+  //     .exec(cb);
+  // }
+}
 
 mongoose.model('Summoner', SummonerSchema);
