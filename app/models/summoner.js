@@ -169,4 +169,4 @@ var SummonerSchema = new Schema({
 
 });
 
-mongoose.model('summoners_profile', SummonerSchema);
+mongoose.model('Summoner', SummonerSchema);
