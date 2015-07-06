@@ -14,7 +14,7 @@ var extend = require('util')._extend
 exports.load = function (req, res, next, id){
 console.log("test load");
   Summoner.load(id, function (err, summoner) {
-  	console.log("summoner" + summoner);
+  	console.log("err" + err);
     if (err) return next(err);
     if (!summoner) return next(new Error('not found'));
     req.summoner = summoner;
