@@ -12,6 +12,7 @@ var articles = require('articles');
 var comments = require('comments');
 var tags = require('tags');
 var auth = require('./middlewares/authorization');
+var summoners = require('summoners');
 
 /**
  * Route middlewares
@@ -90,13 +91,17 @@ module.exports = function (app, passport) {
 
   // article routes
   app.param('id', articles.load);
-  app.get('/articles', articles.index);
-  app.get('/articles/new', auth.requiresLogin, articles.new);
-  app.post('/articles', auth.requiresLogin, articles.create);
-  app.get('/articles/:id', articles.show);
-  app.get('/articles/:id/edit', articleAuth, articles.edit);
-  app.put('/articles/:id', articleAuth, articles.update);
-  app.delete('/articles/:id', articleAuth, articles.destroy);
+  app.get('/articles', articles.index); //load all articles
+  app.get('/articles/new', auth.requiresLogin, articles.new); //takes you to form to create new article 
+  app.post('/articles', auth.requiresLogin, articles.create); //create article
+  app.get('/articles/:id', articles.show); //show a single article
+  app.get('/articles/:id/edit', articleAuth, articles.edit); //takes you to form to edit article
+  app.put('/articles/:id', articleAuth, articles.update); //updates the article
+  app.delete('/articles/:id', articleAuth, articles.destroy); //delete article
+
+  //summoner route
+  app.param('summonerId', summoners.load);
+  app.get('/summoners/:summonerId', summoners.show); //show summoner
 
   // home route
   app.get('/', home.index);
