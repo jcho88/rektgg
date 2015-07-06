@@ -179,9 +179,7 @@ SummonerSchema.statics = {
    */
 
   load: function (id, cb) {
-    console.log("ID IN LOAD: " + id);
     this.findOne({ _id : id })
-      .populate('name')
       // .populate('user', 'name email username')
       // .populate('comments.user')
       .exec(cb);
