@@ -9,97 +9,16 @@
 
   <body>
 
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item active" href="#">Home</a>
-        </nav>
+  <div class="container">
+    <div class="fb-profile">
+      <img align="left" class="large-img" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example"/>
+      <img align="left" class="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example"/>
+      <div class="fb-profile-text">
+        <h1>Tyco</h1>
+        <p>Steve Chen</p>
       </div>
     </div>
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title"><%= user.name %></h1>
-        <p class="lead blog-description">Rank #<%= user.rank %></p>
-      </div>
-
-      <div class="row">
-  
-    <div class="col-sm-4 blog-sidebar">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Ranked Stats</h3>
-        </div>
-        <div class="panel-body">
-          <p><%= user.wins %> Wins <%= user.losses %> Losses</p>
-        </div>
-        <ul class="list-group">
-        </ul>
-      </div>
-
-            <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Most Played Champions</h3>
-        </div>
-        <ul class="list-group">
-          <% var i, champion; 
-          for (i = 0, champion = user.champions[0]; i < user.champions.length; i++, champion = user.champions[i]) { %> 
-           <li class="list-group-item">
-            <p><%= champion.name %></p>
-            <p><%= champion.kills %> / <%= champion.deaths %> / <%= champion.assists %> KDA</p>
-            <p><%= champion.cs %>
-          </li>
-          <% } %>
-        </ul>
-      </div>
-        </div><!-- /.blog-sidebar -->
-
-        <div class="col-sm-8 blog-main">
-  
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Recent Game Stats</h3>
-        </div>
-        <div class="panel-body">
-          <p>kills / deaths / assists</p>
-        <p><%= user.kills %> / <%= user.deaths %> / <%= user.assists %></p>
-        </div>
-      </div>
-
-
-      <% var i, match;  
-      for (i = 0, match = matches[0]; i < matches.length; i++, match = matches[i]) { %> 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><%= match.type %></h3>
-        </div>
-        <div class="panel-body">
-          <p><%= match.kills %> Kills</p>
-        <p><%= match.deaths %> Deaths</p>
-        <p><%= match.assists %> Assists</p>
-        </div>
-      </div>
-      <% } %>
-
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    <footer class="blog-footer">
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
+  </div>
 
   </body>
 </html>

@@ -21,19 +21,23 @@
 </style>
 <body>
   {% include '../partials/header.html' %}
-  <div class="container">
-<!--<div class="page-header">
-      {% block main %}{% endblock %}
-    </div> -->
-    <div class="messages">
-      {% include '../includes/messages.html' %}
+  
+  {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) %}
+    <div class="container">
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
     </div>
-    <div class="content">
-      {% block content %}{% endblock %}
-    </div>
-  </div>
     {% include '../partials/footer.html' %}
-<!--{% include '../includes/foot.html' %} -->
+  {% else %}
+    <div class="full-width-container">
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% include '../partials/footer.html' %}
+  {% endif %}
+  
 
 </body>
 </html>

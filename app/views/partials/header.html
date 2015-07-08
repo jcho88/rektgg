@@ -24,7 +24,6 @@
           <div id="navbar" class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/signup">Register</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -40,12 +39,14 @@
             </ul>
 
             {% if (!isActive('/')) %}
+            <center>
               <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                   <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
+            </center>
             {% endif %}
 
             {% if (req.isAuthenticated()) %}
@@ -55,24 +56,57 @@
                 <li><a href="/logout" title="logout">Log out</a></li>
               </ul>
             {% else %}
-              <form action="/users/session", method="post" class="navbar-form navbar-right" role="form">
-                <input type="hidden" name="_csrf" value="{{ csrf_token }}">
-                <center>
-                  <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="E-mail">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                  </div>
-                  <button type="submit" class="btn btn-info login">Log In</button>
-                </center>
-                <!-- <p>Not a member? <a href="registration">Register</a></p>
-                <div class="checkbox checkboxpos">
-                  <label>
-                    <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
-                  </label>
-                </div>--> 
-              </form>
+              <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                  <ul id="login-dp" class="dropdown-menu">
+                    <li>
+                      <div class="row">
+                        <div class="col-md-12">
+
+                          <div class="social-buttons">
+                              <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                              <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                          </div>
+
+                          <form class="form" action="/users/session", method="post" class="navbar-form navbar-right" role="form">
+                          <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+
+                            <div class="form-group">
+                              <input type="email" class="form-control" name="email" placeholder="E-mail">
+                            </div>
+
+                            <div class="form-group">
+                              <input type="password" class="form-control" name="password" placeholder="Password">
+                              <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+                            </div>
+
+                            <div class="form-group">
+                              <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                            </div>
+
+<!--                             <div class="checkbox">
+                              <label>
+                                <input type="checkbox"> keep me logged-in
+                              </label>
+                            </div> -->
+
+                          </form>
+                        </div> <!-- col-md-12 -->
+                              
+<!--                         <div class="bottom text-center">
+                          New here ? <a href="#"><b>Join Us</b></a>
+                        </div> -->
+
+                      </div> <!-- row -->
+                    </li>
+                  </ul> <!-- unordered list login-dp -->
+                </li> <!-- list class dropdown -->
+
+                <li><a href="/signup">Register</a></li>
+
+              </ul> <!-- unordered list class navbar-right -->
             {% endif %}
 
           </div>

@@ -1,20 +1,183 @@
 {% extends '../layouts/default.html' %}
 
 {% block main %}
-  <h1>{{ summoner.name }}</h1>
+
 {% endblock %}
 
 {% block content %}
 
-  <div class="container">
-    <div class="fb-profile">
-      <img align="left" class="large-img" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example"/>
-      <img align="left" class="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example"/>
-      <div class="fb-profile-text">
-        <h1>Tyco</h1>
-        <p>Steve Chen</p>
-      </div>
-    </div>
-  </div>
+<!-- media queries for mobile view -->
 
+<style>
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+
+
+}
+
+</style>
+
+<!-- Header Photo -->
+  
+<div class="container-fluid">
+   <div class="cover-container">
+      <div class="social-cover"></div>
+      <div class="social-desc">
+         <div class="visible-md visible-sm">
+            <h1 class="fg-white">Empire State, NY, USA</h1>
+            <h5 class="fg-white">- Aug 20th, 2014</h5>
+            <div style="margin-top:50px;">
+            </div>
+         </div>
+      </div>
+<!--       <div class="social-avatar" >
+         <img class="img-avatar" src="http://bootdey.com/img/Content/user-453533-fdadfd.png" height="100" width="100">
+         <h4 class="fg-white text-center">Marting lowenyert</h4>
+         <h5 class="fg-white text-center" style="opacity:0.8;">DevOps Engineer, NY</h5>
+         <hr class="border-black75" style="border-width:2px;" >
+         <div class="text-center">
+          <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
+            <span>follow me</span>
+          </button>
+         </div>
+      </div> -->
+   </div>
+</div>
+
+<!-- Content -->
+
+<div class="container-fluid">
+   <div class="row profile">
+
+      <!-- Profile Column -->
+      <div class="col-md-3" id="profileCol">
+         <div class="profile-sidebar">
+            <div class="profile-userpic">
+               <img src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6__400x400.jpg" class="img-responsive" alt="">
+            </div>
+            <div class="profile-usertitle">
+               <div class="profile-usertitle-name">
+                  {{ summoner.name }}
+               </div>
+            </div>
+            <div class="profile-userbuttons">
+               <button type="button" class="btn btn-info btn-sm">
+                        <i class="fa fa-user-plus"></i>
+                        Follow
+               </button>
+            </div>
+            <div class="profile-usermenu">
+               <ul class="nav">
+                  <li class="active">
+                     <a href="#">
+                     <i class="glyphicon glyphicon-home"></i>
+                     Overview </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                     <i class="glyphicon glyphicon-user"></i>
+                     Account Settings </a>
+                  </li>
+                  <li>
+                     <a href="#" target="_blank">
+                     <i class="glyphicon glyphicon-ok"></i>
+                     Tasks </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                     <i class="glyphicon glyphicon-flag"></i>
+                     Help </a>
+                  </li>
+               </ul>
+            </div>
+
+            <div class="most-played">
+               Most Played Champ
+               <div class="row">
+                  <div class="col-sm-2">
+                     <img src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Rengar.png" width="100" height="100" alt="107">
+                     Rengar
+                  </div>
+               </div>
+            </div>
+
+         </div> <!-- profile sidebar -->
+      </div> <!-- profile column -->
+
+      <!-- Content Column -->
+      <div class="col-md-9" id="contentCol">
+         <div class="content-sidebar">
+            <div class="row hidden-xs hidden-sm">
+               <a href="#" class="btn btn-info" id="toggle-link">
+                  <i class="fa fa-arrow-left"></i>
+                  Hide menu
+               </a>
+               <hr class="hr-sep">
+            </div>
+            <div class="row">
+               <div class="col-sm-12">
+                  <textarea class="form-control" rows="3" placeholder="Say something..."></textarea>                        
+               </div>
+            </div>
+            <hr>
+
+            <!-- post 1 -->
+            <div class="row">
+               <div class="col-md-2">
+                  <img src="http://bootdey.com/img/Content/user_3.jpg" class="img-responsive  img-circle">
+               </div>
+               <div class="col-md-10">
+                  <div class="row post">
+                     <div class="col-md-12">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok tip" href="#" title="View"></a>
+                        <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash tip" href="#" title="Delete"></a>
+                        <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-share tip" href="#" title="Share"></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <hr>
+
+            <!-- post 2 -->
+            <div class="row">
+               <div class="col-md-2">
+                  <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-responsive  img-circle">
+               </div>
+               <div class="col-md-10">
+                  <div class="row post">
+                     <div class="col-md-12">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok tip" href="#" title="View"></a>
+                        <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash tip" href="#" title="Delete"></a>
+                        <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-share tip" href="#" title="Share"></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <hr>
+
+            <!-- post 3 -->
+            <div class="row">
+               <div class="col-md-2">
+                  <img src="http://bootdey.com/img/Content/user_2.jpg" class="img-responsive  img-circle">
+               </div>
+               <div class="col-md-10">
+                  <div class="row post">
+                     <div class="col-md-12">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok tip" href="#" title="View"></a>
+                        <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash tip" href="#" title="Delete"></a>
+                        <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-share tip" href="#" title="Danger"></a>
+                    </div>
+                  </div>
+               </div>    
+            </div>
+            <hr>
+         </div> <!-- content sidebar -->
+      </div> <!-- content column -->
+
+   </div> <!-- row profile -->
+</div> <!-- container-fluid -->
 {% endblock %}
