@@ -22,7 +22,7 @@ var oAuthTypes = [
 var UserSchema = new Schema({
   name: { type: String, default: '' },
   email: { type: String, default: '' },
-  username: { type: String, default: '' },
+  username: { type: String, default: ''},
   provider: { type: String, default: '' },
   hashed_password: { type: String, default: '' },
   salt: { type: String, default: '' },
@@ -83,6 +83,18 @@ UserSchema.path('username').validate(function (username) {
   if (this.skipValidation()) return true;
   return username.length;
 }, 'Username cannot be blank');
+
+UserSchema.path('username').validate(function (username, fn) {
+  var User = mongoose.model('User');
+  if (this.skipValidation()) fn(true);
+
+  // Check only when it is a new user or when email field is modified
+  if (this.isNew || this.isModified('username')) {
+    User.find({ username: username }).exec(function (err, users) {
+      fn(!err && users.length === 0);
+    });
+  } else fn(true);
+}, 'username already exists');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   if (this.skipValidation()) return true;

@@ -168,6 +168,22 @@ var SummonerSchema = new Schema({
 
 });
 
+
+SummonerSchema.methods = {
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 SummonerSchema.statics = {
 
   /**
@@ -178,8 +194,10 @@ SummonerSchema.statics = {
    * @api private
    */
 
-  load: function (id, cb) {
-    this.findOne({ _id : id })
+  load: function (summonerName, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.findOne({name : summonerName })
       // .populate('user', 'name email username')
       // .populate('comments.user')
       .exec(cb);
@@ -203,6 +221,15 @@ SummonerSchema.statics = {
   //     .skip(options.perPage * options.page)
   //     .exec(cb);
   // }
+/*
+    createSummoner: function(summonerName, cb){
+      console.log("I am in here");
+
+      .exec(cb);
+
+
+  }
+*/
 }
 
 mongoose.model('Summoner', SummonerSchema);

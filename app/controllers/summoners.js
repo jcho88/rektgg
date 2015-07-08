@@ -13,13 +13,64 @@ var extend = require('util')._extend
 
 exports.load = function (req, res, next, id){
 console.log("test load");
-  Summoner.load(id, function (err, summoner) {
-  	console.log("err" + err);
+console.log(req.query.summonerId)
+
+
+
+
+  Summoner.load(req.query.summonerId, function (err, summoner) {
+    //console.log(summoner);
+    console.log("err" + err);
     if (err) return next(err);
-    if (!summoner) return next(new Error('not found'));
-    req.summoner = summoner;
+
+    if (!summoner){ 
+      console.log("Api call");
+
+       var blah = new Summoner({
+
+          name: req.query.summonerId,
+          id: "1",
+          profileIconId: "1",
+          revisionDate: "1",
+          summonerLevel: "1",
+
+          games: [{
+            fellowPlayers: [{
+                championId: "2",
+                teamId: "3",
+                summonerId: "4"
+              }]
+          }]
+
+
+
+
+
+        });
+
+      
+        blah.save(function(err, userinfo) {
+          if(!err) {
+              console.log("shoot me");
+          }
+          else {
+              console.log("shoot them");
+          }
+          
+        });
+
+
+
+
+
+      return next(new Error('not found'));
+    }else{
+      console.log(summoner);
+      req.summoner = summoner;
+    }
     next();
   });
+
 };
 
 

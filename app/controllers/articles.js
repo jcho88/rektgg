@@ -65,6 +65,8 @@ exports.new = function (req, res){
  */
 
 exports.create = function (req, res) {
+  console.log("below is body");
+  console.log(req.body);
   var article = new Article(req.body);
   var images = req.files.image
     ? [req.files.image]
