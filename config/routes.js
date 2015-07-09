@@ -101,7 +101,8 @@ module.exports = function (app, passport) {
 
   //summoner route
   app.param('summonerId', summoners.load);
-  app.get('/summoners?:summonerId', summoners.show); //show summoner
+  app.get('/summonerSearch?:query', summoners.search); //show summoner
+  app.get('/summoners/:summonerId', summoners.show); //show summoner
 
   // home route
   app.get('/', home.index);

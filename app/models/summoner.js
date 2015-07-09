@@ -194,7 +194,7 @@ SummonerSchema.statics = {
    * @api private
    */
 
-  load: function (summonerName, cb) {
+  search: function (summonerName, cb) {
     //console.log("cb = " + cb)
     //console.log("name = " + summonerName)
     this.findOne({name : summonerName })
@@ -202,6 +202,14 @@ SummonerSchema.statics = {
       // .populate('comments.user')
       .exec(cb);
   },
+
+  load: function (id, cb) {
+    this.findOne({ _id : id })
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },
+
 
   /**
    * List articles
