@@ -12,11 +12,11 @@
 
 @media (min-width: 300px) and (max-width: 500px) {
 
-#profileCol .profile-sidebar{
-  margin: -200px 10px 0px 0px;
-  z-index: 1;  
-  min-height: 410px;
-}
+   #profileCol .profile-sidebar{
+      margin: -200px 10px 0px 0px;
+      z-index: 1;  
+      min-height: 410px;
+   }
 
 }
 
@@ -96,13 +96,73 @@
                </ul>
             </div>
 
-            <div class="most-played">
-               Most Played Champ
-               <div class="row">
-                  <div class="col-sm-2">
-                     <img src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Rengar.png" width="100" height="100" alt="107">
-                     Rengar
+            <!-- Stats -->
+
+            <div class="row">
+               Season 5 Most Played Champs
+               <div class="statsCol">
+
+                  {% for champion in summoner.mostPlayed.champions %}
+
+<!--                   for (var i =0; i < summoner.mostPlayed.champions.length; i++) {
+                     champion = summoner.mostPlayed.champions[i];
+
+                     ...
+                  } -->
+
+                  <div class="media stats-border">
+                     <div class="pull-left">
+                        <img class="media-object img-circle" style="width: 50px; height: 50px;" src= {{ champion.img }}>
+                     </div>
+                     <div class="media-body">
+                        <h6 class="media-heading">{{ champion.name }}</h6>
+                        <small class="text-muted">{{ champion.kills }} / {{ champion.deaths }} / {{ champion.assists }}</small>
+                     </div>
                   </div>
+
+                  {% endfor %}
+
+                  <!-- <div class="media stats-border">
+                     <div class="pull-left">
+                        <img class="media-object img-circle" style="width: 50px; height: 50px;" src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/TwistedFate.png">
+                     </div>
+                     <div class="media-body">
+                        <h5 class="media-heading">Twisted Fate</h5>
+                        <small class="text-muted">8.1 / 4.1 / 9.3</small>
+                     </div>
+                  </div>
+
+                  <div class="media stats-border">
+                     <div class="pull-left">
+                        <img class="media-object img-circle" style="width: 50px; height: 50px;" src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Nidalee.png">
+                     </div>
+                     <div class="media-body">
+                        <h5 class="media-heading">Nidalee</h5>
+                        <small class="text-muted">8.1 / 4.3 / 8.3</small>
+                     </div>
+                  </div>
+
+                  <div class="media stats-border">
+                     <div class="pull-left">
+                        <img class="media-object img-circle" style="width: 50px; height: 50px;" src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/LeeSin.png">
+                     </div>
+                     <div class="media-body">
+                        <h5 class="media-heading">Lee Sin</h5>
+                        <small class="text-muted">7.4 / 3.3 / 9.8</small>
+                     </div>
+                  </div>
+
+                  <div class="media stats-border">
+                     <div class="pull-left">
+                        <img class="media-object img-circle"style="width: 50px; height: 50px;" src="http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Vi.png">
+                     </div>
+                     <div class="media-body">
+                        <h5 class="media-heading">Vi</h5>
+                        <small class="text-muted">8.5 / 4 / 7</small>
+                     </div>
+                  </div> -->
+
+
                </div>
             </div>
 

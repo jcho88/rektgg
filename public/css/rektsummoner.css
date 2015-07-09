@@ -112,6 +112,7 @@
   margin: 0 auto;
 /*  width: 50%;
   height: 50%;*/
+  border: 6px solid black;
   -webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   border-radius: 50% !important;
@@ -144,6 +145,7 @@
 
 .profile-usermenu {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .profile-usermenu ul li {
@@ -181,12 +183,29 @@
   margin-left: -2px;
 }
 
-.most-played {
-  margin: 20px 0px 0px 0px;;
-}
-
 .content-sidebar {
   padding: 20px;
   background: #fff;
   min-height: 410px;
+}
+
+
+/* stats */
+
+
+.statsCol {
+  margin: 20px 0px 0px 0px;
+  box-shadow: -2px 0 3px #ddd;
+  padding:0;
+  overflow: auto;
+}
+
+.stats-border {
+  position: relative;
+  padding:5px;
+  border-bottom:1px solid #ddd;
+  border-right:1px solid #ddd;
+  margin:0;
+  background-color: #233140;
+  color: #ecf0f1;
 }

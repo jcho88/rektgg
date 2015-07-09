@@ -76,7 +76,68 @@ console.log(req.query.summonerId)
 
 exports.show = function (req, res){
 	console.log("test show");
+
+  data = {
+
+    name: 'Steve',
+    mostPlayed: {
+
+      champions: [
+            {
+                name: 'Rengar',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183,
+                img: "http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Rengar.png"
+            },
+            {
+                name: 'Twisted Fate',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183,
+                img: "http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/TwistedFate.png"
+            },
+            {
+                name: 'Nidalee',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183,
+                img: "http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Nidalee.png"
+            },
+            {
+                name: 'Lee Sin',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183,
+                img: "http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/LeeSin.png"
+            },
+            {
+                name: 'Vi',
+                kills: 7,
+                deaths: 4,
+                assists: 7,
+                win_rate: 0.54,
+                cs: 183,
+                img: "http://ddragon.leagueoflegends.com/cdn/5.12.1/img/champion/Vi.png"
+            }
+        ]
+
+      }     
+
+    }
+
+    console.log(data.mostPlayed.champions);
+
   res.render('summoners/show', {
-    summoner: req.summoner
+    //summoner: req.summoner
+    summoner: data
   });
 };
