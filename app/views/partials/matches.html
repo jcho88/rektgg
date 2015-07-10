@@ -1,0 +1,43 @@
+   <!-- views/partials/matches.html -->  
+
+   <div id="contentCol">
+      <div class="content-sidebar">
+         <div class="row hidden-xs hidden-sm">
+            <a href="#" class="btn btn-info" id="toggle-link">
+               <i class="fa fa-arrow-left"></i>
+               Hide menu
+            </a>
+            <hr class="hr-sep">
+         </div>
+
+         <div class="row">
+            <div class="col-xs-12 col-sm-12">
+               <textarea class="form-control" rows="3" placeholder="Say something..."></textarea>                        
+            </div>
+         </div>
+         <hr>
+
+         {% for champion in summoner.mostPlayed.champions %}
+
+         <div class="row">
+            <div class="col-sm-2 col-md-2">
+               <img src= {{ champion.img }} class="img-responsive  img-circle">
+            </div>
+            <div class="col-md-10">
+               <div class="row post">
+                  <div class="col-md-12">
+                     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                     <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok tip" href="#" title="View"></a>
+                     <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash tip" href="#" title="Delete"></a>
+                     <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-share tip" href="#" title="Share"></a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <hr>
+
+         {% endfor %}
+
+      </div> <!-- content sidebar -->
+   </div> <!-- content column -->
+
