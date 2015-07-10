@@ -174,7 +174,9 @@ exports.load = function (req, res, next, id){
 };
 
 exports.show = function (req, res){
-	//console.log(req.summoner);
+
+	console.log("test show");
+
   res.render('summoners/show', {
     summoner: req.summoner
   });

@@ -1,0 +1,19 @@
+   <!-- views/partials/most-played.html -->    
+
+   {% for champion in summoner.mostPlayed.champions %}
+      <div class="row championRow">
+         <div class="col-xs-5 championImage">
+            <img class="media-object img-circle" src= "{{ champion.img }}">
+            <span>{{ champion.name }}</span>
+            <span>{{ champion.cs }} CS</span>
+         </div>
+
+         <div class="col-xs-5 championInfo">
+            <span>{{ champion.kills }} / {{ champion.deaths }} / {{ champion.assists }}</span>
+         </div>
+
+         <div class="col-xs-2 championPlayed">
+            <span>{{ champion.win_rate }}</span>
+         </div>
+      </div>
+   {% endfor %}
