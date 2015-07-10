@@ -10,10 +10,12 @@ var Schema = mongoose.Schema;
 
 var SummonerSchema = new Schema({
   //summoner's info	
-  name: {type : String, default : '', trim : true},
+  name: {type : String, default : '', trim : true, lowercase: true},
   profileIconId: {type : String, default : '', trim : true},
   revisionDate: {type : String, default : '', trim : true},
   summonerLevel: {type : String, default : '', trim : true},
+  id: {type : String, default : '', trim : true},
+  region: {type : String, default : '', trim : true},
 
   //games where it display indivisual stats.
   games: [{
