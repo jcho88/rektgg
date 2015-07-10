@@ -1,5 +1,5 @@
 
-/* Cover photo & Profile */
+/********************************* Cover photo & Profile *********************************/
 
 .social-cover{
     position:absolute;
@@ -64,30 +64,7 @@
 }
 
 
-/* Profile */
-
-.content-border {
-    border: 1px solid #ccc;
-    padding: 20px;
-    background: #fff;
-    box-shadow: none;
-    border-radius: 3px;
-    position: relative;
-    max-height: 100000px;
-    transition: max-height 0.5s ease;
-    -o-transition: max-height 0.5s ease;
-    -ms-transition: max-height 0.5s ease;
-    -moz-transition: max-height 0.5s ease;
-    -webkit-transition: max-height 0.5s ease;
-}
-
-@media (min-width: 300px) and (max-width: 500px) {
-
-  .content-border {
-    max-width: 100%;
-  }
-
-}
+/********************************* Profile *********************************/
 
 .post-date{
     background:#eee;
@@ -203,33 +180,75 @@
   margin-left: -2px;
 }
 
+/********************************* Most Played Champions *********************************/
+
+#profile-champions {
+    font-size: 12px;
+}
+
+#profile-champions.row {
+    margin: 0;
+}
+
+.championRow {
+    background-color: #233140;
+    color: #FFF;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.championImage img {
+    width: 50px;
+    height: 50px;
+    float: left;
+}
+
+.championInfo, .championPlayed {
+    text-align: center;
+}
+
+.championImage, .championInfo, .championPlayed {
+    padding: 0;
+}
+
+.championImage span {
+    display: block;
+}
+
+
+/******************************** Content *********************************/
+
+.content-border {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background: #fff;
+    box-shadow: none;
+    border-radius: 3px;
+    position: relative;
+    max-height: 100000px;
+    transition: max-height 0.5s ease;
+    -o-transition: max-height 0.5s ease;
+    -ms-transition: max-height 0.5s ease;
+    -moz-transition: max-height 0.5s ease;
+    -webkit-transition: max-height 0.5s ease;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .content-border {
+    max-width: 100%;
+  }
+
+}
+
 .content-sidebar {
   padding: 20px;
-  background: #fff;
+  background: #7f8c8d;
   min-height: 410px;
 }
 
-/* stats */
 
-
-.statsCol {
-  margin: 20px 0px 0px 0px;
-  box-shadow: -2px 0 3px #ddd;
-  padding:0;
-  overflow: auto;
-}
-
-.stats-border {
-  position: relative;
-  padding:5px;
-  border-bottom:1px solid #ddd;
-  border-right:1px solid #ddd;
-  margin:0;
-  background-color: #233140;
-  color: #ecf0f1;
-}
-
-/* Activity */
+/******************************** Activity *********************************/
 
 .panel-shadow {
     box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
@@ -333,38 +352,4 @@
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
-}
-
-/* Most Played Champions */
-#profile-champions {
-    font-size: 12px;
-}
-
-#profile-champions.row {
-    margin: 0;
-}
-
-.championRow {
-    background-color: #233140;
-    color: #FFF;
-    margin-bottom: 5px;
-    padding: 5px;
-}
-
-.championImage img {
-    width: 50px;
-    height: 50px;
-    float: left;
-}
-
-.championInfo, .championPlayed {
-    text-align: center;
-}
-
-.championImage, .championInfo, .championPlayed {
-    padding: 0;
-}
-
-.championImage span {
-    display: block;
 }

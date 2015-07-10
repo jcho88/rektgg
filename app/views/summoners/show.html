@@ -75,28 +75,12 @@
                </ul>
             </div>
 
-			<!-- Most Played Champions -->
-			<div id="profile-champions" class="row">
-				<div class="col-xs-12">
-				{% for champion in summoner.mostPlayed.champions %}
-					<div class="row championRow">
-						<div class="col-xs-5 championImage">
-							<img class="media-object img-circle" src= "{{ champion.img }}">
-							<span>{{ champion.name }}</span>
-							<span>{{ champion.cs }} CS</span>
-						</div>
-
-						<div class="col-xs-5 championInfo">
-							<span>{{ champion.kills }} / {{ champion.deaths }} / {{ champion.assists }}</span>
-						</div>
-
-						<div class="col-xs-2 championPlayed">
-							<span>{{ champion.win_rate }}</span>
-						</div>
-					</div>
-				{% endfor %}
-				</div>
-			</div>
+   			<!-- Most Played Champions -->
+   			<div id="profile-champions" class="row">
+   				<div class="col-xs-12">
+                  {% include '../partials/most-played.html' %}
+   				</div>
+   			</div>
 
          </div> <!-- profile sidebar -->
       </div> <!-- profile column -->
@@ -105,23 +89,25 @@
       <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
          <div class="content-border">
             <div class="clearfix"></div>
-               <ul class="nav nav-tabs">
-                  <li class="active">
-                     <a href="#tab" data-toggle="tab">
-                        Activity
-                     </a>
-                  </li>
-                  <li class="">
-                     <a href="#tab2" data-toggle="tab">
-                        Matches
-                     </a>
-                  </li>
-                  <li class="">
-                     <a href="#tab3" data-toggle="tab">
-                        Account
-                     </a>
-                  </li>
-               </ul>
+            <ul class="nav nav-tabs">
+            <!-- <ul class="nav nav-pills"> -->
+               <li class="active">
+                  <a href="#tab" data-toggle="tab">
+                     Activity
+                  </a>
+               </li>
+               <li class="">
+                  <a href="#tab2" data-toggle="tab">
+                     Matches
+                  </a>
+               </li>
+               <li class="">
+                  <a href="#tab3" data-toggle="tab">
+                     Account
+                  </a>
+               </li>
+            </ul>
+            
             <div class="tab-content">
                <div class="tab-pane active" id="tab">
                   <div class="row">
@@ -142,10 +128,11 @@
                         <hr class="hr-sep">
                         {% include '../partials/temp-tab3.html' %}
                         <hr>
-                  </div> <!-- row -->
-               </div> <!-- tab-pane -->
+                  </div>
+               </div>
             </div> <!-- tab-content -->
-         </div> <!-- well -->
+
+         </div> <!-- content-border -->
       </div> <!-- col -->
 
    </div> <!-- row profile -->
