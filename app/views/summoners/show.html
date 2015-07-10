@@ -6,33 +6,12 @@
 
 {% block content %}
 
-<!-- media queries for mobile view -->
-
-<style>
-
-@media (min-width: 300px) and (max-width: 500px) {
-
-   #profileCol .profile-sidebar{
-      margin: -200px 10px 0px 0px;
-      z-index: 1;  
-      min-height: 410px;
-   }
-
-}
-
-</style>
-
 <!-- Header Photo -->
   
 <div class="container-fluid">
    <div class="cover-container">
       <div class="social-cover"></div>
       <div class="social-desc">
-         <div class="visible-md visible-sm">
-            <h1 class="fg-white">Empire State, NY, USA</h1>
-            <h5 class="fg-white">- Aug 20th, 2014</h5>
-            <div style="margin-top:50px;">
-            </div>
          </div>
       </div>
 <!--       <div class="social-avatar" >
@@ -58,7 +37,7 @@
       <div class="col-md-3" id="profileCol">
          <div class="profile-sidebar">
             <div class="profile-userpic">
-               <img src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6__400x400.jpg" class="img-responsive" alt="">
+               <img class="img-circle img-responsive" src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6_.jpg" alt="">
             </div>
             <div class="profile-usertitle">
                <div class="profile-usertitle-name">
@@ -67,8 +46,8 @@
             </div>
             <div class="profile-userbuttons">
                <button type="button" class="btn btn-info btn-sm">
-                        <i class="fa fa-user-plus"></i>
-                        Friend Request
+                  <i class="fa fa-user-plus"></i>
+                  Friend Request
                </button>
             </div>
             <div class="profile-usermenu">
@@ -101,27 +80,7 @@
             <div class="row">
                Season 5 Most Played Champs
                <div class="statsCol">
-
-                  {% for champion in summoner.mostPlayed.champions %}
-
-<!--                   for (var i =0; i < summoner.mostPlayed.champions.length; i++) {
-                     champion = summoner.mostPlayed.champions[i];
-
-                     ...
-                  } -->
-
-                  <div class="media stats-border">
-                     <div class="pull-left">
-                        <img class="media-object img-circle" style="width: 50px; height: 50px;" src= {{ champion.img }}>
-                     </div>
-                     <div class="media-body">
-                        <h6 class="media-heading">{{ champion.name }}</h6>
-                        <small class="text-muted">{{ champion.kills }} / {{ champion.deaths }} / {{ champion.assists }}</small>
-                     </div>
-                  </div>
-
-                  {% endfor %}
-
+                  {% include '../partials/most-played.html' %}
                </div>
             </div>
 
@@ -133,66 +92,42 @@
          <div class="content-border">
             <div class="clearfix"></div>
                <ul class="nav nav-tabs">
-                 <li class="active">
+                  <li class="active">
                      <a href="#tab" data-toggle="tab">
-                        Overview
+                        Activity
                      </a>
-                 </li>
-                 <li class="">
+                  </li>
+                  <li class="">
                      <a href="#tab2" data-toggle="tab">
+                        Matches
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="#tab3" data-toggle="tab">
                         Account
                      </a>
-                 </li>
+                  </li>
                </ul>
             <div class="tab-content">
                <div class="tab-pane active" id="tab">
                   <div class="row">
-                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        {% include '../partials/matches.html' %}
+                        <hr class="hr-sep">
+                        {% include '../partials/activity.html' %}
                         <hr>
-                     </div>
                   </div>
                </div>
                <div class="tab-pane" id="tab2">
                   <div class="row">
-                     <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-                        <div class="tab-content">
-                           <div class="tab-pane active" id="basic">
-                              <form class="form-horizontal" role="form">
-                                 <div class="form-group">
-                                    <label for="inputfullname" class="col-lg-2 control-label">First Name</label>
-                                    <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="inputfullname" placeholder="First Name">
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="inputlastname" class="col-lg-2 control-label">Last Name</label>
-                                    <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="inputlastname" placeholder="Last Name">
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="inputemail" class="col-lg-2 control-label">Email</label>
-                                    <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="inputemail" placeholder="Email">
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="inputpassword" class="col-lg-2 control-label">Password</label>
-                                    <div class="col-lg-10">
-                                        <input type="password" class="form-control" id="inputpassword" placeholder="Password">
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label  class="col-lg-2 control-label">Photo</label>
-                                    <div class="col-lg-10">
-                                        <input type="file" class="filestyle" data-classbutton="btn btn-default btn-lg" data-input="false" id="filestyle-0" tabindex="-1" style="position: fixed; left: -500px;"><div class="bootstrap-filestyle input-group"><input type="text" class="form-control " disabled="" placeholder="Choose file"> <span class="input-group-btn" tabindex="0">  <label for="filestyle-0" class="btn btn-default btn-lg">    <span class="glyphicon glyphicon-folder-open"></span>   </label></span></div>
-                                    </div>    
-                                 </div>
-                              </form>
-                           </div> <!-- tab-pane -->
-                        </div> <!-- tab-content -->
-                     </div> <!-- col -->
+                        <hr class="hr-sep">
+                        {% include '../partials/matches.html' %}
+                        <hr>
+                  </div>
+               </div>
+               <div class="tab-pane" id="tab3">
+                  <div class="row">
+                        <hr class="hr-sep">
+                        {% include '../partials/temp-tab3.html' %}
+                        <hr>
                   </div> <!-- row -->
                </div> <!-- tab-pane -->
             </div> <!-- tab-content -->

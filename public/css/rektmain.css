@@ -94,6 +94,44 @@
 	margin-top: 150px;
 }
 
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .searchfield input {
+    width: 250px;
+  }
+
+  .logofield {
+    margin-top: 100px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+  }
+
+  .logofieldreg {
+    margin-top: 50px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+  }  
+
+  .regfield {
+    text-align: center;
+  }
+    
+  .regfield input {
+    width: 250px;
+  }
+
+  .footerfield {
+    margin-top: 150px;
+  }
+    
+  .footerfieldreg {
+    margin-top: 25px;
+  }
+
+}
+
 .button-green {
   	color: white;
   	border-radius: 4px;
