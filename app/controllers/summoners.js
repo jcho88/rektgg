@@ -17,11 +17,11 @@ var async = require('async')
 exports.search = function (req, res){
 console.log("test search");
 console.log(req.query.summonerName)
+var summonerName = req.query.summonerName;
+summonerName = summonerName.toLowerCase()
 
 
-
-
-  Summoner.search(req.query.summonerName, function (err, summoner) {
+  Summoner.search(summonerName, function (err, summoner) {
     //console.log(summoner);
     var summonerBasicInfo;
     var summonerRiotID;
@@ -29,8 +29,8 @@ console.log(req.query.summonerName)
     var statsRankChamp;
     var statsRankChampPast;
     var summonerGames;
-    var summonerName = req.query.summonerName;
-    summonerName = summonerName.toLowerCase()
+    
+
 
    // console.log("err" + err);
     if (err) return next(err);
@@ -130,9 +130,9 @@ console.log(req.query.summonerName)
                         if(!err) {
                             console.log("shoot me");
                             //console.log(userinfo);
-                            // res.render('summoners/show', {
-                            //     summoner: userinfo
-                            // });              
+                            res.render('summoners/show', {
+                                summoner: userinfo
+                            });              
                         }
                         else {
                             console.log("shoot them");
