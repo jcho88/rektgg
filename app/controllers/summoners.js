@@ -73,6 +73,8 @@ console.log(req.query.summonerName)
                         /*TODO: error massage later*/
 
                         statsRankChamp = JSON.parse(body);
+                        statsRankChamp.slice(0,6);
+
                         //console.log(statsRankChamp);
                         callback();
                       }); 
@@ -120,9 +122,9 @@ console.log(req.query.summonerName)
                         if(!err) {
                             console.log("shoot me");
                             //console.log(userinfo);
-                            res.render('summoners/show', {
-                                summoner: userinfo
-                            });              
+                            // res.render('summoners/show', {
+                            //     summoner: userinfo
+                            // });              
                         }
                         else {
                             console.log("shoot them");
