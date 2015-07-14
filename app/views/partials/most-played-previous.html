@@ -1,8 +1,8 @@
-   <!-- views/partials/most-played.html -->
+   <!-- views/partials/most-played-previous.html -->
 
    {% set count = 0 %}
 
-   {% for champion in summoner.currentSeason.champions %}
+   {% for champion in summoner.pastSeason.champions %}
 
       {% if count < 6 && champion.id != 0 %}
 
