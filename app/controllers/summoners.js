@@ -30,6 +30,7 @@ console.log(req.query.summonerName)
     var statsRankChampPast;
     var summonerGames;
     var summonerName = req.query.summonerName;
+    summonerName = summonerName.toLowerCase()
 
    // console.log("err" + err);
     if (err) return next(err);
@@ -42,11 +43,11 @@ console.log(req.query.summonerName)
             //Load user to get userId first
             //Load posts (won't be called before task 1's "task callback" has been called)
             function(callback) {
-              request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+req.query.summonerName+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+              request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+summonerName+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                 //do error massage later
 
                 summonerBasicInfo = JSON.parse(body);
-                summonerBasicInfo = summonerBasicInfo[req.query.summonerName];
+                summonerBasicInfo = summonerBasicInfo[summonerName];
                 //console.log(summonerBasicInfo);
                 summonerRiotID = summonerBasicInfo.id;
                 callback();
@@ -74,6 +75,10 @@ console.log(req.query.summonerName)
 
                         statsRankChamp = JSON.parse(body);
                         //console.log(statsRankChamp);
+                        statsRankChamp.champions.sort(function(a,b){
+                          return parseFloat(b.stats.totalSessionsPlayed) - parseFloat(a.stats.totalSessionsPlayed);
+                        });
+
                         callback();
                       }); 
                     },
@@ -83,6 +88,10 @@ console.log(req.query.summonerName)
                         //do error massage later
 
                         statsRankChampPast = JSON.parse(body);
+                        statsRankChampPast.champions.sort(function(a,b){
+                          return parseFloat(b.stats.totalSessionsPlayed) - parseFloat(a.stats.totalSessionsPlayed);
+                        });
+
                         //console.log(statsRankChampPast);
                         callback();
                       }); 
