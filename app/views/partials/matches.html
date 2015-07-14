@@ -21,19 +21,25 @@
          </div>
          <hr>
 
-         {% for champion in summoner.mostPlayed.champions %}
+         {% for champion in summoner.games %}
 
          <div class="row">
             <div class="col-sm-2 col-md-2">
+               <span>{{ champion.gameType }}</span>
                <img src= {{ champion.img }} class="img-responsive  img-circle">
             </div>
             <div class="col-md-10">
                <div class="row post">
                   <div class="col-md-12">
-                     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
-                     <a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok tip" href="#" title="View"></a>
-                     <a data-placement="top" class="btn btn-danger  btn-xs glyphicon glyphicon-trash tip" href="#" title="Delete"></a>
-                     <a data-placement="top" class="btn btn-info  btn-xs glyphicon glyphicon-share tip" href="#" title="Share"></a>
+                     
+                     <span>{{ champion.stats.item0 }}</span>
+                     <span>{{ champion.stats.item1 }}</span>
+                     <span>{{ champion.stats.item2 }}</span>
+                     <span>{{ champion.stats.item3 }}</span>
+                     <span>{{ champion.stats.item4 }}</span>
+                     <span>{{ champion.stats.item5 }}</span>
+                     <span>{{ champion.stats.item6 }}</span>
+
                   </div>
                </div>
             </div>

@@ -1,19 +1,44 @@
-   <!-- views/partials/most-played.html -->    
+   <!-- views/partials/most-played.html -->
 
-   {% for champion in summoner.mostPlayed.champions %}
+   {% set count = 0 %}
+
+   {% for champion in summoner.currentSeason.champions %}
+
+      {% if count < 6 %}
+
       <div class="row championRow">
-         <div class="col-xs-5 championImage">
+         <div class="col-xs-4 championImage">
             <img class="media-object img-circle" src= "{{ champion.img }}">
-            <span>{{ champion.name }}</span>
-            <span>{{ champion.cs }} CS</span>
+           
+               <span>{{ champion.id }}</span>
+               <span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
+          
          </div>
 
-         <div class="col-xs-5 championInfo">
-            <span>{{ champion.kills }} / {{ champion.deaths }} / {{ champion.assists }}</span>
+         <div class="col-xs-6 championInfo">
+
+            <span>{{ (champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
+            <span>{{ (champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
+            <span>{{ (champion.stats.totalAssists / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
+
          </div>
 
          <div class="col-xs-2 championPlayed">
-            <span>{{ champion.win_rate }}</span>
+
+            <span>{{ champion.stats.totalSessionsPlayed }} Games</span>
+
+               <div class="championWinRate">
+
+                  <span>{{ (champion.stats.totalSessionsWon / champion.stats.totalSessionsPlayed * 100).toFixed(0) }} %</span>
+                  
+               </div>
+
          </div>
+
       </div>
+
+      {% set count += 1 %}
+      
+      {% endif %}
+
    {% endfor %}
