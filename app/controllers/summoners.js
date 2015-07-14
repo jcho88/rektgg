@@ -74,7 +74,6 @@ console.log(req.query.summonerName)
                         /*TODO: error massage later*/
 
                         statsRankChamp = JSON.parse(body);
-                        statsRankChamp.slice(0,6);
 
                         //console.log(statsRankChamp);
                         statsRankChamp.champions.sort(function(a,b){
