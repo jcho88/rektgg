@@ -77,7 +77,7 @@
 }
 
 #profileCol .profile-sidebar{
-  margin: -200px 10px 0px 50px;
+  margin: -200px 10px 0px 20px;
   z-index: 1;  
   min-height: 410px;
 }
@@ -86,8 +86,8 @@
 
    #profileCol .profile-sidebar{
       margin: -200px 10px 0px 0px;
-      z-index: 1;  
-      min-height: 410px;
+      z-index: 1; 
+      min-height: 410px; 
    }
 
 }
@@ -183,46 +183,70 @@
 /********************************* Most Played Champions *********************************/
 
 #profile-champions {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 #profile-champions.row {
-    margin: 0;
+  margin: 0;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+   #profile-champions.row{
+      margin: -10px; 
+   }
+
 }
 
 .championRow {
-    background-color: #233140;
-    color: #FFF;
-    margin-bottom: 2px;
-    padding: 5px;
+  background-color: #233140;
+  color: #FFF;
+  margin-bottom: 2px;
+  padding: 5px;
 }
 
-.championImage img {
-    width: 50px;
-    height: 50px;
-    float: left;
-    margin-right: 10px;
+.championInfo img {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-right: 10px;
+}
+
+.championInfo, .championKDA, .championGames {
+  padding: 0;
 }
 
 .championInfo {
-    text-align: center;
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
 }
 
-.championImage, .championInfo, .championPlayed {
-    padding: 0;
+.championCS {
+  display: block;
+  margin-right: -5px;
 }
 
-.championImage span {
-    display: block;
+.championKDA {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 15px;
 }
 
-.championPlayed span{
-    font-size: 10;
-    display: block;
+.kDA {
+  font-size: 10px;
 }
 
-.championWinRate span{
-    font-size: 16;
+.championGames {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+.championWinRate {
+  font-size: 20px;
+  margin-top: 0px;
 }
 
 
@@ -362,4 +386,20 @@
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
+}
+
+
+/******************************** Matches *********************************/
+
+.matchInfo {
+}
+
+.matchItems {
+  width: 180px;
+  top: 8px;
+  float: left;
+}
+
+.matchItems img {
+  margin: 1px;
 }

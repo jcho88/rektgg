@@ -1,44 +1,58 @@
    <!-- views/partials/most-played-previous.html -->
 
-   {% set count = 0 %}
+{% set count = 0 %}
 
-   {% for champion in summoner.pastSeason.champions %}
+{% for champion in summoner.pastSeason.champions %}
 
-      {% if count < 6 && champion.id != 0 %}
+   {% if count < 6 && champion.id != 0 %}
 
-      <div class="row championRow">
-         <div class="col-xs-4 championImage">
-            <img class="media-object img-circle" src= "{{ champion.img }}">
-           
-               <span>{{ champion.id }}</span>
-               <span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
-          
-         </div>
+   {% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.id + ".png" %}
 
-         <div class="col-xs-6 championInfo">
+   <div class="row championRow">
+      <div class="col-xs-4 championInfo">
+         <img class="media-object img-circle" src= {{ champLink }}>
+        
+            <span>{{ champion.id }}</span>
 
+            <div class="championCS">
+               <span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} CS </span>
+            </div>
+       
+      </div>
+
+      <div class="col-xs-6 championKDA">
+
+         {% set avgKills = champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed %}
+         {% set avgAssists = champion.stats.totalAssists / champion.stats.totalSessionsPlayed %}
+         {% set avgDeaths = champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed %}
+         {% set kPlusA = avgKills + avgAssists %}
+
+         <span><b>{{ (kPlusA / avgDeaths).toFixed(2) }}</b> KDA</span>
+
+         <div class="kDA">
             <span>{{ (champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
             <span>{{ (champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
             <span>{{ (champion.stats.totalAssists / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
-
-         </div>
-
-         <div class="col-xs-2 championPlayed">
-
-            <span>{{ champion.stats.totalSessionsPlayed }} Games</span>
-
-               <div class="championWinRate">
-
-                  <span>{{ (champion.stats.totalSessionsWon / champion.stats.totalSessionsPlayed * 100).toFixed(0) }} %</span>
-                  
-               </div>
-
          </div>
 
       </div>
 
-      {% set count += 1 %}
-      
-      {% endif %}
+      <div class="col-xs-2 championGames">
 
-   {% endfor %}
+         <span>{{ champion.stats.totalSessionsPlayed }} Games</span>
+
+            <div class="championWinRate">
+
+               <span>{{ (champion.stats.totalSessionsWon / champion.stats.totalSessionsPlayed * 100).toFixed(0) }}%</span>
+               
+            </div>
+
+      </div>
+
+   </div>
+
+   {% set count += 1 %}
+   
+   {% endif %}
+
+{% endfor %}

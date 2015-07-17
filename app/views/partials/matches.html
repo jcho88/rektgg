@@ -23,28 +23,70 @@
 
          {% for champion in summoner.games %}
 
-         <div class="row">
-            <div class="col-sm-2 col-md-2">
-               <span>{{ champion.gameType }}</span>
-               <img src= {{ champion.img }} class="img-responsive  img-circle">
-            </div>
-            <div class="col-md-10">
-               <div class="row post">
-                  <div class="col-md-12">
-                     
-                     <span>{{ champion.stats.item0 }}</span>
-                     <span>{{ champion.stats.item1 }}</span>
-                     <span>{{ champion.stats.item2 }}</span>
-                     <span>{{ champion.stats.item3 }}</span>
-                     <span>{{ champion.stats.item4 }}</span>
-                     <span>{{ champion.stats.item5 }}</span>
-                     <span>{{ champion.stats.item6 }}</span>
+            {% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.championId + ".png" %}
+
+            {% set itemLink0 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item0 + ".png" %}
+            {% set itemLink1 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item1 + ".png" %}
+            {% set itemLink2 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item2 + ".png" %}
+            {% set itemLink3 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item3 + ".png" %}
+            {% set itemLink4 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item4 + ".png" %}
+            {% set itemLink5 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item5 + ".png" %}
+            {% set itemLink6 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item6 + ".png" %}
+
+            <div class="row">
+               <div class="col-sm-2 col-md-2">
+<!--                   <span>{{ champion.gameType }}</span> -->
+                  <img src= {{ champLink }} class="img-responsive  img-circle" height="75" width="75">
+               </div>
+               <div class="col-md-10">
+                  <div class="col-md-12 matchInfo">
+
+                     <div class="col-md-4">
+
+                     </div>
+
+                     {% if champion.stats.item0 == '' %}
+                        {% set itemLink0 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item1 == '' %}
+                        {% set itemLink1 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item2 == '' %}
+                        {% set itemLink2 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item3 == '' %}
+                        {% set itemLink3 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item4 == '' %}
+                        {% set itemLink4 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item5 == '' %}
+                        {% set itemLink5 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     {% if champion.stats.item6 == '' %}
+                        {% set itemLink6 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
+                     {% endif %}
+
+                     <div class="col-md-4 matchItems">
+                        <img src= {{ itemLink0 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink1 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink2 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink6 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink3 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink4 }} class="img-rounded" height="30" width="30">
+                        <img src= {{ itemLink5 }} class="img-rounded" height="30" width="30">
+                     </div>
 
                   </div>
                </div>
             </div>
-         </div>
-         <hr>
+            <hr>
 
          {% endfor %}
 
