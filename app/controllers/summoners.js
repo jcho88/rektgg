@@ -18,7 +18,10 @@ exports.search = function (req, res){
 console.log("test search");
 console.log(req.query.summonerName)
 var summonerName = req.query.summonerName;
-summonerName = summonerName.toLowerCase()
+summonerName = summonerName.trim();
+console.log(summonerName);
+
+//summonerName = summonerName.toLowerCase()
 
 
   Summoner.search(summonerName, function (err, summoner) {
@@ -29,7 +32,7 @@ summonerName = summonerName.toLowerCase()
     var statsRankChamp;
     var statsRankChampPast;
     var summonerGames;
-    
+    var summonerNameNoWhiteSpace;
 
 
    // console.log("err" + err);
@@ -45,10 +48,11 @@ summonerName = summonerName.toLowerCase()
             function(callback) {
               request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+summonerName+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                 //do error massage later
-
+                
                 summonerBasicInfo = JSON.parse(body);
-                summonerBasicInfo = summonerBasicInfo[summonerName];
-                //console.log(summonerBasicInfo);
+                summonerNameNoWhiteSpace = Object.keys(summonerBasicInfo)[0];
+                summonerBasicInfo = summonerBasicInfo[summonerNameNoWhiteSpace];
+                console.log(summonerBasicInfo);
                 summonerRiotID = summonerBasicInfo.id;
                 callback();
               }); 
@@ -56,7 +60,7 @@ summonerName = summonerName.toLowerCase()
         ], function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err);
                 async.parallel([
-                            //Load user
+                    //rank team, and solo rank division 
                     function(callback) {
 
                         request("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/"+summonerRiotID+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
@@ -114,6 +118,7 @@ summonerName = summonerName.toLowerCase()
 
                         name: summonerBasicInfo.name,
                         id: summonerBasicInfo.id,
+                        nameNoWhiteSpace: summonerNameNoWhiteSpace,
                         profileIconId: summonerBasicInfo.profileIconId,
                         revisionDate: summonerBasicInfo.revisionDate,
                         summonerLevel: summonerBasicInfo.summonerLevel, 
