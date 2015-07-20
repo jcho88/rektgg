@@ -17,7 +17,8 @@ var SummonerSchema = new Schema({
   summonerLevel: {type : String, default : '', trim : true},
   id: {type : String, default : '', trim : true},
   region: {type : String, default : '', trim : true},
-
+  isVerified: {type : Boolean, default : true , trim : true},
+  ownerID: {type : String, default : '', trim : true},
   //games where it display indivisual stats.
   games: [{
   			fellowPlayers: [{

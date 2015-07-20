@@ -90,7 +90,7 @@ module.exports = function (app, passport) {
 
   // CookieParser should be above session
   app.use(cookieParser());
-  app.use(cookieSession({ secret: 'secret' }));
+  app.use(cookieSession({ secret: 'chinesefoodisgreat' }));
   app.use(session({
     resave: true,
     saveUninitialized: true,

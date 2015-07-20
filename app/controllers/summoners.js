@@ -15,12 +15,14 @@ var async = require('async')
 // };
 
 exports.search = function (req, res){
+
 console.log("test search");
 console.log(req.query.summonerName)
 var summonerName = req.query.summonerName;
+summonerName = summonerName.toString("utf8");
 summonerName = summonerName.trim();
 console.log(summonerName);
-
+//console.log(summonerName.toString('utf8'));
 //summonerName = summonerName.toLowerCase()
 
 
@@ -35,6 +37,7 @@ console.log(summonerName);
     var summonerNameNoWhiteSpace;
 
 
+
    // console.log("err" + err);
     if (err) return next(err);
 /*
@@ -46,9 +49,10 @@ console.log(summonerName);
             //Load user to get userId first
             //Load posts (won't be called before task 1's "task callback" has been called)
             function(callback) {
-              request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+summonerName+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+
+              request({ encoding: null, method: "GET", url: "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+ encodeURIComponent(summonerName) +"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421"}, function(error, response, body) {
                 //do error massage later
-                
+                console.log(response.statusCode)
                 summonerBasicInfo = JSON.parse(body);
                 summonerNameNoWhiteSpace = Object.keys(summonerBasicInfo)[0];
                 summonerBasicInfo = summonerBasicInfo[summonerNameNoWhiteSpace];
