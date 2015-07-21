@@ -16,7 +16,7 @@ var auth = require('./middlewares/authorization');
 
 //for Rekt
 var summoners = require('summoners');
-var friends = require('friend')
+var friends = require('friends')
 
 /**
  * Route middlewares
