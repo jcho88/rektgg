@@ -6,16 +6,30 @@ var Schema = mongoose.Schema;
 
 var FriendSchema = new Schema({
 
-
-friends: [{
-	friendsId: {type : String, default : '', trim : true},
-	username: {type : String, default : '', trim : true},
-	addedAt: {type : String, default : '', trim : true}
-}],
-createdAt: {type : String, default : '', trim : true},
-ownerId: {type : String, default : '', trim : true},
-privacy: {type : Boolean, default : true , trim : true}
+friendsId: {type : String, default : '', trim : true, ref: 'User'},
+createdAt: {type : Date, default : '', trim : true},
+ownerId: {type : String, default : '', trim : true, ref: 'User'},
+privacy: {type : Boolean, default : false , trim : true}
 
 });
+
+FriendSchema.statics = {
+
+  checkFriend: function (ownerId,friendId, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.find({
+    	$and: [
+    	{ownerId : ownerId },  
+        {friendsId: friendId}
+        ]})
+
+
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },
+
+}
 
 mongoose.model('Friend', FriendSchema);

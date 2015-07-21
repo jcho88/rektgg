@@ -84,17 +84,20 @@ UserSchema.path('username').validate(function (username) {
   return username.length;
 }, 'Username cannot be blank');
 
+/*Added by: Steve Chen 
+  Each username must be unqiue*/
 UserSchema.path('username').validate(function (username, fn) {
   var User = mongoose.model('User');
   if (this.skipValidation()) fn(true);
 
   // Check only when it is a new user or when email field is modified
   if (this.isNew || this.isModified('username')) {
-    User.find({ username: username }).exec(function (err, users) {
+    User.find({ username: RegExp(username, "i") }).exec(function (err, users) {
       fn(!err && users.length === 0);
     });
   } else fn(true);
 }, 'username already exists');
+
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   if (this.skipValidation()) return true;
@@ -187,6 +190,14 @@ UserSchema.statics = {
    * @param {Function} cb
    * @api private
    */
+  search: function (userName, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.findOne({username : new RegExp(userName, "i") })
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },
 
   load: function (options, cb) {
     options.select = options.select || 'name username';

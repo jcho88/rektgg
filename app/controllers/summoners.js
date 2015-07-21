@@ -137,14 +137,14 @@ console.log(summonerName);
 
                       newSummoner.save(function(err, userinfo) {
                         if(!err) {
-                            console.log("shoot me");
+                            console.log("user created in database");
                             //console.log(userinfo);
                             res.render('summoners/show', {
                                 summoner: userinfo
                             });              
                         }
                         else {
-                            console.log("shoot them");
+                            console.log("creation in database failed");
                             res.render('/', {
                                 summoner: userinfo
                             });  
@@ -154,17 +154,12 @@ console.log(summonerName);
                       });
 
 
-                    console.log("done");
-
-
-
-
                 });//parelle
         });//series        
 
       
     }else{
-      console.log("Found");
+      console.log("Summoner found!");
       //console.log(summoner);
        res.render('summoners/show', {
        summoner: summoner
