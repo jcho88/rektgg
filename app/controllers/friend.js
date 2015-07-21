@@ -17,11 +17,11 @@ exports.add = function (req, res){
 		MyFriend.search("123", function (err, myFriend) {
 			if(myFriend){
 
-				Friend.checkFriend(userID, myFriend._id, function (err, myFriend){
+				Friend.checkFriend(userID, myFriend._id, function (err, checkFriend){
 
-					//console.log(myFriend);
+					//console.log(checkFriend[0]);
 
-					if(myFriend){
+					if(checkFriend[0]){
 						console.log("U already added him/her as friend")
 					}else{ // creating a new doc for user's friend
 
