@@ -2,54 +2,34 @@
 
 {% set count = 0 %}
 
-{% for champion in summoner.currentSeason.champions %}
+{% for champion in champions %}
 
    {% if count < 6 && champion.id != 0 %}
 
    {% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.id + ".png" %}
+   {% set avgKills = champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed %}
+   {% set avgAssists = champion.stats.totalAssists / champion.stats.totalSessionsPlayed %}
+   {% set avgDeaths = champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed %}
+   {% set kPlusA = avgKills + avgAssists %}
 
-   <div class="row championRow">
-      <div class="col-xs-4 championInfo">
-         <img class="media-object img-circle" src= {{ champLink }}>
-        
-            <span>{{ champion.id }}</span>
-
-            <div class="championCS">
-               <span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} CS </span>
-            </div>
-       
-      </div>
-
-      <div class="col-xs-6 championKDA">
-
-         {% set avgKills = champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed %}
-         {% set avgAssists = champion.stats.totalAssists / champion.stats.totalSessionsPlayed %}
-         {% set avgDeaths = champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed %}
-         {% set kPlusA = avgKills + avgAssists %}
-
-         <span><b>{{ (kPlusA / avgDeaths).toFixed(2) }}</b> KDA</span>
-
-         <div class="kDA">
-            <span>{{ (champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
-            <span>{{ (champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
-            <span>{{ (champion.stats.totalAssists / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
-         </div>
-
-      </div>
-
-      <div class="col-xs-2 championGames">
-
-         <span>{{ champion.stats.totalSessionsPlayed }} Games</span>
-
-            <div class="championWinRate">
-
-               <span>{{ (champion.stats.totalSessionsWon / champion.stats.totalSessionsPlayed * 100).toFixed(0) }}%</span>
-               
-            </div>
-
-      </div>
-
-   </div>
+	<div class="champions">
+		<div class="champions-row">
+			<div class="champions-img">
+				<img class="champion-img img-circle" src= {{ champLink }}></img>
+				<span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} CS </span>
+			</div>
+			<div class="champions-info">
+				<div>{{ (kPlusA / avgDeaths).toFixed(2) }} KDA</div>
+				<span>{{ (champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
+				<span>{{ (champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed).toFixed(1) }} / </span>
+				<span>{{ (champion.stats.totalAssists / champion.stats.totalSessionsPlayed).toFixed(1) }}</span>
+			</div>
+			<div class="champions-played">
+				<div>{{ champion.stats.totalSessionsPlayed }} Games</div>
+				<span class="champions-ratio">{{ (champion.stats.totalSessionsWon / champion.stats.totalSessionsPlayed * 100).toFixed(0) }}%</span>
+			</div>
+		</div>
+	</div>
 
    {% set count += 1 %}
    

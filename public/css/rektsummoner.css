@@ -389,17 +389,80 @@
 }
 
 
-/******************************** Matches *********************************/
+/* Most playedc champions */
 
-.matchInfo {
+.champion-img {
+    height: 50px;
+    width: 50px;
 }
 
-.matchItems {
-  width: 180px;
-  top: 8px;
-  float: left;
+.champions {
+   display: table;
+   width: 100%;
+   font-size: 11px;
 }
 
-.matchItems img {
-  margin: 1px;
+.champions-row  {
+    display: table-row;
+}
+
+.champions-img, .champions-info, .champions-played {
+    display: table-cell;
+}
+
+.champions-ratio {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Match */
+
+.item-img {
+    display: inline-block;
+}
+
+.item-img img {
+    height: 32px;
+    width: 32px;
+    border-radius: 4px;
+}
+
+.matches-header {
+    display: table-header-group;
+}
+
+.matches-summoner {
+    height: 55px;
+    width: 55px;
+}
+
+.matches {
+   display: table;
+   width: 100%;
+}
+
+.matches-row  {
+    display: table-row;
+}
+
+.match-items {
+    width: 120px;
+}
+
+.match-img, .match-stats-1, .match-stats-2, .match-items, .match-trinket, .match-summoners {
+    display: table-cell;
+}
+
+.match-summoners {
+    vertical-align: middle;
+}
+
+.match-team {
+    display: inline-block;
+}
+
+.summoner-img {
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
 }
