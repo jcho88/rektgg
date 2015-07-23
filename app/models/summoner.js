@@ -10,13 +10,15 @@ var Schema = mongoose.Schema;
 
 var SummonerSchema = new Schema({
   //summoner's info	
-  name: {type : String, default : '', trim : true, lowercase: true},
+  name: {type : String, default : '', trim : true},
+  nameNoWhiteSpace: {type : String, default : '', trim : true},
   profileIconId: {type : String, default : '', trim : true},
   revisionDate: {type : String, default : '', trim : true},
   summonerLevel: {type : String, default : '', trim : true},
   id: {type : String, default : '', trim : true},
   region: {type : String, default : '', trim : true},
-
+  isVerified: {type : Boolean, default : false , trim : true},
+  ownerID: {type : String, default : '', trim : true},
   //games where it display indivisual stats.
   games: [{
   			fellowPlayers: [{
@@ -199,7 +201,7 @@ SummonerSchema.statics = {
   search: function (summonerName, cb) {
     //console.log("cb = " + cb)
     //console.log("name = " + summonerName)
-    this.findOne({name : summonerName })
+    this.findOne({nameNoWhiteSpace : new RegExp(summonerName, "i") })
       // .populate('user', 'name email username')
       // .populate('comments.user')
       .exec(cb);

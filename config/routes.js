@@ -10,9 +10,13 @@ var home = require('home');
 var users = require('users');
 var articles = require('articles');
 var comments = require('comments');
+
 var tags = require('tags');
 var auth = require('./middlewares/authorization');
+
+//for Rekt
 var summoners = require('summoners');
+var friends = require('friends')
 
 /**
  * Route middlewares
@@ -103,6 +107,9 @@ module.exports = function (app, passport) {
   app.param('summonerId', summoners.load);
   app.get('/summonerSearch?:query', summoners.search); //show summoner
   app.get('/summoners/:summonerId', summoners.show); //show summoner
+
+  //add friend route
+  app.get('/addfriend', friends.add);
 
   // home route
   app.get('/', home.index);

@@ -14,6 +14,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('config');
 
+
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -41,6 +42,7 @@ require('./config/express')(app, passport);
 // Bootstrap routes
 require('./config/routes')(app, passport);
 
+app.disable('x-powered-by');
 app.listen(port);
 console.log('Express app started on port ' + port);
 
