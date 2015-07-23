@@ -1,5 +1,7 @@
    <!-- views/partials/matches.html -->  
 
+	{% set endpoint = "https://rektgg.s3.amazonaws.com" %}
+
    <div id="contentCol">
       <div class="content-sidebar">
 <!--          <div class="row hidden-xs hidden-sm">
@@ -21,72 +23,94 @@
          </div>
          <hr>
 
-         {% for champion in summoner.games %}
+         {% for game in summoner.games %}
 
-            {% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.championId + ".png" %}
+            {% set champLink = endpoint + "/champion_square/" + game.championId + ".png" %}
 
-            {% set itemLink0 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item0 + ".png" %}
-            {% set itemLink1 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item1 + ".png" %}
-            {% set itemLink2 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item2 + ".png" %}
-            {% set itemLink3 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item3 + ".png" %}
-            {% set itemLink4 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item4 + ".png" %}
-            {% set itemLink5 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item5 + ".png" %}
-            {% set itemLink6 = "https://rektgg.s3.amazonaws.com/item/" + champion.stats.item6 + ".png" %}
+            {% set itemLink0 = endpoint + "/item/" + game.stats.item0 + ".png" %}
+            {% set itemLink1 = endpoint + "/item/" + game.stats.item1 + ".png" %}
+            {% set itemLink2 = endpoint + "/item/" + game.stats.item2 + ".png" %}
+            {% set itemLink3 = endpoint + "/item/" + game.stats.item3 + ".png" %}
+            {% set itemLink4 = endpoint + "/item/" + game.stats.item4 + ".png" %}
+            {% set itemLink5 = endpoint + "/item/" + game.stats.item5 + ".png" %}
+            {% set itemLink6 = endpoint + "/item/" + game.stats.item6 + ".png" %}
 
-            <div class="row">
-               <div class="col-sm-2 col-md-2">
-<!--                   <span>{{ champion.gameType }}</span> -->
-                  <img src= {{ champLink }} class="img-responsive  img-circle" height="75" width="75">
-               </div>
-               <div class="col-md-10">
-                  <div class="col-md-12 matchInfo">
+			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
+			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
-                     <div class="col-md-4">
-
-                     </div>
-
-                     {% if champion.stats.item0 == '' %}
-                        {% set itemLink0 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item1 == '' %}
-                        {% set itemLink1 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item2 == '' %}
-                        {% set itemLink2 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item3 == '' %}
-                        {% set itemLink3 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item4 == '' %}
-                        {% set itemLink4 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item5 == '' %}
-                        {% set itemLink5 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     {% if champion.stats.item6 == '' %}
-                        {% set itemLink6 = "https://rektgg.s3.amazonaws.com/item/3460.png" %}
-                     {% endif %}
-
-                     <div class="col-md-4 matchItems">
-                        <img src= {{ itemLink0 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink1 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink2 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink6 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink3 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink4 }} class="img-rounded" height="30" width="30">
-                        <img src= {{ itemLink5 }} class="img-rounded" height="30" width="30">
-                     </div>
-
-                  </div>
-               </div>
-            </div>
-            <hr>
+			<div class="matches">
+				<div class="matches-header">
+					<span>{{ game.gameType }}</span>
+				</div>
+				<div class="matches-row">
+					<div class="match-img">
+						<img src= {{ champLink }} class="matches-summoner img-circle">
+					</div>
+					<div class="match-stats-1">
+						<div>{{ KDA.toFixed(1) }} KDA</div>
+						<span>{{ game.stats.championsKilled }} / </span>
+						<span>{{ game.stats.numDeaths }} / </span>
+						<span>{{ game.stats.assists }}</span>
+					</div>
+					<div class="match-stats-2">
+						<div>Level: {{ game.stats.level}}</div>
+						<span>{{ game.stats.minionsKilled }} CS</span>
+					</div>
+					<div class="match-items">
+						<div class="item-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
+						<div class="item-img">{% if game.stats.item1 %} <img src= {{ itemLink1 }}> {% endif %}</div>
+						<div class="item-img">{% if game.stats.item2 %} <img src= {{ itemLink2 }}> {% endif %}</div>
+						<div class="item-img">{% if game.stats.item3 %} <img src= {{ itemLink3 }}> {% endif %}</div>
+						<div class="item-img">{% if game.stats.item4 %} <img src= {{ itemLink4 }}> {% endif %}</div>
+						<div class="item-img">{% if game.stats.item5 %} <img src= {{ itemLink5 }}> {% endif %}</div>
+					</div>
+					<div class="match-trinket">
+						<div class="item-img">{% if game.stats.item6 %} <img src= {{ itemLink6 }}> {% endif %}</div>
+						<div>Trinket</div>
+					</div>
+					<div class="match-summoners">
+						<div class="match-team">
+							<!-- Summoner -->
+							{% if game.teamId == '100' %}
+								<div>
+									<img src= {{ champLink }} class="summoner-img">
+									{{ summoner.name }}
+								</div>
+							{% endif %}
+							
+							<!-- Fellow Players -->
+							{% for player in game.fellowPlayers %}
+								{% if player.teamId == '100' %}
+									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
+									<div>
+										<img src= {{ playerLink }} class="summoner-img">
+									</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+						
+						<div class="match-team">
+							<!-- Summoner -->
+							{% if game.teamId == '200' %}
+								<div>
+									<img src= {{ champLink }} class="summoner-img">
+									{{ summoner.name }}
+								</div>
+							{% endif %}
+							
+							<!-- Fellow Players -->
+							{% for player in game.fellowPlayers %}
+								{% if player.teamId == '200' %}
+									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
+									<div>
+										<img src= {{ playerLink }} class="summoner-img">
+									</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
 
          {% endfor %}
 
