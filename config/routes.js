@@ -109,8 +109,10 @@ module.exports = function (app, passport) {
   app.get('/summoners/:summonerId', summoners.show); //show summoner
 
   //add friend route
-  app.get('/addfriend', friends.add);
-
+  app.get('/addfriend', friends.addFriend);//post
+  app.get('/deletefriend', friends.deleteFriend);//delete
+  app.get('/getFriendList', friends.isFriend);
+  //app.get('/isFriend', friends.isFriend);
   // home route
   app.get('/', home.index);
 

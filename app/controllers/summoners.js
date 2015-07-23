@@ -8,6 +8,7 @@ var utils = require('../../lib/utils')
 var extend = require('util')._extend
 var request = require('request')
 var async = require('async')
+var friend = require('friends')
 
 // exports.search = function (req, res){
 //   console.log("search");
@@ -154,11 +155,12 @@ console.log(summonerName);
                       });
 
 
-                });//parelle
+                });//parallel
         });//series        
 
       
     }else{
+      friend.isfriend
       console.log("Summoner found!");
       //console.log(summoner);
        res.render('summoners/show', {
@@ -178,6 +180,7 @@ console.log(summonerName);
 
 exports.load = function (req, res, next, id){
 //console.log("test load");
+
   Summoner.load(id, function (err, summoner) {
     console.log("err" + err);
     if (err) return next(err);

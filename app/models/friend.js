@@ -6,9 +6,10 @@ var Schema = mongoose.Schema;
 
 var FriendSchema = new Schema({
 
-friendsId: {type : String, default : '', trim : true, ref: 'User'},
+friendId: {type : String, default : '', trim : true, ref: 'User'},
 createdAt: {type : Date, default : '', trim : true},
 ownerId: {type : String, default : '', trim : true, ref: 'User'},
+isFriend: {type : Boolean, default : false , trim : true},
 privacy: {type : Boolean, default : false , trim : true}
 
 });
@@ -21,7 +22,7 @@ FriendSchema.statics = {
     this.find({
     	$and: [
     	{ownerId : ownerId },  
-        {friendsId: friendId}
+        {friendId: friendId}
         ]})
 
 
@@ -29,6 +30,58 @@ FriendSchema.statics = {
       // .populate('comments.user')
       .exec(cb);
   },
+  deleteFriend: function (ownerId,friendId, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.find({
+      $or: [
+        {$and: [{ownerId : ownerId },  
+        {friendId: friendId}]},
+        {$and: [{ownerId : friendId },  
+        {friendId: ownerId}]},
+
+        ]})
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .remove().exec(cb);
+  },  
+  checkIsFriend: function (ownerId,friendId, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.find({
+      $or: [
+        {$and: [{ownerId : ownerId },  
+        {friendId: friendId}]},
+        {$and: [{ownerId : friendId },  
+        {friendId: ownerId}]},
+
+        ]})
+
+
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },    
+  updateIsFriendBoolean: function (ids, cb) {
+    //console.log("cb = " + cb)
+    //console.log("name = " + summonerName)
+    this.update( {_id : {"$in":ids}}, {isFriend:true} , {multi: true})
+
+
+      // .populate('user', 'name email username')
+      // .populate('comments.user')
+      .exec(cb);
+  },
+  getAllFriends: function (ownerId, cb) {
+
+    this.find({
+      $and: [
+        {ownerId : ownerId },  
+        {isFriend: true}
+        ]})
+      .populate('friendId')
+      .exec(cb);
+  },        
 
 }
 
