@@ -13,18 +13,21 @@ var _ = require('underscore')
 
 exports.search = function (req, res){
     var name = req.query.summonerName.toLowerCase();
+    name = name.toString("utf8");
+    name = name.replace(/\s/g, '');
     var summonerData = {}
     
     // Get summoner
     function getSummoner (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+name+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
-            summonerData.name = results[name].name;
-            summonerData.id = results[name].id;
+            summonerData.nameNoWhiteSpace = Object.keys(results)[0];
+            summonerData.name = results[summonerData.nameNoWhiteSpace].name;
+            summonerData.id = results[summonerData.nameNoWhiteSpace].id;
             summonerData.region = 'North America'
-            summonerData.profileIconId = results[name].profileIconId;
-            summonerData.revisionDate = results[name].revisionDate;
-            summonerData.summonerLevel = results[name].summonerLevel;
+            summonerData.profileIconId = results[summonerData.nameNoWhiteSpace].profileIconId;
+            summonerData.revisionDate = results[summonerData.nameNoWhiteSpace].revisionDate;
+            summonerData.summonerLevel = results[summonerData.nameNoWhiteSpace].summonerLevel;
             callback();
         }); 
     }
@@ -70,10 +73,11 @@ exports.search = function (req, res){
             callback();
         });
     }
-    
+    console.log(name)
     Summoner.search(name, function (err, summoner) {
         if (err) return next(err);
 
+        //console.log(summoner)
         if (summoner) { 
             res.render('summoners/show', {
                 summoner: summoner

@@ -125,19 +125,14 @@ exports.addFriend = function (req, res){
 						}
 						else {
 						    console.log("Friend Not added");
-
 						}
-						});//save
-
-						
+						});//save					
 					}//else
 
 				});//checkfriend
-
 			}
 			else{
 				console.log("Cannot find myFriend")
-
 			}//else
 		});//search
 
@@ -165,24 +160,18 @@ exports.deleteFriend = function (req, res){
 
 					}else{ // creating a new doc for user's friend
 						console.log("Friend not deleted")
-
 					}//else
-
 				});//deleteFriend
-
 			}
 			else{
 				console.log("Cannot find myFriend")
-
 			}//else
 		});//search
-
 	}//if
 	else{
 		//route to somewhere
 		console.log("user not login (coner case)")
 	}//else
-
 }
 
 exports.isFriend = getFriendList

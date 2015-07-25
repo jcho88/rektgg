@@ -201,7 +201,7 @@ SummonerSchema.statics = {
   search: function (summonerName, cb) {
     //console.log("cb = " + cb)
     //console.log("name = " + summonerName)
-    this.findOne({nameNoWhiteSpace : new RegExp(summonerName, "i") })
+    this.findOne({nameNoWhiteSpace : summonerName })
       // .populate('user', 'name email username')
       // .populate('comments.user')
       .exec(cb);
