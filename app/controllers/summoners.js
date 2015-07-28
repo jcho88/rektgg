@@ -8,16 +8,15 @@ var utils = require('../../lib/utils')
 var extend = require('util')._extend
 var request = require('request')
 var async = require('async')
-
 var _ = require('underscore')
 
 exports.search = function (req, res){
     var name = req.query.summonerName.toLowerCase();
     name = name.toString("utf8");
     name = name.replace(/\s/g, '');
-    var summonerData = {}
+    var summonerData = new Summoner()
+    var fellowPlayers = {}
     
-    // Get summoner
     function getSummoner (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
@@ -32,7 +31,6 @@ exports.search = function (req, res){
         }); 
     }
 
-    // Get league stats
     function getLeague (callback) {
         request("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/"+summonerData.id+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
@@ -41,7 +39,6 @@ exports.search = function (req, res){
         });
     }
 
-    // Get current season stats
     function getCurrentSeason(callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2015&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
@@ -53,7 +50,6 @@ exports.search = function (req, res){
       }); 
     }
     
-    // Get past season stats
     function getPastSeason (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2014&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
@@ -64,8 +60,7 @@ exports.search = function (req, res){
             callback();
       }); 
     }
-
-    // Get games
+    
     function getGames (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/"+summonerData.id+"/recent?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             results = JSON.parse(body);
@@ -73,15 +68,62 @@ exports.search = function (req, res){
             callback();
         });
     }
-    console.log(name)
+    
+    function getNames (callback) {
+        var ids = []
+        var count = 0
+        var n = 40
+        
+        // Collect summoner ids and sort into groups of n
+        _.each(summonerData.games, function(game) {
+            _.each(game.fellowPlayers, function(player) {
+                if (count % n == 0) {
+                    ids.push([]);
+                }
+                ids[Math.floor(count++/n)].push(player.summonerId);
+            })
+        })
+        
+        // Fetch summoner names, n at a time
+        async.each(ids,
+            function(idGroup, callback) {
+                request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+                    results = JSON.parse(body);
+                    _.extend(fellowPlayers, results);
+                    callback();
+                });
+            },
+            callback
+        );
+    }
+
+    function getGamesWrapper (callback) {
+        async.series([
+            getGames,
+            getNames
+        ],
+        function(err) {
+            if (err) return next(err);
+            callback();
+        });
+    }
+
     Summoner.search(name, function (err, summoner) {
         if (err) return next(err);
 
-        //console.log(summoner)
-        if (summoner) { 
-            res.render('summoners/show', {
-                summoner: summoner
-            });
+        if (summoner) {
+            summonerData = summoner;
+            async.series([
+                getNames
+            ],
+            function(err) {
+                if (err) return next(err);
+                
+                res.render('summoners/show', {
+                    summoner: summoner,
+                    fellowPlayers: fellowPlayers
+                });
+            })
         }
         else {
             // We need to call the Summoner API first since the other calls depend on this
@@ -94,14 +136,15 @@ exports.search = function (req, res){
                     getLeague,
                     getCurrentSeason,
                     getPastSeason,
-                    getGames
+                    getGamesWrapper
                 ],
                 function(err) {
-                    newSummoner = new Summoner(summonerData)
-                    newSummoner.save(function(err, summoner) {
+                    if (err) return next(err);
+                    summonerData.save(function(err, summoner) {
                       if(!err) {
                           res.render('summoners/show', {
-                              summoner: summoner
+                              summoner: summoner,
+                              fellowPlayers: fellowPlayers
                           });              
                       }
                       else {
@@ -120,10 +163,7 @@ exports.search = function (req, res){
  */
 
 exports.load = function (req, res, next, id){
-//console.log("test load");
-
   Summoner.load(id, function (err, summoner) {
-    console.log("err" + err);
     if (err) return next(err);
     if (!summoner) return next(new Error('not found'));
     req.summoner = summoner;
@@ -132,9 +172,6 @@ exports.load = function (req, res, next, id){
 };
 
 exports.show = function (req, res){
-
-	console.log("test show");
-
   res.render('summoners/show', {
     summoner: req.summoner
   });
