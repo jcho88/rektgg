@@ -53,6 +53,10 @@ exports.create = function (req, res) {
 
 exports.show = function (req, res) {
   var user = req.profile;
+
+  //set user rating
+  user.rating = user.getRatings(); //write getRatings method to return average of the ratings
+
   res.render('users/show', {
     title: user.name,
     user: user
