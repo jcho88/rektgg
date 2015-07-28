@@ -48,7 +48,6 @@ exports.create = function (req, res){
   rating.userId = req.user;
 
   rating.save(function(err) {
-
 	    if (!err) {
 	  	  req.flash('success', 'Successfully created a rating!');
 	  	  return res.redirect('/ratings/'+rating._id);
@@ -121,15 +120,17 @@ exports.update = function (req, res){
   delete req.body.user;
   rating = extend(rating, req.body);
 
-  if (!err) {
-  	return res.redirect('/ratings/' + rating._id);
-  }
+  rating.save(function(err) {
+	  	if (!err) {
+	  		return res.redirect('/ratings/' + rating._id);
+	  	}
 
-  res.render('ratings/edit', {
-  	title: 'Edit Rating',
-  	rating: rating,
-  	errors: utils.errors(err.errors || err)
-  });
+		res.render('ratings/edit', {
+		  	title: 'Edit Rating',
+		  	rating: rating,
+		  	errors: utils.errors(err.errors || err)
+		});
+	});
 }
 
 
