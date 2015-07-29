@@ -18,6 +18,7 @@ var auth = require('./middlewares/authorization');
 var summoners = require('summoners');
 var friends = require('friends');
 var ratings = require('ratings');
+var post = require('post');
 
 /**
  * Route middlewares
@@ -115,6 +116,19 @@ module.exports = function (app, passport) {
   app.get('/deletefriend', friends.deleteFriend);//delete
   app.get('/getFriendList', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
+
+  app.get('/testactivity', function (req, res){
+
+    console.log("test show");
+
+    res.render('testactivity');
+  }
+
+);
+
+  app.post('/testpost', post.createPost);  
+
+
   // home route
   app.get('/', home.index);
 
