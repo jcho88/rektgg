@@ -10,7 +10,12 @@ var request = require('request')
 var async = require('async')
 var MyFriend = mongoose.model('User')
 
-
+/*
+Created by: Steve Chen
+Description: This function is to change the value of isFriend to true if both 
+users existed in the Friend database. (If friend is added connected both direction).
+Return: None
+*/
 var changeIsFriendValue = function (req, res, friendDocument) {
 
 		if(req.user){
@@ -59,7 +64,11 @@ var changeIsFriendValue = function (req, res, friendDocument) {
 	
 	
 }
-
+/*
+Created by: Steve Chen
+Description: This function is to get a list of user's friend, and populate return an array.
+Return: An array of friends with refs to their user schema
+*/
 var getFriendList = function (req, res) {
 
 	if(req.user){
@@ -91,7 +100,12 @@ var getFriendList = function (req, res) {
 	
 }
 
-
+/*
+Created by: Steve Chen
+Description: This function is to add friend one directional. Adding friend does
+not make a user friend unless both direction are connected.
+Return: None
+*/
 exports.addFriend = function (req, res){
 	//isFriend(req,res)
 	if(req.user){
@@ -143,6 +157,14 @@ exports.addFriend = function (req, res){
 	}//else
 
 }
+
+/*
+Created by: Steve Chen
+Description: This function is to remove friend from a user. 
+Upon calling this function, both document of Friend in the 
+database will be permanently deleted
+Return: None
+*/
 
 exports.deleteFriend = function (req, res){
 

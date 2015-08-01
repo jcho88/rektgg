@@ -1,0 +1,26 @@
+{% extends '../layouts/profile.html' %}
+
+{% block main %}
+  <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+  {% if (ratings.length) %}
+    {% for rating in ratings %}
+      {% include 'rating.html' %}
+    {% endfor %}
+
+    {% if (pages > 1) %}
+      <ul class="pagination">
+        {% autoescape false %}
+          {{ createPagination(pages, page) }}
+        {% endautoescape %}
+      </ul>
+    {% endif %}
+  {% else %}
+    <h4 class="muted">
+      No ratings.&nbsp;
+      <a href="/ratings/new">create one</a>
+    </h4>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="rating">
+  <h3>
+    <a href="{{ '/ratings/' + rating._id }}" title="{{ rating.title }}">
+      {{ rating.title }}
+    </a>
+  </h3>
+  <p>{{ rating.body }}</p>
+
+  <span class="muted">{{ rating.createdAt.toISOString()|date('M d, Y  h:m a') }}</span>
+
+  {% if (rating.user) %}
+    &nbsp; - &nbsp;
+    <span>Author: </span>
+    <a href="{{ '/users/' + rating.user._id }}">
+      {{ rating.user.name || rating.user.username }}
+    </a>
+  {% endif %}
+
+</div>

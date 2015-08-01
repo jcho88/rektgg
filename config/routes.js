@@ -16,7 +16,9 @@ var auth = require('./middlewares/authorization');
 
 //for Rekt
 var summoners = require('summoners');
-var friends = require('friends')
+var friends = require('friends');
+var ratings = require('ratings');
+var post = require('post');
 
 /**
  * Route middlewares
@@ -24,6 +26,7 @@ var friends = require('friends')
 
 var articleAuth = [auth.requiresLogin, auth.article.hasAuthorization];
 var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization];
+var ratingAuth  = [auth.requiresLogin, auth.rating.hasAuthorization];
 
 /**
  * Expose routes
@@ -103,16 +106,29 @@ module.exports = function (app, passport) {
   app.put('/articles/:id', articleAuth, articles.update); //updates the article
   app.delete('/articles/:id', articleAuth, articles.destroy); //delete article
 
-  //summoner route
+  //summoner routes
   app.param('summonerId', summoners.load);
   app.get('/summonerSearch?:query', summoners.search); //show summoner
   app.get('/summoners/:summonerId', summoners.show); //show summoner
 
-  //add friend route
+  //add friend routes
   app.get('/addfriend', friends.addFriend);//post
   app.get('/deletefriend', friends.deleteFriend);//delete
   app.get('/getFriendList', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
+
+  app.get('/testactivity', function (req, res){
+
+    console.log("test show");
+
+    res.render('testactivity');
+  }
+
+);
+
+  app.post('/testpost', post.createPost);  
+
+
   // home route
   app.get('/', home.index);
 
@@ -125,6 +141,17 @@ module.exports = function (app, passport) {
   // tag routes
   app.get('/tags/:tag', tags.index);
 
+
+  // rating routes
+  app.get('/ratings/:ratingId', ratings.index); //load all ratings
+  // app.param('ratingId', ratings.load);
+
+  // app.get('/ratings/new', auth.requiresLogin, ratings.new); //takes you to form to create new rating 
+  // app.post('/ratings', auth.requiresLogin, ratings.create); //create rating
+  // app.get('/ratings/:ratingId', ratings.show); //show a single ratings
+  // app.get('/ratings/:ratingId/edit', ratingAuth, ratings.edit); //takes you to form to edit rating
+  // app.put('/ratings/:ratingId', ratingAuth, ratings.update); //updates the rating
+  // app.delete('/ratings/:ratingId', ratingAuth, ratings.destroy); //delete rating 
 
   /**
    * Error handling

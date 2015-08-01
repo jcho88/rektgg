@@ -6,6 +6,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var utils = require('../../lib/utils');
+var Profile = mongoose.model('Profile')
 
 /**
  * Load
@@ -38,12 +39,35 @@ exports.create = function (req, res) {
         title: 'Sign up'
       });
     }
+    console.log("before I print user")
+    console.log(user)
 
-    // manually login the user once successfully signed up
-    req.logIn(user, function(err) {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
-      return res.redirect('/');
+    var profile = new Profile({
+      ownerID: user._id
     });
+
+    profile.save(function(err, userinfo) {
+    if(!err) {
+        console.log("profile created");
+    // manually login the user once successfully signed up
+        req.logIn(user, function(err) {
+          if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+          return res.redirect('/');
+        });      
+        
+    
+    }
+    else {
+      return res.render('users/signup', {
+        errors: utils.errors(err.errors),
+        user: user,
+        title: 'Sign up'
+      });        
+        console.log("profile create error");
+    }
+    });//save     
+
+
   });
 };
 
@@ -53,6 +77,10 @@ exports.create = function (req, res) {
 
 exports.show = function (req, res) {
   var user = req.profile;
+
+  //set user rating
+  user.rating = user.getRatings(); //write getRatings method to return average of the ratings
+
   res.render('users/show', {
     title: user.name,
     user: user

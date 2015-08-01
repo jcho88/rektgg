@@ -12,7 +12,7 @@
 .cover-container {
     height:350px;
     margin-top:-5px;
-    background-image:url(https://pbs.twimg.com/profile_banners/1029142980/1436496494/1500x500);
+    background-image:url(https://pbs.twimg.com/profile_banners/1029142980/1437721222/1500x500);
     background-size:cover;
     position:relative;
     margin-bottom:25px;
@@ -277,7 +277,8 @@
 
 .content-sidebar {
   padding: 20px;
-  background: #7f8c8d;
+  background: #b2cecf;
+  /*background: #7f8c8d;*/
   min-height: 410px;
 }
 
