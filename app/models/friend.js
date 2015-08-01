@@ -9,9 +9,9 @@ var FriendSchema = new Schema({
 friendId: {type : String, default : '', trim : true, ref: 'User'},
 createdAt: {type : Date, default : '', trim : true},
 ownerId: {type : String, default : '', trim : true, ref: 'User'}, 
+
 // if IsFriend is true, means the user of ownerId and friendID are friend
-isFriend: {type : Boolean, default : false , trim : true},
-privacy: {type : String, default : '' , trim : true}
+isFriend: {type : Boolean, default : false , trim : true}
 
 });
 
