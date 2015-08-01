@@ -15,7 +15,6 @@ exports.search = function (req, res){
     name = name.toString("utf8");
     name = name.replace(/\s/g, '');
     var summonerData = new Summoner()
-    var fellowPlayers = {}
     
     function getSummoner (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
@@ -69,7 +68,7 @@ exports.search = function (req, res){
         });
     }
     
-    function getNames (callback) {
+    function getFellowPlayerNames (callback) {
         var ids = []
         var count = 0
         var n = 40
@@ -89,18 +88,23 @@ exports.search = function (req, res){
             function(idGroup, callback) {
                 request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                     results = JSON.parse(body);
-                    _.extend(fellowPlayers, results);
+                    
+                    // TODO: Don't store fellow player names inside the Summoner model
+                    _.extend(summonerData.fellowPlayerNames, results);
                     callback();
                 });
             },
-            callback
+            function(err) {
+                if (err) return next(err);
+                callback();
+            }
         );
     }
 
     function getGamesWrapper (callback) {
         async.series([
             getGames,
-            getNames
+            getFellowPlayerNames
         ],
         function(err) {
             if (err) return next(err);
@@ -113,17 +117,10 @@ exports.search = function (req, res){
 
         if (summoner) {
             summonerData = summoner;
-            async.series([
-                getNames
-            ],
-            function(err) {
-                if (err) return next(err);
-                
-                res.render('summoners/show', {
-                    summoner: summoner,
-                    fellowPlayers: fellowPlayers
-                });
-            })
+
+            res.render('summoners/show', {
+                summoner: summoner
+            });
         }
         else {
             // We need to call the Summoner API first since the other calls depend on this
@@ -143,8 +140,7 @@ exports.search = function (req, res){
                     summonerData.save(function(err, summoner) {
                       if(!err) {
                           res.render('summoners/show', {
-                              summoner: summoner,
-                              fellowPlayers: fellowPlayers
+                              summoner: summoner
                           });              
                       }
                       else {
