@@ -4,12 +4,12 @@ var utils = require('../../lib/utils');
 
 var Schema = mongoose.Schema;
 
-var CommentSchema = new Schema({
+var PostCommentSchema = new Schema({
 	ownerId: {type : String, default : '', trim : true},
 	message: {type : String, default : '', trim : true},
 	create_at: {type : String, default : '', trim : true},
-	parentActivityId: {type : String, default : '', trim : true}
+	postId: {type : String, default : '', trim : true}
 
 });
 
-mongoose.model('Comment', CommentSchema);
+mongoose.model('PostComment', PostCommentSchema);

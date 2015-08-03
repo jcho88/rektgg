@@ -27,11 +27,11 @@ var UserSchema = new Schema({
   hashed_password: { type: String, default: '' },
   salt: { type: String, default: '' },
   authToken: { type: String, default: '' },
-  facebook: {},
-  twitter: {},
-  github: {},
-  google: {},
-  linkedin: {}
+  //Steve added
+  aboutMe: {type : String, default : '', trim : true},
+  profileImage: {type : String, default : '', trim : true},
+  profileCoverImage: {type : String, default : '', trim : true},
+  privacy: {type : String, default : 'P' , trim : true}
 });
 
 /**
