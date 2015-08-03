@@ -22,11 +22,11 @@
                       <div class="clearfix"></div>
                       <ul class="nav nav-tabs">
                       
-                        {% set reviewRoute = "/ratings/" + summoner._id %}
+                        {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
 
                         {% if (isActive('summonerName')) %} <!-- change later -->
                          <li class="active">
-                            <a href="#tab" data-toggle="tab">
+                            <a>
                                Matches
                             </a>
                          </li>
@@ -40,7 +40,7 @@
 
                         {% if (isActive('matches')) %}
                          <li class="active">
-                            <a href="#tab2" data-toggle="tab">
+                            <a>
                                Activity
                             </a>
                          </li>
@@ -54,8 +54,8 @@
 
                          {% if (isActive('ratings')) %}
                          <li class="active">
-                            <a href="tab3">
-                               Reviews
+                            <a href={{ reviewRoute }}>
+                              Reviews
                             </a>
                          </li>
                          {% else %}

@@ -58,12 +58,12 @@ exports.comment = {
  *  Rating authorization routing middleware
  */
 
-exports.rating = {
-  hasAuthorization: function (req, res, next) {
-    if (req.rating.userId != req.user.id) {
-      req.flash('info', 'You are not authorized')
-      return res.redirect('/ratings/' + req.rating.id)
-    }
-    next()
-  }
-}
+// exports.rating = {
+//   hasAuthorization: function (req, res, next) {
+//     if (req.rating.userId != req.user.id) {
+//       req.flash('info', 'You are not authorized')
+//       return res.redirect('/ratings/summoner' + req.summoner)
+//     }
+//     next()
+//   }
+// }
