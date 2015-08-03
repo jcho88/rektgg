@@ -13,10 +13,16 @@ var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('config');
-
+var I18n = require('i18n-2');
 
 var app = express();
 var port = process.env.PORT || 3000;
+
+// Attach the i18n property to the express request object
+// And attach helper methods for use in templates
+I18n.expressBind(app, {
+    locales: ['riot_api']
+});
 
 // Connect to mongodb
 var connect = function () {
