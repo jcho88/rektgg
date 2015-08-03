@@ -117,6 +117,7 @@ module.exports = function (app, passport) {
   app.get('/getFriendList', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
 
+//test post
   app.get('/testactivity', function (req, res){
 
     console.log("test show");
@@ -126,8 +127,12 @@ module.exports = function (app, passport) {
 
 );
 
-  app.post('/testpost', post.createPost);  
-
+  app.post('/testpost', post.createPost);
+  app.post('/testdelete', post.deletePost);  
+  app.post('/testcomment', post.createPostComment); 
+  app.post('/testdeletecomment', post.deletePostComment);
+  app.post('/testeditcomment', post.editPostComment)     
+//end test post
 
   // home route
   app.get('/', home.index);

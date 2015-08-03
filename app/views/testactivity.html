@@ -7,8 +7,43 @@
 		<div align="center">
 		<br><br>
 		<input type="text" name="mypost" size="25">
-		<br><input type="submit" value="sent post"> <input type="button" value="get post"><br>
+		<br><input type="submit" value="sent post"> <br>
 		</div>
 	</form>
+<form name="myform2" action="/testdelete" method="POST">
+	<input name="postId" type="hidden" value="55bd395865610d58143bcb98"> 
+	<input type="submit" value="delete post">
+</form>	
+
+<form name="comment" action="/testcomment" method="POST">
+	<input name="postId" type="hidden" value="55bd395865610d58143bcb98"> 
+	<input name="wallId" type="hidden" value="55b850827d14d40803fe680e"> 
+	<input type="text" name="message" size="25">
+	<input type="submit" value="create comment">
+</form>	
+
+
+<form name="myform2" action="/testdeletecomment" method="POST">
+	<input name="postId" type="hidden" value="55bd395865610d58143bcb98"> 
+	<input name="commentId" type="hidden" value="55bd5f7afdf7dedc10286ba1"> 
+	<input name="authorId" type="hidden" value="55b850827d14d40803fe680e"> 
+	<input type="submit" value="delete comment">
+</form>	
+
+
+<form name="comment" action="/testeditcomment" method="POST">
+	<input name="postId" type="hidden" value="55bd395865610d58143bcb98"> 
+	<input name="commentId" type="hidden" value="55bd58238b720ddc0cd8bc79"> 
+	<input name="authorId" type="hidden" value="55b850827d14d40803fe680e">  
+	<input type="text" name="message" size="25">
+	<input type="submit" value="update comment">
+</form>	
+
+
+
+
+
+
+
 </body>
 </html>

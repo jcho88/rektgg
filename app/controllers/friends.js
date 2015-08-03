@@ -37,9 +37,9 @@ var changeIsFriendValue = function (req, res, friendDocument) {
 						    ids.push(checkFriend[i].id);
 						}
 
-						Friend.updateIsFriendBoolean(ids, function (err, numofDocChnaged){
+						Friend.updateIsFriendBoolean(ids, function (err, numofDocChanged){
 
-							if(numofDocChnaged != 2){
+							if(numofDocChanged != 2){
 								console.log("Didnt update isFriend Boolean")
 							}
 						});//updateIsFriendBoolean

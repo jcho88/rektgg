@@ -49,8 +49,7 @@ return 2.
         {friendId: ownerId}]},
 
         ]})
-      // .populate('user', 'name email username')
-      // .populate('comments.user')
+
       .remove().exec(cb);
   },  
 /*
