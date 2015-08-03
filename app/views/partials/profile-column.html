@@ -1,0 +1,56 @@
+<!-- views/partials/profile-column.html -->     
+
+      <div class="col-md-3" id="profileCol">
+         <div class="profile-sidebar">
+            <div class="profile-userpic">
+               <img class="img-circle img-responsive" src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6_.jpg" alt="">
+            </div>
+            <div class="profile-usertitle">
+               <div class="profile-usertitle-name">
+                  {{ summoner.name }}
+               </div>
+            </div>
+            <div class="profile-userbuttons">
+               <button type="button" class="btn btn-info btn-sm">
+                  <i class="fa fa-user-plus"></i>
+                  Friend Request
+               </button>
+            </div>
+            <div class="profile-usermenu">
+               <ul class="nav">
+                  <li class="active">
+                     <a href="#">
+                     <i class="glyphicon glyphicon-home"></i>
+                     Overview </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                     <i class="glyphicon glyphicon-user"></i>
+                     Account Settings </a>
+                  </li>
+                  <li>
+                     <a href="#" target="_blank">
+                     <i class="glyphicon glyphicon-ok"></i>
+                     Tasks </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                     <i class="glyphicon glyphicon-flag"></i>
+                     Help </a>
+                  </li>
+               </ul>
+            </div>
+
+   			<!-- Most Played Champions -->
+            <b>Season 5 Most Played Champions</b> <br></br>
+
+			{% set champions = summoner.currentSeason.champions %}
+   			{% include '../partials/most-played.html' with champions %}
+
+            <b>Season 4 Most Played Champions</b> <br></br>
+
+			{% set champions = summoner.pastSeason.champions %}
+			{% include '../partials/most-played.html' with champions %}
+
+         </div> <!-- profile sidebar -->
+      </div> <!-- profile column -->

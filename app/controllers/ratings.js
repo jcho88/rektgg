@@ -62,10 +62,11 @@ exports.create = function (req, res){
 };
 
 /**
- * List ratings
+ * New rating form & list ratings
  */
 
 exports.index = function (req, res){
+  console.log("rating controller");
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
   var perPage = 30;
   var options = {
@@ -76,8 +77,9 @@ exports.index = function (req, res){
   Rating.list(options, function (err, ratings) {
     if (err) return res.render('500');
     Rating.count().exec(function (err, count) {
-      res.render('ratings/index', {
+      res.render('ratings/ratings', {
         title: 'Ratings',
+        rating: new Rating({}),
         ratings: ratings,
         page: page + 1,
         pages: Math.ceil(count / perPage)

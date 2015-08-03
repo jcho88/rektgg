@@ -19,12 +19,14 @@ var SummonerSchema = new Schema({
   region: {type : String, default : '', trim : true},
   isVerified: {type : Boolean, default : false , trim : true},
   ownerID: {type : String, default : '', trim : true},
+  fellowPlayerNames: {type : {}, default: {}},
   //games where it display indivisual stats.
   games: [{
   			fellowPlayers: [{
   				championId: {type : String, default : '', trim : true},
   				teamId: {type : String, default : '', trim : true},
-  				summonerId: {type : String, default : '', trim : true}
+  				summonerId: {type : String, default : '', trim : true},
+  				name: {type : String, default : '', trim : true}
   			}],
 
   			//Game type. (Legal values: CUSTOM_GAME, MATCHED_GAME, TUTORIAL_GAME)

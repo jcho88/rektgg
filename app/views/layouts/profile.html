@@ -1,0 +1,83 @@
+<html>
+  {% include '../partials/head.html' %}
+<body>
+  {% include '../partials/header.html' %}
+  
+  {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) %}
+    <div class="container">
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% include '../partials/footer.html' %}
+  {% else %}
+    <div class="full-width-container">
+      <div class="content">
+        {% include '../partials/profile-header-image.html' %}
+        {% include '../partials/profile-column.html' %}
+        <div class="container-fluid">
+          <div class="row profile">
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+              <div class="content-border">
+                      <div class="clearfix"></div>
+                      <ul class="nav nav-tabs">
+                      
+                        {% set reviewRoute = "/ratings/" + summoner._id %}
+
+                        {% if (isActive('summonerName')) %} <!-- change later -->
+                         <li class="active">
+                            <a href="#tab" data-toggle="tab">
+                               Matches
+                            </a>
+                         </li>
+                         {% else %}
+                         <li class="">
+                            <a href="#tab" data-toggle="tab">
+                               Matches
+                            </a>
+                         </li>
+                         {% endif %}
+
+                        {% if (isActive('matches')) %}
+                         <li class="active">
+                            <a href="#tab2" data-toggle="tab">
+                               Activity
+                            </a>
+                         </li>
+                         {% else %}
+                         <li class="">
+                            <a href="#tab2" data-toggle="tab">
+                               Activity
+                            </a>
+                         </li>
+                         {% endif %}
+
+                         {% if (isActive('ratings')) %}
+                         <li class="active">
+                            <a href="tab3">
+                               Reviews
+                            </a>
+                         </li>
+                         {% else %}
+                         <li class="">
+                            <a href={{ reviewRoute }}>
+                               Reviews
+                            </a>
+                         </li>
+                         {% endif %}
+
+                      </ul>
+
+                {% block content %}{% endblock %}
+
+              </div>
+            </div>
+          </div>
+        </div>      
+      </div>
+    </div>
+    {% include '../partials/footer.html' %}
+  {% endif %}
+
+</body>
+</html>

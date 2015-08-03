@@ -148,14 +148,15 @@ module.exports = function (app, passport) {
 
 
   // rating routes
-  app.param('ratingId', ratings.load);
-  app.get('/ratings', ratings.index); //load all ratings
-  app.get('/ratings/new', auth.requiresLogin, ratings.new); //takes you to form to create new rating 
-  app.post('/ratings', auth.requiresLogin, ratings.create); //create rating
-  app.get('/ratings/:ratingId', ratings.show); //show a single ratings
-  app.get('/ratings/:ratingId/edit', ratingAuth, ratings.edit); //takes you to form to edit rating
-  app.put('/ratings/:ratingId', ratingAuth, ratings.update); //updates the rating
-  app.delete('/ratings/:ratingId', ratingAuth, ratings.destroy); //delete rating 
+  app.get('/ratings/:ratingId', ratings.index); //load all ratings
+  // app.param('ratingId', ratings.load);
+
+  // app.get('/ratings/new', auth.requiresLogin, ratings.new); //takes you to form to create new rating 
+  // app.post('/ratings', auth.requiresLogin, ratings.create); //create rating
+  // app.get('/ratings/:ratingId', ratings.show); //show a single ratings
+  // app.get('/ratings/:ratingId/edit', ratingAuth, ratings.edit); //takes you to form to edit rating
+  // app.put('/ratings/:ratingId', ratingAuth, ratings.update); //updates the rating
+  // app.delete('/ratings/:ratingId', ratingAuth, ratings.destroy); //delete rating 
 
   /**
    * Error handling

@@ -84,6 +84,7 @@
 									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
 									<div>
 										<img src= {{ playerLink }} class="summoner-img">
+										{{ summoner.fellowPlayerNames[player.summonerId] }}
 									</div>
 								{% endif %}
 							{% endfor %}
@@ -104,6 +105,7 @@
 									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
 									<div>
 										<img src= {{ playerLink }} class="summoner-img">
+										{{ summoner.fellowPlayerNames[player.summonerId] }}
 									</div>
 								{% endif %}
 							{% endfor %}
