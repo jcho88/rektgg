@@ -32,3 +32,10 @@ label.star:before {
   content: '\f006';
   font-family: FontAwesome;
 }
+
+.displayStars {
+    display: block;
+    background: url(stars.png) 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+}
