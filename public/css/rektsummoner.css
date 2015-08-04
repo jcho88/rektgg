@@ -329,13 +329,14 @@
   height: auto;
 }
 .post .post-description {
-  padding: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
 }
 .post .post-description p {
   font-size: 14px;
 }
 .post .post-description .stats {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 .post .post-description .stats .stat-item {
   display: inline-block;

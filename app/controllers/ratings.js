@@ -13,8 +13,6 @@ var extend = require('util')._extend
  */
 
 exports.load = function (req, res, next, id){
-
-  console.log("rating.load");
   var User = mongoose.model('User');
 
   Rating.load(id, function (err, rating) {
@@ -29,73 +27,66 @@ exports.load = function (req, res, next, id){
  * New rating
  */
 
-exports.new = function (req, res){
-  res.render('ratings/new', {
-    title: 'New Rating',
-    rating: new Rating({})
-  });
-};
+// exports.new = function (req, res){
+//   res.render('ratings/new', {
+//     title: 'New Rating',
+//     rating: new Rating({})
+//   });
+// };
 
 /**
  * Create a rating
  */
 
 exports.create = function (req, res){
-  console.log("below is body");
-  console.log(req.body);
+  console.log("rating create");
   var rating = new Rating(req.body);
 
-  rating.userId = req.user;
+  rating.user = req.user;
 
   rating.save(function(err) {
 	    if (!err) {
 	  	  req.flash('success', 'Successfully created a rating!');
-	  	  return res.redirect('/ratings/'+rating._id);
+	  	  return res.redirect('/summoner_ratings/'+rating.summoner);
 	    }
 	    console.log(err);
-		res.render('ratings/new', {
+		res.render('ratings/'+rating.id, {
 			title: 'New Rating',
 		    rating: rating,
+        summoner: rating.summoner,
 		    errors: utils.errors(err.errors || err)
 		 });
 	});
 };
+
 
 /**
  * New rating form & list ratings
  */
 
 exports.index = function (req, res){
-  console.log("rating controller");
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-  var perPage = 30;
+  var perPage = 10;
+
   var options = {
     perPage: perPage,
-    page: page
+    page: page,
+    criteria : {summoner: req.summoner._id}
   };
+
 
   Rating.list(options, function (err, ratings) {
     if (err) return res.render('500');
     Rating.count().exec(function (err, count) {
       res.render('ratings/ratings', {
         title: 'Ratings',
-        rating: new Rating({}),
+        rating: new Rating(),
+        summoner: req.summoner,
         ratings: ratings,
         page: page + 1,
         pages: Math.ceil(count / perPage)
       });
     });
-  });
-};
-
-/**
- * Show
- */
-
-exports.show = function (req, res){
-  res.render('ratings/show', {
-    title: req.rating.title,
-    rating: req.rating
   });
 };
 
@@ -105,17 +96,21 @@ exports.show = function (req, res){
  */
 
 exports.edit = function (req, res) {
-  res.render('ratings/edit', {
+  console.log("controller edit");
+  res.render('ratings/ratings', {
     title: 'Edit ' + req.rating.title,
-    rating: req.rating
+    rating: req.rating,
+    summoner: req.rating.summoner
   });
 }
+
 
 /**
  * Update rating
  */
 
 exports.update = function (req, res){
+  console.log("controller update");
   var rating = req.rating;
 
   // make sure no one changes the user
@@ -124,10 +119,11 @@ exports.update = function (req, res){
 
   rating.save(function(err) {
 	  	if (!err) {
-	  		return res.redirect('/ratings/' + rating._id);
+        req.flash('info', 'Review Updated');
+	  		return res.redirect('/summoner_ratings/'+rating.summoner);
 	  	}
 
-		res.render('ratings/edit', {
+		res.render('ratings/ratings', {
 		  	title: 'Edit Rating',
 		  	rating: rating,
 		  	errors: utils.errors(err.errors || err)
@@ -144,6 +140,6 @@ exports.destroy = function (req, res){
   var rating = req.rating;
   rating.remove(function (err){
     req.flash('info', 'Deleted successfully');
-    res.redirect('/ratings');
+    res.redirect('back');
   });
 }
