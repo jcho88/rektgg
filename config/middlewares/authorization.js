@@ -58,12 +58,13 @@ exports.comment = {
  *  Rating authorization routing middleware
  */
 
-// exports.rating = {
-//   hasAuthorization: function (req, res, next) {
-//     if (req.rating.userId != req.user.id) {
-//       req.flash('info', 'You are not authorized')
-//       return res.redirect('/ratings/summoner' + req.summoner)
-//     }
-//     next()
-//   }
-// }
+exports.rating = {
+  hasAuthorization: function (req, res, next) {
+    if (req.rating.user.id != req.user.id) {
+      console.log("rating flash when failed to delete");
+      req.flash('info', 'You are not authorized')
+      return res.redirect('back')
+    }
+    next()
+  }
+}

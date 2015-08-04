@@ -26,7 +26,7 @@ var post = require('post');
 
 var articleAuth = [auth.requiresLogin, auth.article.hasAuthorization];
 var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization];
-// var ratingAuth  = [auth.requiresLogin, auth.rating.hasAuthorization];
+var ratingAuth  = [auth.requiresLogin, auth.rating.hasAuthorization];
 
 /**
  * Expose routes
@@ -151,9 +151,9 @@ module.exports = function (app, passport) {
   app.param('ratingId', ratings.load);
   app.get('/summoner_ratings/:summonerId', ratings.index); //load all ratings
   app.post('/summoner_ratings/:summonerId', auth.requiresLogin, ratings.create); //create rating
-  app.get('/ratings/:ratingId/edit', ratings.edit); //takes you to form to edit rating
-  app.put('/ratings/:ratingId', ratings.update); //updates the rating
-  app.delete('/ratings/:ratingId', ratings.destroy); //delete rating
+  app.get('/ratings/:ratingId/edit', ratingAuth, ratings.edit); //takes you to form to edit rating
+  app.put('/ratings/:ratingId', ratingAuth, ratings.update); //updates the rating
+  app.delete('/ratings/:ratingId', ratingAuth, ratings.destroy); //delete rating
 
   // matches routes
   app.get('/matches/:matchId', summoners.show);

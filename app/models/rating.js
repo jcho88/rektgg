@@ -18,9 +18,8 @@ var RatingSchema = new Schema({
 	title: {type : String, default : '', trim : true},			//title the review (headline)
   body: {type : String, default : '', trim : true},			//the review
   value: {type: Number, required: true},						//value of rating
-	ownerId: {type : String, default : '', trim : true},		//link to other models
 	summoner: {type : Schema.ObjectId, ref : 'Summoner'},		//summoner being reviewed
-	userId: {type : Schema.ObjectId, ref : 'User'},				//user reviewing summoner
+	user: {type : Schema.ObjectId, ref : 'User'},				//user reviewing summoner
 	comments: [{												//comments for the review
     	body: { type : String, default : '' },
     	user: { type : Schema.ObjectId, ref : 'User' },
@@ -34,7 +33,7 @@ var RatingSchema = new Schema({
  * Validations
  */
 
-RatingSchema.path('userId').required(true, 'You must be logged in to rate a user');
+RatingSchema.path('user').required(true, 'You must be logged in to rate a user');
 RatingSchema.path('value').required(true, 'Rate the user from 1 to 5 stars');
 
 RatingSchema.statics = {
@@ -49,7 +48,8 @@ RatingSchema.statics = {
 
   load: function (id, cb) {
     this.findOne({ _id : id })
-      .populate('summoner')
+      .populate('summoner')   // in future change to just summoner info (name, profile pic, e.g...)
+      .populate('user')
       .exec(cb);
   },
 

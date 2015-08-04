@@ -18,7 +18,7 @@
 	            	<form method="post" action={{action}} enctype="multipart/form-data" role="form" class="form-horizontal">
 
 	            		<input type="hidden" name="_csrf" value="{{ csrf_token }}">
-	            		<input type="hidden" name="summoner" value="{{ summoner._id|json|replace('\"','','g') }}">
+	            		<input type="hidden" name="summoner" value={{ summoner._id|json|replace('\"','','g') }}>
 	            		{% if not rating.isNew %}
 				          <input type="hidden" name="_method" value="PUT">
 				        {% endif %}
@@ -44,7 +44,6 @@
 								    <input class="star star-1" id="star-1" type="radio" value="1" name="value"/>
 								    <label class="star star-1" for="star-1"></label>
 								</div>
-		<!-- 	            		<input type="number" class="form-control" name="rating" id="rating" data-min="1" data-max="5" value="{{ rating.rating }}"> -->
 			            	</div>
 		            	</div>
 
@@ -70,6 +69,9 @@
 	        <div class="panel panel-white post panel-shadow">
 
 	        	<div class="post-heading">
+
+	        	{% if not (rating.user.id != req.user.id) %}
+
 	        		<form action="{{ '/ratings/' + rating.id }}" method="post" onsubmit="return confirm('Are you sure?')" style="float: right;">
 					    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
 					    <a href="{{ '/ratings/' + rating._id + '/edit' }}" title="edit" class="btn btn-default">
@@ -79,12 +81,15 @@
 					    <input type="hidden" name="_method" value="DELETE">
 					    <button class="btn btn-danger" type="submit" a href={{reviewRoute}}>Delete</button>
 					</form>
+
+				{% endif %}
+
 	                <div class="pull-left image">
 	                    <img src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6_.jpg" class="img-circle avatar" alt="user profile image">
 	                </div>
 	                <div class="pull-left meta">
 	                    <div class="title h5">
-	                        <a href="#"><b>{{ rating.userId }}</b></a>
+	                        <a href="#"><b>{{ rating.user.username }}</b></a>
 	                        commented
 	                    </div>
 	                    <h6 class="text-muted time">{{ rating.createdAt.toISOString()|date('M d, Y  h:m a') }}</h6>
@@ -102,17 +107,25 @@
 	                    </a>
 	                </div>
 	            </div>
-	            <div class="post-footer">
+<!-- 	            <div class="post-footer">
 	                <div class="input-group"> 
 	                    <input class="form-control" placeholder="Add a comment" type="text">
 	                    <span class="input-group-addon">
 	                        <a href="#"><i class="fa fa-edit"></i></a>  
 	                    </span>
 	                </div>
-	            </div>
+	            </div> -->
 	        </div>
 
 	        {% endfor %}
+
+	        {% if (pages > 1) %}
+		      <ul class="pagination">
+		        {% autoescape false %}
+		          {{ createPagination(pages, page) }}
+		        {% endautoescape %}
+		      </ul>
+		    {% endif %}
 
 	    </div>
     </div>
