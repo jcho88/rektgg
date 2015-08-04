@@ -33,6 +33,24 @@ PostSchema.statics = {
       .remove().exec(cb);
   }, 
 
+  editPost: function (message, postId, cb) {
+    console.log(message)
+    console.log(postId)
+    this.update({'_id': postId},
+           {'$set' :{ 'message': message}})
+
+      .exec(cb);
+  },
+
+  getAllPost: function (ownerId, cb) {
+
+    this.find({ownerId : ownerId })
+      .populate('ownerId')
+      .populate('commetsList.authorId')
+      .populate('userWallId')
+      .exec(cb);
+  },      
+
   createPostComment: function (commentData, postId, cb) {
 
     this.update({ _id: postId },

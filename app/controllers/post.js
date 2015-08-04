@@ -70,6 +70,23 @@ exports.deletePost = function (req, res){
 
 exports.getAllPost = function (req, res){
 
+	var userID = req.user._id;
+	console.log("in get All Post")
+	Post.getAllPost(userID, function (err, listOfFriends){
+		console.log(listOfFriends.length)
+		console.log(err)	
+		for (var i=0; i<listOfFriends.length; ++i) {
+		    console.log(listOfFriends[i]);
+		}			
+
+		if(listOfFriends.length > 0){
+			return listOfFriends;
+		}else{
+
+		}		
+
+
+	});	
 	//check the privacy of the user
 	//look for the wall ID
 	//check database with wallID and sort by time
@@ -77,6 +94,36 @@ exports.getAllPost = function (req, res){
 }
 
 exports.editPost = function (req, res){
+
+	if(req.user){
+
+		if(req.user._id.toString().localeCompare(req.body.authorId.toString()) == 0){
+			Post.editPost(req.body.message, req.body.postId, function (err, numofDocChnaged){
+
+				if(err){ 
+					console.log("do error call")
+				}
+
+				if(numofDocChnaged == 1){
+					console.log("Post editied")
+				}else{
+					console.log("Didnt edit post")
+				}
+
+			});//editPostComment
+		}else{
+
+			console.log("You are not allow to edit this post")
+		}	
+
+	}//if
+	else{
+		//route to somewhere
+		console.log("user not login (coner case)")
+	}//else
+
+
+	
 
 }
 
