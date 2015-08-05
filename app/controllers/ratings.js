@@ -13,8 +13,6 @@ var extend = require('util')._extend
  */
 
 exports.load = function (req, res, next, id){
-  var User = mongoose.model('User');
-
   Rating.load(id, function (err, rating) {
     if (err) return next(err);
     if (!rating) return next(new Error('not found'));
@@ -50,12 +48,13 @@ exports.create = function (req, res){
 	  	  return res.redirect('/summoner_ratings/'+rating.summoner);
 	    }
 	    console.log(err);
-		res.render('ratings/'+rating.id, {
-			title: 'New Rating',
-		    rating: rating,
-        summoner: rating.summoner,
-		    errors: utils.errors(err.errors || err)
-		 });
+      if(err.message == 'Validation failed'){
+        req.flash('error', err.errors.value.message);
+      }
+      else {
+        req.flash('error', err.message);
+      }
+    	res.redirect('back');
 	});
 };
 

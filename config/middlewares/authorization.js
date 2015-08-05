@@ -61,7 +61,6 @@ exports.comment = {
 exports.rating = {
   hasAuthorization: function (req, res, next) {
     if (req.rating.user.id != req.user.id) {
-      console.log("rating flash when failed to delete");
       req.flash('info', 'You are not authorized')
       return res.redirect('back')
     }
