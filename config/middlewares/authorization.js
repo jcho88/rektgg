@@ -6,6 +6,7 @@
 exports.requiresLogin = function (req, res, next) {
   if (req.isAuthenticated()) return next()
   if (req.method == 'GET') req.session.returnTo = req.originalUrl
+  req.flash('info', 'You must be logged in!')  
   res.redirect('/login')
 }
 

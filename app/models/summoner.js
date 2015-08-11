@@ -178,16 +178,6 @@ var SummonerSchema = new Schema({
 SummonerSchema.methods = {
 
 
-
-
-
-
-
-
-
-
-
-
 }
 
 SummonerSchema.statics = {
