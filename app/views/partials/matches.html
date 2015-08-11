@@ -46,6 +46,10 @@
 					<div class="match-img">
 						<img src= {{ champLink }} class="matches-summoner img-circle">
 					</div>
+					<div class="match-spells">
+						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
+						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
+					</div>
 					<div class="match-stats-1">
 						<div>{{ KDA.toFixed(1) }} KDA</div>
 						<span>{{ game.stats.championsKilled }} / </span>
@@ -69,47 +73,47 @@
 						<div>Trinket</div>
 					</div>
 					<div class="match-summoners">
-						<div class="match-team">
-							<!-- Summoner -->
-							{% if game.teamId == '100' %}
-								<div>
-									<img src= {{ champLink }} class="summoner-img">
-									{{ summoner.name }}
-								</div>
-							{% endif %}
-							
-							<!-- Fellow Players -->
-							{% for player in game.fellowPlayers %}
-								{% if player.teamId == '100' %}
-									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
-									<div>
-										<img src= {{ playerLink }} class="summoner-img">
-										{{ summoner.fellowPlayerNames[player.summonerId] }}
-									</div>
-								{% endif %}
-							{% endfor %}
-						</div>
 						
-						<div class="match-team">
-							<!-- Summoner -->
-							{% if game.teamId == '200' %}
-								<div>
-									<img src= {{ champLink }} class="summoner-img">
-									{{ summoner.name }}
-								</div>
-							{% endif %}
-							
-							<!-- Fellow Players -->
-							{% for player in game.fellowPlayers %}
-								{% if player.teamId == '200' %}
-									{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
+							<div class="match-team">
+								<!-- Summoner -->
+								{% if game.teamId == '100' %}
 									<div>
-										<img src= {{ playerLink }} class="summoner-img">
-										{{ summoner.fellowPlayerNames[player.summonerId] }}
+										<img src= {{ champLink }} class="summoner-img">
+										<span class="fellowPlayerName">{{ summoner.name }}</span>
 									</div>
 								{% endif %}
-							{% endfor %}
-						</div>
+							
+								<!-- Fellow Players -->
+								{% for player in game.fellowPlayers %}
+									{% if player.teamId == '100' %}
+										{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
+										<div>
+											<img src= {{ playerLink }} class="summoner-img">
+											<span class="fellowPlayerName">{{ summoner.fellowPlayerNames[player.summonerId] }}</span>
+										</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+							<div class="match-team">
+								<!-- Summoner -->
+								{% if game.teamId == '200' %}
+									<div>
+										<img src= {{ champLink }} class="summoner-img">
+										<span class="fellowPlayerName">{{ summoner.name }}</span>
+									</div>
+								{% endif %}
+							
+								<!-- Fellow Players -->
+								{% for player in game.fellowPlayers %}
+									{% if player.teamId == '200' %}
+										{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
+										<div>
+											<img src= {{ playerLink }} class="summoner-img">
+											<span class="fellowPlayerName">{{ summoner.fellowPlayerNames[player.summonerId] }}</span>
+										</div>
+									{% endif %}
+								{% endfor %}
+							</div>
 					</div>
 				</div>
 			</div>
