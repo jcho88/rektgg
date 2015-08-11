@@ -77,7 +77,7 @@
 }
 
 #profileCol .profile-sidebar{
-  margin: -200px 10px 0px 20px;
+  margin: -180px 10px 0px 20px;
   z-index: 1;  
   min-height: 410px;
 }
@@ -85,9 +85,7 @@
 @media (min-width: 300px) and (max-width: 500px) {
 
    #profileCol .profile-sidebar{
-      margin: -200px 10px 0px 0px;
-      z-index: 1; 
-      min-height: 410px; 
+      margin: -175px 10px 0px 0px;
    }
 
 }
@@ -267,14 +265,6 @@
     -webkit-transition: max-height 0.5s ease;
 }
 
-@media (min-width: 300px) and (max-width: 500px) {
-
-  .content-border {
-    max-width: 100%;
-  }
-
-}
-
 .content-sidebar {
   padding: 20px;
   background: #b2cecf;
@@ -282,11 +272,24 @@
   min-height: 410px;
 }
 
+@media (min-width: 300px) and (max-width: 500px) {
 
-/******************************** Activity *********************************/
+  .content-border {
+    max-width: 100%;
+    padding: 0px;
+  }
+
+  .mobile-width {
+    padding: 0px;
+  }
+
+}
+
+
+/******************************** Reviews *********************************/
 
 .panel-shadow {
-    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+  box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
 }
 .panel-white {
   border: 1px solid #dddddd;
@@ -329,13 +332,14 @@
   height: auto;
 }
 .post .post-description {
-  padding: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
 }
 .post .post-description p {
   font-size: 14px;
 }
 .post .post-description .stats {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 .post .post-description .stats .stat-item {
   display: inline-block;
@@ -344,7 +348,10 @@
 .post .post-description .stats .stat-item .icon {
   margin-right: 8px;
 }
-.post .post-footer {
+
+/******************************** Review Comments ********************************/
+
+/*.post .post-footer {
   border-top: 1px solid #ddd;
   padding: 15px;
 }
@@ -387,8 +394,25 @@
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
-}
+}*/
 
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .panel-mobile {
+    max-width: 100%;
+  }
+
+  .post-heading {
+    display: inline-block;
+    margin: 0px;
+  }
+
+  .post-description {
+    display: block;
+    margin-top: 25px;
+  }
+
+}
 
 /* Most played champions */
 
@@ -416,7 +440,7 @@
     font-size: 24px;
 }
 
-/* Match */
+/******************************** Matches ********************************/
 
 .item-img {
     display: inline-block;

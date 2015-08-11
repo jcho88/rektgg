@@ -16,17 +16,16 @@ var Schema = mongoose.Schema;
 var RatingSchema = new Schema({
 
 	title: {type : String, default : '', trim : true},			//title the review (headline)
-  	body: {type : String, default : '', trim : true},			//the review
-  	rating: {type: Number, required: true},						//value of rating
-	ownerId: {type : String, default : '', trim : true},		//link to other models
-	summonerId: {type : Schema.ObjectId, ref : 'Summoner'},		//summoner being reviewed
-	userId: {type : Schema.ObjectId, ref : 'User'},				//user reviewing summoner
-	comments: [{												//comments for the review
-    	body: { type : String, default : '' },
-    	user: { type : Schema.ObjectId, ref : 'User' },
-    	createdAt: { type : Date, default : Date.now }
-  	}],
-	createdAt: {type : Date, default : Date.now}
+  body: {type : String, default : '', trim : true},			  //the review
+  value: {type: Number},						//value of rating
+	summoner: {type : Schema.ObjectId, ref : 'Summoner'},		//summoner being reviewed
+	user: {type : Schema.ObjectId, ref : 'User'},				    //user reviewing summoner
+	// comments: [{												                  //comments for the review
+ //    	body: { type : String, default : '' },
+ //    	user: { type : Schema.ObjectId, ref : 'User' },
+ //    	createdAt: { type : Date, default : Date.now }
+ //  	}],
+	createdAt: {type : Date, default : Date.now}            //date review was created
 
 });
 
@@ -34,8 +33,37 @@ var RatingSchema = new Schema({
  * Validations
  */
 
-RatingSchema.path('userId').required(true, 'You must be logged in to rate a user');
-RatingSchema.path('rating').required(true, 'Rate the user from 1 to 5 stars');
+RatingSchema.path('value').required(true, 'Please give the summoner a rating from 1-5 stars'); //a rating value 
+
+/**
+ * Pre-remove hook
+ */
+
+RatingSchema.pre("save", function(next) {
+  var self = this;
+  if(this.isNew){                                                                                          //only pre-hook for the save on create method
+    mongoose.models["Rating"].findOne({user: this.user, summoner: this.summoner}, function(err, results) { //find if a user of the current user with a summoner of the current summoner is in the rating database
+      if (err) {
+        next(error);
+      }
+      else if (results) {
+        self.invalidate('error', 'User may not vote for a summoner more than once');
+        next(new Error("user may not vote for a summoner more than once"));
+      }
+      else {
+        next();
+      }
+    })
+  }
+  else{
+    next();
+  }
+})
+
+
+/**
+ * Statics
+ */ 
 
 RatingSchema.statics = {
 
@@ -48,9 +76,9 @@ RatingSchema.statics = {
    */
 
   load: function (id, cb) {
-    this.findOne({ _id : id })
-      .populate('user', 'name email username')
-      .populate('comments.user')
+    this.findOne({ _id : id })  //summoner id in model summoner is ._id
+      .populate('summoner')     // in future change to just summoner info (name, profile pic, e.g...)
+      .populate('user')
       .exec(cb);
   },
 
