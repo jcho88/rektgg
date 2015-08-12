@@ -58,6 +58,22 @@
                          </li>
                          {% endif %} -->
 
+
+                        {% if (isActive('matches')) %}
+                         <li class="active">
+                            <a>
+                               Friends
+                            </a>
+                         </li>
+                         {% else %}
+                         <li class="">
+                            <a href="#tab2" data-toggle="tab">
+                               Friends
+                            </a>
+                         </li>
+                         {% endif %}
+
+
                          {% if (isActive('ratings')) %}
                          <li class="active">
                             <a href={{ reviewRoute }}>
