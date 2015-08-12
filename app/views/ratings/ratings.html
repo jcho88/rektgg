@@ -9,124 +9,128 @@
     	{% set action = '/ratings/' + rating._id %}
   	{% endif %}
 
-   	<div id="contentCol">
-      	<div class="content-sidebar">
 
-	  	    <div class="row">
-	            <div class="col-xs-12 col-sm-12">
-	            	
-	            	<form method="post" action={{action}} enctype="multipart/form-data" role="form" class="form-horizontal">
+  	<div class="content-sidebar">
 
-	            		<input type="hidden" name="_csrf" value="{{ csrf_token }}">
-	            		<input type="hidden" name="summoner" value={{ summoner._id|json|replace('\"','','g') }}>
-	            		{% if not rating.isNew %}
-				          <input type="hidden" name="_method" value="PUT">
-				        {% endif %}
+  	    <div class="row">
+            <div class="col-xs-12 col-sm-12">
+            	
+            	<form method="post" action={{action}} enctype="multipart/form-data" role="form" class="form-horizontal">
 
+            		<input type="hidden" name="_csrf" value="{{ csrf_token }}">
+            		<input type="hidden" name="summoner" value={{ summoner._id|json|replace('\"','','g') }}>
+            		{% if not rating.isNew %}
+			          <input type="hidden" name="_method" value="PUT">
+			        {% endif %}
+
+	            	<div class="form-group">
+						<label for="title" class="control-label">Title</label>
+	            		<input type="text" name="title" value="{{ rating.title }}" placeholder="Enter the title" class="form-control" id="title">
+	            	</div>
+	            	<br>
+
+	            	<div class="form-group">
+	            	<label for="rating" class="control-label">Rating (1-5)</label>
 		            	<div class="form-group">
-							<label for="title" class="control-label">Title</label>
-		            		<input type="text" name="title" value="{{ rating.title }}" placeholder="Enter the title" class="form-control" id="title">
+		            		<div class="stars">
+							    <input class="star star-5" id="star-5" type="radio" value="5" name="value"/>
+							    <label class="star star-5" for="star-5"></label>
+							    <input class="star star-4" id="star-4" type="radio" value="4" name="value"/>
+							    <label class="star star-4" for="star-4"></label>
+							    <input class="star star-3" id="star-3" type="radio" value="3" name="value"/>
+							    <label class="star star-3" for="star-3"></label>
+							    <input class="star star-2" id="star-2" type="radio" value="2" name="value"/>
+							    <label class="star star-2" for="star-2"></label>
+							    <input class="star star-1" id="star-1" type="radio" value="1" name="value"/>
+							    <label class="star star-1" for="star-1"></label>
+							</div>
 		            	</div>
-		            	<br></br>
+	            	</div>
 
-		            	<div class="form-group">
-		            	<label for="rating" class="control-label">Rating (1-5)</label>
-			            	<div class="form-group">
-			            		<div class="stars">
-								    <input class="star star-5" id="star-5" type="radio" value="5" name="value"/>
-								    <label class="star star-5" for="star-5"></label>
-								    <input class="star star-4" id="star-4" type="radio" value="4" name="value"/>
-								    <label class="star star-4" for="star-4"></label>
-								    <input class="star star-3" id="star-3" type="radio" value="3" name="value"/>
-								    <label class="star star-3" for="star-3"></label>
-								    <input class="star star-2" id="star-2" type="radio" value="2" name="value"/>
-								    <label class="star star-2" for="star-2"></label>
-								    <input class="star star-1" id="star-1" type="radio" value="1" name="value"/>
-								    <label class="star star-1" for="star-1"></label>
-								</div>
-			            	</div>
-		            	</div>
+	            	<div class="form-group">
+	            		<label for="review" class="control-label">Body</label>
+	            		<textarea rows="5" name="body" placeholder="Write a review" id="desc" cols="30" rows="10" class="form-control">{{ rating.body }}</textarea>
+	            	</div>
 
-		            	<div class="form-group">
-		            		<label for="review" class="control-label">Body</label>
-		            		<textarea rows="5" name="body" placeholder="Write a review" id="desc" cols="30" rows="10" class="form-control">{{ rating.body }}</textarea>
-		            	</div>
+	            	<div class="form-group" style="float: right;">
 
-		            	<div class="form-group" style="float: right;">
+			            	<a href='javascript:history.go(-1)' class="btn btn-link">Cancel</a>
+			            	<button class="btn btn-primary" type="submit">Submit</button>
+			            	&nbsp;
 
-				            	<a href='javascript:history.go(-1)' class="btn btn-link">Cancel</a>
-				            	<button class="btn btn-primary" type="submit">Submit</button>
-				            	&nbsp;
+			        </div>
+			    </form>
+			</div>
+        </div>
+        <hr>
 
-				        </div>
-				    </form>
-				</div>
-	        </div>
-	        <hr>
+        {% for rating in ratings %}
 
-	        {% for rating in ratings %}
+        <div class="panel panel-white post panel-shadow panel-mobile">
 
-	        <div class="panel panel-white post panel-shadow">
+        	<div class="post-heading">
 
-	        	<div class="post-heading">
+        	{% if not (rating.user.id != req.user.id) %}
 
-	        	{% if not (rating.user.id != req.user.id) %}
+        		<form action="{{ '/ratings/' + rating.id }}" method="post" onsubmit="return confirm('Are you sure?')" style="float: right;">
+				    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+				    <a href="{{ '/ratings/' + rating._id + '/edit' }}" title="edit" class="btn btn-default">
+				      Edit
+				    </a>
+				    &nbsp;
+				    <input type="hidden" name="_method" value="DELETE">
+				    <button class="btn btn-danger" type="submit" a href={{reviewRoute}}>Delete</button>
+				</form>
 
-	        		<form action="{{ '/ratings/' + rating.id }}" method="post" onsubmit="return confirm('Are you sure?')" style="float: right;">
-					    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
-					    <a href="{{ '/ratings/' + rating._id + '/edit' }}" title="edit" class="btn btn-default">
-					      Edit
-					    </a>
-					    &nbsp;
-					    <input type="hidden" name="_method" value="DELETE">
-					    <button class="btn btn-danger" type="submit" a href={{reviewRoute}}>Delete</button>
-					</form>
+			{% endif %}
 
-				{% endif %}
-
-	                <div class="pull-left image">
-	                    <img src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6_.jpg" class="img-circle avatar" alt="user profile image">
-	                </div>
-	                <div class="pull-left meta">
-	                    <div class="title h5">
-	                        <a href="#"><b>{{ rating.user.username }}</b></a>
-	                        commented
-	                    </div>
-	                    <h6 class="text-muted time">{{ rating.createdAt.toISOString()|date('M d, Y  h:m a') }}</h6>
-	                </div>
-	            </div> 
-	            <div class="post-description">
-	            	<font size="6"><bold>{{ rating.title }}</bold></font> 
-	                <p>{{ rating.body }}</p>
-	                <div class="stats">
-	                    <a href="#" class="btn btn-default stat-item">
-	                        <i class="fa fa-thumbs-up icon"></i>2
-	                    </a>
-	                    <a href="#" class="btn btn-default stat-item">
-	                        <i class="fa fa-share icon"></i>12
-	                    </a>
-	                </div>
-	            </div>
+                <div class="pull-left image">
+                    <img src="https://pbs.twimg.com/profile_images/601667089556877312/O4wYkI6_.jpg" class="img-circle avatar" alt="user profile image">
+                </div>
+                <div class="pull-left meta">
+                    <div class="title h5">
+                        <a href="#"><b>{{ rating.user.username }}</b></a>
+                        commented
+                    </div>
+                	{% set count =  rating.value %}
+                    {% for i in Array(count) %}
+                    	<span><img src="../img/star.png"</img></span>
+                    {% endfor %}
+                    <span class="text-muted time" style="font-size:10px">{{ rating.createdAt.toISOString()|date('M d, Y') }}</span>
+                </div>
+            </div> 
+            <div class="post-description">
+            	<font size="6"><bold>{{ rating.title }}</bold></font> 
+                <p>{{ rating.body }}</p>
+                <div class="stats">
+                    <a href="#" class="btn btn-default stat-item">
+                        <i class="fa fa-thumbs-up icon"></i>2
+                    </a>
+                    <a href="#" class="btn btn-default stat-item">
+                        <i class="fa fa-share icon"></i>12
+                    </a>
+                </div>
+            </div>
 <!-- 	            <div class="post-footer">
-	                <div class="input-group"> 
-	                    <input class="form-control" placeholder="Add a comment" type="text">
-	                    <span class="input-group-addon">
-	                        <a href="#"><i class="fa fa-edit"></i></a>  
-	                    </span>
-	                </div>
-	            </div> -->
-	        </div>
+                <div class="input-group"> 
+                    <input class="form-control" placeholder="Add a comment" type="text">
+                    <span class="input-group-addon">
+                        <a href="#"><i class="fa fa-edit"></i></a>  
+                    </span>
+                </div>
+            </div> -->
+        </div>
 
-	        {% endfor %}
+        {% endfor %}
 
-	        {% if (pages > 1) %}
-		      <ul class="pagination">
-		        {% autoescape false %}
-		          {{ createPagination(pages, page) }}
-		        {% endautoescape %}
-		      </ul>
-		    {% endif %}
+        {% if (pages > 1) %}
+	      <ul class="pagination">
+	        {% autoescape false %}
+	          {{ createPagination(pages, page) }}
+	        {% endautoescape %}
+	      </ul>
+	    {% endif %}
 
-	    </div>
     </div>
+
 {% endblock %}

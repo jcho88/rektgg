@@ -13,26 +13,14 @@ var extend = require('util')._extend
  */
 
 exports.load = function (req, res, next, id){
-  var User = mongoose.model('User');
-
   Rating.load(id, function (err, rating) {
-    if (err) return next(err);
-    if (!rating) return next(new Error('not found'));
-    req.rating = rating;
-    next();
+    if (err) return next(err);                          //error handle
+    if (!rating) return next(new Error('not found'));   //no rating exists
+    req.rating = rating;                                //set requested rating to be rating
+    next();                                             //next function
   });
 };
 
-/**
- * New rating
- */
-
-// exports.new = function (req, res){
-//   res.render('ratings/new', {
-//     title: 'New Rating',
-//     rating: new Rating({})
-//   });
-// };
 
 /**
  * Create a rating
@@ -40,22 +28,23 @@ exports.load = function (req, res, next, id){
 
 exports.create = function (req, res){
   console.log("rating create");
-  var rating = new Rating(req.body);
+  var rating = new Rating(req.body);                                //new rating with req.body info (rating model filled)
 
-  rating.user = req.user;
+  rating.user = req.user;                                           //set user of the rating model to be the current user
 
-  rating.save(function(err) {
+  rating.save(function(err) {                                       //save the rating
 	    if (!err) {
-	  	  req.flash('success', 'Successfully created a rating!');
+	  	  req.flash('success', 'Successfully created a rating!');     //no error, create the rating and redirect
 	  	  return res.redirect('/summoner_ratings/'+rating.summoner);
 	    }
-	    console.log(err);
-		res.render('ratings/'+rating.id, {
-			title: 'New Rating',
-		    rating: rating,
-        summoner: rating.summoner,
-		    errors: utils.errors(err.errors || err)
-		 });
+	    console.log(err);                                             //print error, flash appropriate error message
+      if(err.message == 'Validation failed'){
+        req.flash('error', err.errors.value.message);
+      }
+      else {
+        req.flash('error', err.message);
+      }
+    	res.redirect('back');                                         //redirect to previous page
 	});
 };
 
@@ -65,23 +54,23 @@ exports.create = function (req, res){
  */
 
 exports.index = function (req, res){
-  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-  var perPage = 10;
+  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
+  var perPage = 10;                                                 //set max reviews per page to be 10
 
-  var options = {
+  var options = {                                                   //set options to be called into list function
     perPage: perPage,
     page: page,
     criteria : {summoner: req.summoner._id}
   };
 
 
-  Rating.list(options, function (err, ratings) {
+  Rating.list(options, function (err, ratings) {                    //call list function in model
     if (err) return res.render('500');
-    Rating.count().exec(function (err, count) {
-      res.render('ratings/ratings', {
-        title: 'Ratings',
+    Rating.count().exec(function (err, count) {                     //Returns the count of documents that would match a find() query. 
+      res.render('ratings/ratings', {                               //The db.collection.count() method does not perform the find() operation
+        title: 'Ratings',                                           //but instead counts and returns the number of results that match a query.
         rating: new Rating(),
-        summoner: req.summoner,
+        summoner: req.summoner,                                     //pass in the summoner information
         ratings: ratings,
         page: page + 1,
         pages: Math.ceil(count / perPage)
@@ -96,9 +85,8 @@ exports.index = function (req, res){
  */
 
 exports.edit = function (req, res) {
-  console.log("controller edit");
-  res.render('ratings/ratings', {
-    title: 'Edit ' + req.rating.title,
+  res.render('ratings/ratings', {                                  //render an individual rating page that sets the rating to be the rating
+    title: 'Edit ' + req.rating.title,                             //the user clicked for that summoner so that they may edit it
     rating: req.rating,
     summoner: req.rating.summoner
   });
@@ -110,8 +98,7 @@ exports.edit = function (req, res) {
  */
 
 exports.update = function (req, res){
-  console.log("controller update");
-  var rating = req.rating;
+  var rating = req.rating;                                          //set rating to be the rating the user updates
 
   // make sure no one changes the user
   delete req.body.user;

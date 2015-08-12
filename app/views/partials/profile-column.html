@@ -17,11 +17,19 @@
                </button>
             </div>
             <div class="profile-usermenu">
-               <ul class="nav">
+                <ul class="nav">
                   <li class="active">
                      <a href="#">
-                     <i class="glyphicon glyphicon-home"></i>
-                     Overview </a>
+                     <i class="glyphicon glyphicon-heart"></i>
+                     Summoner Rating </a>
+                  </li>
+                  <li>
+                     <div class="summoner_rating">
+                        {% set count =  3 %}
+                        {% for i in Array(count) %}
+                           <span><img src="../img/star.png"</img></span>
+                        {% endfor %}
+                     </div>
                   </li>
                   <li>
                      <a href="#">
