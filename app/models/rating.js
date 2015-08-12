@@ -109,7 +109,7 @@ RatingSchema.statics = {
       .limit(options.perPage)
       .skip(options.perPage * options.page)
       .exec(cb);
-  },
+  }
 
 }
 

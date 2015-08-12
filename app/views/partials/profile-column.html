@@ -21,12 +21,12 @@
                   <li class="active">
                      <a href="#">
                      <i class="glyphicon glyphicon-heart"></i>
-                     Summoner Rating </a>
+                     Summoner Rating {{ summoner.average.toFixed(1) }}</a>
                   </li>
                   <li>
                      <div class="summoner_rating">
-                        {% set count =  3 %}
-                        {% for i in Array(count) %}
+                        {% set count =  summoner.average %}
+                        {% for i in Array(Math.ceil(count)) %}
                            <span><img src="../img/star.png"</img></span>
                         {% endfor %}
                      </div>

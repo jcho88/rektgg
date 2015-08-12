@@ -97,7 +97,7 @@ UserSchema.path('username').validate(function (username, fn) {
       fn(!err && users.length === 0);
     });
   } else fn(true);
-}, 'username already exists');
+}, 'Username already exists');
 
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {

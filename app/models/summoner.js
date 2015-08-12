@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('config');
 var utils = require('../../lib/utils');
+var Rating = mongoose.model('Rating');
 
 var Schema = mongoose.Schema;
 
@@ -174,11 +175,32 @@ var SummonerSchema = new Schema({
 
 });
 
+var loadData = function(summoner, cb) {
+
+  summoner.getAvgRating(function(err, rating) {
+    if(!rating) return cb(err, summoner);
+    summoner.average = rating[0].average;
+    cb(err, summoner);
+  });
+}
+
+//Method is instance
 
 SummonerSchema.methods = {
 
+  getAvgRating: function(callback) {
+      Rating.aggregate([
+          { $match: { summoner: this._id } },
+          { $group: { _id: '$summoner', average: { $avg: '$value' } } }
+      ], function(err, result) {
+          callback(err, result);
+      })
+  }
 
 }
+
+
+//Static is class
 
 SummonerSchema.statics = {
 
@@ -191,20 +213,20 @@ SummonerSchema.statics = {
    */
 
   search: function (summonerName, cb) {
-    //console.log("cb = " + cb)
-    //console.log("name = " + summonerName)
-    this.findOne({nameNoWhiteSpace : summonerName })
-      // .populate('user', 'name email username')
-      // .populate('comments.user')
-      .exec(cb);
+
+    this.findOne({nameNoWhiteSpace : summonerName }, function(err, summoner) {
+      if (!summoner || err) return cb(err, null);
+      loadData(summoner, cb);
+    })   
   },
 
   load: function (id, cb) {
-    this.findOne({ _id : id })
-      // .populate('user', 'name email username')
-      // .populate('comments.user')
-      .exec(cb);
-  },
+
+    this.findOne({ _id : id}, function(err, summoner) {
+      if (!summoner || err) return cb(err, null);
+      loadData(summoner, cb);
+    })
+  }
 
 
   /**
