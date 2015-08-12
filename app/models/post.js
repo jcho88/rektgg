@@ -42,9 +42,9 @@ PostSchema.statics = {
       .exec(cb);
   },
 
-  getAllPost: function (ownerId, cb) {
+  getAllPost: function (WallId, cb) {
 
-    this.find({ownerId : ownerId })
+    this.find({userWallId : WallId })
       .populate('ownerId')
       .populate('commetsList.authorId')
       .populate('userWallId')

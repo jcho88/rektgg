@@ -1,0 +1,59 @@
+{% extends '../layouts/profile.html' %}
+
+{% block content %}
+
+{% set createPost = '/activity/post' %}
+
+
+<div id="contentCol">
+
+      <div class="content-sidebar">
+
+            <div class="row">
+               <div class="col-xs-12 col-sm-12">
+                    <form method="post" action={{createPost}} enctype="multipart/form-data" role="form" class="form-horizontal">
+                        <input type="hidden" name="wallId" value="{{wallId}}">
+                        <textarea  name="mypost" class="form-control" rows="3" placeholder="Say something..."></textarea>
+                        <br>
+                        <div class="fform-horizontal" style="float: right;">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        <div>
+                    </form>                        
+               </div>
+            </div>
+            <br>
+            <hr>
+            {% for listOfPost in listOfPost %} 
+            <div class="panel panel-white post panel-shadow">
+                   
+                <div class="post-heading">
+                    <div class="pull-left image">
+                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                    </div>
+                    <div class="pull-left meta">
+                        <div class="title h5">
+                            <a href="#"><b>{{listOfPost.ownerId.username}}</b></a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time">{{listOfPost.created_at}}</h6>
+                    </div>
+                </div> 
+                <div class="post-description"> 
+                    <p>{{listOfPost.message}}</p>
+                    <div class="stats">
+                        <a href="#" class="btn btn-default stat-item">
+                            <i class="fa fa-thumbs-up icon"></i>2
+                        </a>
+                        <a href="#" class="btn btn-default stat-item">
+                            <i class="fa fa-share icon"></i>12
+                        </a>
+                         <button class="btn btn-danger" type="submit">Delete</button>
+                    </div>
+                </div>
+                
+               
+            </div>
+            {% endfor %}  
+        </div> <!-- content sidebar -->
+</div>
+{% endblock %}

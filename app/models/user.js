@@ -190,6 +190,11 @@ UserSchema.statics = {
    * @param {Function} cb
    * @api private
    */
+  searchById:function (userid, cb) {
+    this.findOne({_id : userid })
+      .exec(cb);
+  },
+   
   search: function (userName, cb) {
     //console.log("cb = " + cb)
     //console.log("name = " + summonerName)

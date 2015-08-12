@@ -118,14 +118,18 @@ module.exports = function (app, passport) {
   //app.get('/isFriend', friends.isFriend);
 
 //test post
-  app.get('/testactivity', function (req, res){
+//   app.get('/testactivity', function (req, res){
 
-    console.log("test show");
+//     console.log("test show");
 
-    res.render('testactivity');
-  }
+//     res.render('testactivity');
+//   }
 
-);
+// );
+
+  app.get('/activity/:userid', post.index);
+  app.post('/activity/post', post.createPost)
+
   app.get('/getallpost', post.getAllPost);
   app.post('/testpost', post.createPost);
   app.post('/testdelete', post.deletePost);  
