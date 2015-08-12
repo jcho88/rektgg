@@ -129,6 +129,7 @@ module.exports = function (app, passport) {
 
   app.get('/activity/:userid', post.index);
   app.post('/activity/post', post.createPost)
+  app.post('/activity/deletePost', post.deletePost)
 
   app.get('/getallpost', post.getAllPost);
   app.post('/testpost', post.createPost);

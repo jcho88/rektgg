@@ -114,11 +114,9 @@ exports.addFriend = function (req, res){
 					}else{ // creating a new doc for user's friend
 
 						//console.log(myFriend)
-						var date = new Date();
 						var newFriend = new Friend({
 
 							friendId: myFriend._id,
-							createdAt: date,
 							ownerId: userID,
 							privacy: false
 						});//newFriend

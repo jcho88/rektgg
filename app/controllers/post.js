@@ -19,11 +19,10 @@ exports.createPost = function (req, res){
 		var userID = req.user._id;
 		console.log(req.body.mypost)
 
-		var date = new Date();
+		var date = Date.now;
 		var newPost = new Post({
 
 			message: req.body.mypost,
-			created_at: date,
 			ownerId: userID,
 			userWallId: wallId
 		});//newPost
@@ -59,7 +58,8 @@ exports.deletePost = function (req, res){
 			//console.log(numOfDocRemoved);
 
 			if(numOfDocRemoved == 1){
-				console.log("Post deleted")						
+				console.log("Post deleted")
+				res.redirect('back')						
 
 			}else{ // creating a new doc for user's friend
 				console.log("Post not deleted")

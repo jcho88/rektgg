@@ -3,7 +3,7 @@
 {% block content %}
 
 {% set createPost = '/activity/post' %}
-
+{% set deletePost = '/activity/deletePost' %}
 
 <div id="contentCol">
 
@@ -35,7 +35,7 @@
                             <a href="#"><b>{{listOfPost.ownerId.username}}</b></a>
                             made a post.
                         </div>
-                        <h6 class="text-muted time">{{listOfPost.created_at}}</h6>
+                        <h6 class="text-muted time">{{listOfPost.created_at.toLocaleDateString()}} {{listOfPost.created_at.toLocaleTimeString()}}</h6>
                     </div>
                 </div> 
                 <div class="post-description"> 
@@ -47,7 +47,10 @@
                         <a href="#" class="btn btn-default stat-item">
                             <i class="fa fa-share icon"></i>12
                         </a>
-                         <button class="btn btn-danger" type="submit">Delete</button>
+                        <form method="post" action={{deletePost}} style=" display: inline-block">
+                             <input name="postId" type="hidden" value="{{listOfPost.id}}"> 
+                             <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
                     </div>
                 </div>
                 
