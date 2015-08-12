@@ -160,7 +160,7 @@ exports.search = function (req, res){
 
 exports.load = function (req, res, next, id){
   Summoner.load(id, function (err, summoner) {
-    if (err) return next(err);
+    // if (err) return next(err);
     if (!summoner) return next(new Error('not found'));
     req.summoner = summoner;
     next();
