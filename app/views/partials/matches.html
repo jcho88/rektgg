@@ -38,10 +38,10 @@
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
+			<div>
+				<span>{{ __(game.subType) }}</span>
+			</div>
 			<div class="matches">
-				<div class="matches-header">
-					<span>{{ __(game.subType) }}</span>
-				</div>
 				<div class="matches-row">
 					<div class="match-img">
 						<img src= {{ champLink }} class="matches-summoner img-circle">
