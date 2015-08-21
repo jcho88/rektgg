@@ -112,26 +112,32 @@ module.exports = function (app, passport) {
   app.get('/summoners/:summonerId', summoners.show); //show summoner
 
   //add friend routes
-  app.get('/addfriend', friends.addFriend);//post
-  app.get('/deletefriend', friends.deleteFriend);//delete
+  app.post('/addfriend', friends.addFriend);//post
+  app.post('/deletefriend', friends.deleteFriend);//delete
   app.get('/getFriendList', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
 
 //test post
-  app.get('/testactivity', function (req, res){
+//   app.get('/testactivity', function (req, res){
 
-    console.log("test show");
+//     console.log("test show");
 
-    res.render('testactivity');
-  }
+//     res.render('testactivity');
+//   }
 
-);
+// );
 
+  app.get('/activity/:userid', post.index);
+  app.post('/activity/post', post.createPost)
+  app.post('/activity/deletePost', post.deletePost)
+
+  app.get('/getallpost', post.getAllPost);
   app.post('/testpost', post.createPost);
   app.post('/testdelete', post.deletePost);  
   app.post('/testcomment', post.createPostComment); 
   app.post('/testdeletecomment', post.deletePostComment);
-  app.post('/testeditcomment', post.editPostComment)     
+  app.post('/testeditcomment', post.editPostComment) 
+  app.post('/testeditPost', post.editPost)       
 //end test post
 
   // home route

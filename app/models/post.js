@@ -7,13 +7,13 @@ var Schema = mongoose.Schema;
 var PostSchema = new Schema({
 	ownerId: {type : String, default : '', trim : true, ref: 'User'},
 	message: {type : String, default : '', trim : true},
-	created_at: {type : String, default : '', trim : true},
+	created_at: {type : Date, default : Date.now},
 	thumbs_up: {type : Number, default : 0, trim : true},
 	thumbs_down: {type : Number, default : 0, trim : true},
 	commetsList:[{
 		message: {type : String,default : '', trim : true},
 		authorId: {type : String, default : '', trim : true, ref: 'User'},
-		created_at: {type : String, default : '', trim : true},
+		created_at: {type : Date, default : Date.now} ,
 		thumbs_up: {type : Number, default : 0, trim : true},
 		thumbs_down: {type : Number, default : 0, trim : true}
 	}],
@@ -32,6 +32,24 @@ PostSchema.statics = {
 
       .remove().exec(cb);
   }, 
+
+  editPost: function (message, postId, cb) {
+    console.log(message)
+    console.log(postId)
+    this.update({'_id': postId},
+           {'$set' :{ 'message': message}})
+
+      .exec(cb);
+  },
+
+  getAllPost: function (WallId, cb) {
+
+    this.find({userWallId : WallId })
+      .populate('ownerId')
+      .populate('commetsList.authorId')
+      .populate('userWallId')
+      .exec(cb);
+  },      
 
   createPostComment: function (commentData, postId, cb) {
 

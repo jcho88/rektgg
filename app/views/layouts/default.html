@@ -3,8 +3,11 @@
 <body>
   {% include '../partials/header.html' %}
   
-  {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) %}
+  {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) || (isActive('users')) %}
     <div class="container">
+      <div class="page-header">
+        {% block main %}{% endblock %}
+      </div>
       <div class="messages">
         {% include '../partials/messages.html' %}
       </div>
@@ -15,6 +18,9 @@
     {% include '../partials/footer.html' %}
   {% else %}
     <div class="full-width-container">
+      <div class="page-header">
+        {% block main %}{% endblock %}
+      </div>
       <div class="content">
         {% block content %}{% endblock %}
       </div>

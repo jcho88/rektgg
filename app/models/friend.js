@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var FriendSchema = new Schema({
 
 friendId: {type : String, default : '', trim : true, ref: 'User'},
-createdAt: {type : Date, default : '', trim : true},
+createdAt: {type : Date, default : Date.now},
 ownerId: {type : String, default : '', trim : true, ref: 'User'}, 
 
 // if IsFriend is true, means the user of ownerId and friendID are friend

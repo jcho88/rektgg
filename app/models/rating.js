@@ -17,7 +17,7 @@ var RatingSchema = new Schema({
 
 	title: {type : String, default : '', trim : true},			//title the review (headline)
   body: {type : String, default : '', trim : true},			  //the review
-  value: {type: Number},						//value of rating
+  value: {type: Number},						                      //value of rating
 	summoner: {type : Schema.ObjectId, ref : 'Summoner'},		//summoner being reviewed
 	user: {type : Schema.ObjectId, ref : 'User'},				    //user reviewing summoner
 	// comments: [{												                  //comments for the review
@@ -60,6 +60,15 @@ RatingSchema.pre("save", function(next) {
   }
 })
 
+/**
+ * Methods
+ */
+
+RatingSchema.methods = {
+
+
+
+}
 
 /**
  * Statics
@@ -76,6 +85,7 @@ RatingSchema.statics = {
    */
 
   load: function (id, cb) {
+    console.log("rating model load");
     this.findOne({ _id : id })  //summoner id in model summoner is ._id
       .populate('summoner')     // in future change to just summoner info (name, profile pic, e.g...)
       .populate('user')
@@ -100,6 +110,7 @@ RatingSchema.statics = {
       .skip(options.perPage * options.page)
       .exec(cb);
   }
+
 }
 
 mongoose.model('Rating', RatingSchema);

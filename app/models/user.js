@@ -31,7 +31,8 @@ var UserSchema = new Schema({
   aboutMe: {type : String, default : '', trim : true},
   profileImage: {type : String, default : '', trim : true},
   profileCoverImage: {type : String, default : '', trim : true},
-  privacy: {type : String, default : 'P' , trim : true}
+  privacy: {type : String, default : 'P' , trim : true},
+  createdAt: {type : Date, default : Date.now} 
 });
 
 /**
@@ -96,7 +97,7 @@ UserSchema.path('username').validate(function (username, fn) {
       fn(!err && users.length === 0);
     });
   } else fn(true);
-}, 'username already exists');
+}, 'Username already exists');
 
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
@@ -190,6 +191,11 @@ UserSchema.statics = {
    * @param {Function} cb
    * @api private
    */
+  searchById:function (userid, cb) {
+    this.findOne({_id : userid })
+      .exec(cb);
+  },
+   
   search: function (userName, cb) {
     //console.log("cb = " + cb)
     //console.log("name = " + summonerName)

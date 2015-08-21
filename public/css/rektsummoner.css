@@ -178,6 +178,10 @@
   margin-left: -2px;
 }
 
+.summoner_rating {
+  margin-left: 40px;
+}
+
 /********************************* Most Played Champions *********************************/
 
 #profile-champions {

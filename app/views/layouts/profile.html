@@ -5,6 +5,9 @@
   
   {% if (isActive('/')) || (isActive('signup')) || (isActive('login')) %}
     <div class="container">
+      <div class="page-header">
+        {% block main %}{% endblock %}
+      </div>
       <div class="content">
         {% block content %}{% endblock %}
       </div>
@@ -25,49 +28,67 @@
                       <div class="clearfix"></div>
                       <ul class="nav nav-tabs">
                       
+                        {% set matchesRoute = "/summonerSearch?summonerName=" + summoner._name %}
                         {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
+                        {% set activityRoute = "/activity/" + user._id %}
 
-                        {% if (isActive('summonerName')) %} <!-- change later -->
-                         <li class="active">
-                            <a>
-                               Matches
-                            </a>
-                         </li>
-                         {% else %}
-                         <li class="">
-                            <a href="#tab" data-toggle="tab">
-                               Matches
-                            </a>
-                         </li>
-                         {% endif %}
+                        {% if summoner %}
+                          {% if (isActive('summoner')) %}
+                            <li class="active">
+                              <a>
+                                Matches
+                              </a>
+                            </li>
+                            {% else %}
+                            <li class="">
+                              <a href= {{ matchesRoute }}>
+                                Matches
+                              </a>
+                            </li>
+                          {% endif %}
 
-<!--                         {% if (isActive('matches')) %}
-                         <li class="active">
-                            <a>
-                               Activity
-                            </a>
-                         </li>
-                         {% else %}
-                         <li class="">
-                            <a href="#tab2" data-toggle="tab">
-                               Activity
-                            </a>
-                         </li>
-                         {% endif %} -->
+                          {% if (isActive('ratings')) %}
+                            <li class="active">
+                              <a>
+                                Reviews
+                              </a>
+                            </li>
+                            {% else %}
+                            <li class="">
+                              <a href={{ reviewRoute }}>
+                                Reviews
+                              </a>
+                            </li>
+                          {% endif %}
+                        {% else %}
+                          {% if (isActive('activity')) %}
+                            <li class="active">
+                              <a>
+                                Activity
+                              </a>
+                            </li>
+                            {% else %}
+                            <li class="">
+                              <a href="#tab2" data-toggle="tab">
+                                Activity
+                              </a>
+                            </li>
+                          {% endif %}
 
-                         {% if (isActive('ratings')) %}
-                         <li class="active">
-                            <a href={{ reviewRoute }}>
-                              Reviews
-                            </a>
-                         </li>
-                         {% else %}
-                         <li class="">
-                            <a href={{ reviewRoute }}>
-                               Reviews
-                            </a>
-                         </li>
-                         {% endif %}
+                          {% if (isActive('friends')) %}
+                            <li class="active">
+                              <a>
+                                Friends
+                              </a>
+                            </li>
+                            {% else %}
+                            <li class="">
+                              <a href="#tab2" data-toggle="tab">
+                                Friends
+                              </a>
+                            </li>
+                          {% endif %}
+                        {% endif %}
 
                       </ul>
 

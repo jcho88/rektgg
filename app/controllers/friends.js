@@ -71,31 +71,23 @@ Return: An array of friends with refs to their user schema
 */
 var getFriendList = function (req, res) {
 
-	if(req.user){
-		var userID = req.user._id;
-		console.log("hi")
-		Friend.getAllFriends(userID, function (err, listOfFriends){
-			console.log(listOfFriends.length)
-			for (var i=0; i<listOfFriends.length; ++i) {
-			    console.log(listOfFriends[i]);
-			}			
 
-			if(listOfFriends.length > 1){
-				return listOfFriends;
-			}else{
+	var userID = req.user._id;
+	console.log("hi")
+	Friend.getAllFriends(userID, function (err, listOfFriends){
+		console.log(listOfFriends.length)
+		for (var i=0; i<listOfFriends.length; ++i) {
+		    console.log(listOfFriends[i]);
+		}			
 
-			}		
+		if(listOfFriends.length > 0){
+			return listOfFriends;
+		}else{
 
-
-		});
+		}		
 
 
-	}//if
-	else{
-		//route to somewhere
-		console.log("user not login (coner case)")
-	}//else
-
+	});
 
 	
 }
@@ -122,11 +114,9 @@ exports.addFriend = function (req, res){
 					}else{ // creating a new doc for user's friend
 
 						//console.log(myFriend)
-						var date = new Date();
 						var newFriend = new Friend({
 
 							friendId: myFriend._id,
-							createdAt: date,
 							ownerId: userID,
 							privacy: false
 						});//newFriend
