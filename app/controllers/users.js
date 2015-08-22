@@ -41,37 +41,35 @@ exports.create = function (req, res) {
   var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY, data);
 
   recaptcha.verify(function(success, error_code) {
+            console.log("ERROR_CODE FOR RECAPTCHA: " + error_code)
     if (success) {
-        res.send('Recaptcha response valid.');
-        console.log("ERROR_CODE FOR RECAPTCHA: " + error_code)
+      user.save(function (err) {
+        if (err) {
+          return res.render('users/signup', {
+            errors: utils.errors(err.errors),
+            user: user,
+            title: 'Sign up',
+            recaptcha_form: recaptcha.toHTML()
+          });
+        }
+
+        // manually login the user once successfully signed up
+        req.logIn(user, function(err) {
+          if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+          return res.redirect('/');
+        });
+      });
     }
     else {
-        // Redisplay the form.
-        return res.render('users/signup', {
-            layout: false,
-            locals: {
-              recaptcha_form: recaptcha.toHTML()
-            }
-        });
-    }
-  });
-
-  user.save(function (err) {
-    if (err) {
+      req.flash('error', "Captcha was incorrect!");
       return res.render('users/signup', {
-        errors: utils.errors(err.errors),
         user: user,
         title: 'Sign up',
         recaptcha_form: recaptcha.toHTML()
       });
     }
-
-    // manually login the user once successfully signed up
-    req.logIn(user, function(err) {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
-      return res.redirect('/');
-    });
   });
+
 };
 
 
