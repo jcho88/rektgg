@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-express-mongoose-demo",
+  "name": "rekt",
   "description": "A demo app illustrating the usage of express, mongoose, passportjs, swig and other modules in nodejs",
   "keywords": [
     "express",
@@ -48,6 +48,7 @@
     "passport-linkedin": "0.1.3",
     "passport-local": "1.0.0",
     "passport-twitter": "1.0.2",
+    "recaptcha": "^1.2.1",
     "request": "2.58.0",
     "swig": "1.4.2",
     "underscore": "^1.8.3",

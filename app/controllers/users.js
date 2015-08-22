@@ -6,6 +6,9 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var utils = require('../../lib/utils');
+var Recaptcha = require('recaptcha').Recaptcha;
+var PUBLIC_KEY  = '6LcBQQsTAAAAAK4lD_65I8siuWYYC2X3yjwsQsIt',
+    PRIVATE_KEY = '6LcBQQsTAAAAAMgwyOwPkH9NKPutEZLFdbA3xYjV';
 
 /**
  * Load
@@ -87,9 +90,12 @@ exports.login = function (req, res) {
  */
 
 exports.signup = function (req, res) {
+  var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY);
+    
   res.render('users/signup', {
     title: 'Sign up',
-    user: new User()
+    user: new User(),
+    recaptcha_form: recaptcha.toHTML()
   });
 };
 
