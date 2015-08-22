@@ -41,7 +41,6 @@ exports.create = function (req, res) {
   var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY, data);
 
   recaptcha.verify(function(success, error_code) {
-            console.log("ERROR_CODE FOR RECAPTCHA: " + error_code)
     if (success) {
       user.save(function (err) {
         if (err) {
@@ -61,12 +60,8 @@ exports.create = function (req, res) {
       });
     }
     else {
-      req.flash('error', "Captcha was incorrect!");
-      return res.render('users/signup', {
-        user: user,
-        title: 'Sign up',
-        recaptcha_form: recaptcha.toHTML()
-      });
+      req.flash('warning', "Captcha was incorrect!");
+      return res.redirect('/signup');
     }
   });
 
