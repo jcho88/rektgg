@@ -33,12 +33,36 @@ exports.load = function (req, res, next, id) {
 exports.create = function (req, res) {
   var user = new User(req.body);
   user.provider = 'local';
+  var data = {
+      remoteip:  req.connection.remoteAddress,
+      challenge: req.body.recaptcha_challenge_field,
+      response:  req.body.recaptcha_response_field
+  };
+  var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY, data);
+
+  recaptcha.verify(function(success, error_code) {
+    if (success) {
+        res.send('Recaptcha response valid.');
+        console.log("ERROR_CODE FOR RECAPTCHA: " + error_code)
+    }
+    else {
+        // Redisplay the form.
+        return res.render('users/signup', {
+            layout: false,
+            locals: {
+              recaptcha_form: recaptcha.toHTML()
+            }
+        });
+    }
+  });
+
   user.save(function (err) {
     if (err) {
       return res.render('users/signup', {
         errors: utils.errors(err.errors),
         user: user,
-        title: 'Sign up'
+        title: 'Sign up',
+        recaptcha_form: recaptcha.toHTML()
       });
     }
 
