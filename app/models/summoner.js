@@ -226,6 +226,12 @@ SummonerSchema.statics = {
       if (!summoner || err) return cb(err, null);
       loadData(summoner, cb);
     })
+  },
+
+  hasUser: function(userId, cb){
+
+    this.findOne({ownerID: userId})
+    .exec(cb);
   }
 
 

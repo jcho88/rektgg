@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var Post = mongoose.model('Post')
 var User = mongoose.model('User')
+var Summoner = mongoose.model('Summoner')
 var utils = require('../../lib/utils')
 var extend = require('util')._extend
 var request = require('request')
@@ -105,11 +106,7 @@ var getAllPostLocal   = function (userId, res){
 	var userID = userId;
 	console.log("in get All Post")
 	Post.getAllPost(userID, function (err, listOfPost){
-		console.log(listOfPost.length)
-		console.log(err)	
-		for (var i=0; i<listOfPost.length; ++i) {
-		    console.log(listOfPost[i]);
-		}			
+		
 		if(err){
 			res.redirect('/')
 		}
@@ -130,25 +127,89 @@ var getAllPostLocal   = function (userId, res){
 exports.index = function (req, res){
 
 
-	User.searchById(req.params.userid, function (err, userInfo){
+	 async.series([
+	 	function(callback) {	//check if user verified
+	        Summoner.hasUser(req.params.userid, function (err, summonerId){
 
-		console.log(userInfo)		
+	        	if(err){
+	        		//flash
+	        	}else{
+	        		console.log("summonerId");
+	        		console.log(summonerId);
+	        		callback();
+	        	}
 
-		if(err){
-			res.redirect('/')
-		}else{
+			});
+	    }
+        ],
+        function(err) {
+            if (err) return next(err);
 
-			getAllPostLocal(req.params.userid, res);
+			User.searchById(req.params.userid, function (err, userInfo){
 
-		}		
+				//console.log(userInfo)		
+
+				if(err){
+					res.redirect('/')
+				}else{
+
+					getAllPostLocal(req.params.userid, res);
+
+				}		
 
 
-	});
-	
+			});
+        });
+
+}
+
+exports.getPost = function (req, res){
+
+	var summoner_ID_info;
+
+	 async.series([
+	 	function(callback) {	
+	 		console.log(req.params.userid)
+	        Summoner.hasUser(req.params.userid, function (err, summonerId){
+
+	        	if(err){
+	        		//flash
+	        		console.log("poop");
+	        	}else{
+	        		//console.log("summonerId");
+	        		console.log(summonerId);
+	        		summoner_ID_info = summonerId;
+	        		callback();
+	        	}
+
+			});
+	    }
+        ],
+        function(err) {
+            if (err) return next(err);
+
+			Post.getPost(req.params.postId, function (err, postInfo){
+
+				console.log(postInfo)		
+
+				if(err){
+					res.redirect('/')
+				}else{
+
+					if(summoner_ID_info == null || postInfo == null){
+						res.redirect('/')
+					}else{
+						res.render("activity/comment",{ 
+						postInfo: postInfo}
+						);	
+					}
+
+					
+				}		
 
 
-
-	//getAllPostLocal(req, res)
+			});
+        });
 
 }
 

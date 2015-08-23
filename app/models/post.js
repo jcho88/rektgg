@@ -48,6 +48,7 @@ PostSchema.statics = {
       .populate('ownerId')
       .populate('commetsList.authorId')
       .populate('userWallId')
+      .sort({'created_at': -1})
       .exec(cb);
   },      
 
@@ -78,6 +79,14 @@ PostSchema.statics = {
     console.log(commentId)
     this.update({'commetsList._id': commentId},
            {'$set' :{ 'commetsList.$.message': message}})
+
+      .exec(cb);
+  },    
+
+  getPost: function (postId, cb) {
+    console.log(postId)
+    this.findOne({'_id': postId})
+           
 
       .exec(cb);
   },    

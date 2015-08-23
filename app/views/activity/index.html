@@ -42,15 +42,18 @@
                     <p>{{listOfPost.message}}</p>
                     <div class="stats">
                         <a href="#" class="btn btn-default stat-item">
-                            <i class="fa fa-thumbs-up icon"></i>2
+                            <i class="fa fa-thumbs-up icon"></i>{{listOfPost.thumbs_up}}
                         </a>
-                        <a href="#" class="btn btn-default stat-item">
+                        <!--<a href="#" class="btn btn-default stat-item">
                             <i class="fa fa-share icon"></i>12
-                        </a>
+                        </a>-->
+                        {% if not (listOfPost.ownerId.id != req.user.id) %}
                         <form method="post" action={{deletePost}} style=" display: inline-block">
                              <input name="postId" type="hidden" value="{{listOfPost.id}}"> 
                              <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
+                        {% endif %}
+                        <i>{{listOfPost.commetsList.length}} comments</i>
                     </div>
                 </div>
                 
