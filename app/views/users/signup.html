@@ -31,6 +31,10 @@
           <label for="password" class="control-label">Confirm Password</label>
             <center><input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Password"></center>
         </div>
+        <div class="form-group required">
+          {% autoescape false %}{{ recaptcha_form }}{% endautoescape %}
+        </div>
+        <br>
         <center>
           <div class="form-group">
             <button class="btn btn-primary" type="submit">Register</button>

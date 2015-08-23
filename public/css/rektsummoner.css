@@ -418,7 +418,7 @@
 
 }
 
-/******************************** Most Played Champions ********************************/
+/* Most played champions */
 
 .champion-img {
     height: 50px;
@@ -450,10 +450,26 @@
     display: inline-block;
 }
 
-.item-img img {
-    height: 32px;
-    width: 32px;
-    border-radius: 4px;
+.item-img img, .spell-img img {
+    height: 16px;
+    width: 16px;
+    border-radius: 2px;
+}
+
+.fellowPlayerName {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .item-img img, .spell-img img {
+        height: 32px;
+        width: 32px;
+        border-radius: 4px;
+    }
+    
+    .fellowPlayerName {
+        display: inline;
+    }
 }
 
 .matches-header {
@@ -467,7 +483,8 @@
 
 .matches {
    display: table;
-   width: 100%;
+   width: 100%; 
+   font-size: 11px;
 }
 
 .matches-row  {
@@ -475,11 +492,19 @@
 }
 
 .match-items {
-    width: 120px;
+    width: 110px;
 }
 
-.match-img, .match-stats-1, .match-stats-2, .match-items, .match-trinket, .match-summoners {
+.match-img, .match-spells, .match-stats-1, .match-stats-2, .match-items, .match-trinket, .match-summoners {
     display: table-cell;
+}
+
+.match-img, .match-stats-1, .match-stats-2 {
+    width: 80px;
+}
+
+.match-trinket, .match-spells {
+    width: 40px;
 }
 
 .match-summoners {
@@ -487,7 +512,9 @@
 }
 
 .match-team {
+    width: 50%;
     display: inline-block;
+    overflow: hidden;
 }
 
 .summoner-img {
@@ -495,3 +522,5 @@
     width: 16px;
     border-radius: 4px;
 }
+
+.match-summoners { white-space: nowrap; }

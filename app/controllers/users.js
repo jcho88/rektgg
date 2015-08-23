@@ -6,6 +6,9 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var utils = require('../../lib/utils');
+var Recaptcha = require('recaptcha').Recaptcha;
+var PUBLIC_KEY  = '6LcBQQsTAAAAAK4lD_65I8siuWYYC2X3yjwsQsIt',
+    PRIVATE_KEY = '6LcBQQsTAAAAAMgwyOwPkH9NKPutEZLFdbA3xYjV';
 
 /**
  * Load
@@ -30,21 +33,38 @@ exports.load = function (req, res, next, id) {
 exports.create = function (req, res) {
   var user = new User(req.body);
   user.provider = 'local';
-  user.save(function (err) {
-    if (err) {
-      return res.render('users/signup', {
-        errors: utils.errors(err.errors),
-        user: user,
-        title: 'Sign up'
+  var data = {
+      remoteip:  req.connection.remoteAddress,
+      challenge: req.body.recaptcha_challenge_field,
+      response:  req.body.recaptcha_response_field
+  };
+  var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY, data);
+
+  recaptcha.verify(function(success, error_code) {
+    if (success) {
+      user.save(function (err) {
+        if (err) {
+          return res.render('users/signup', {
+            errors: utils.errors(err.errors),
+            user: user,
+            title: 'Sign up',
+            recaptcha_form: recaptcha.toHTML()
+          });
+        }
+
+        // manually login the user once successfully signed up
+        req.logIn(user, function(err) {
+          if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+          return res.redirect('/');
+        });
       });
     }
-
-    // manually login the user once successfully signed up
-    req.logIn(user, function(err) {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
-      return res.redirect('/');
-    });
+    else {
+      req.flash('warning', "Captcha was incorrect!");
+      return res.redirect('/signup');
+    }
   });
+
 };
 
 
@@ -87,9 +107,12 @@ exports.login = function (req, res) {
  */
 
 exports.signup = function (req, res) {
+  var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY);
+    
   res.render('users/signup', {
     title: 'Sign up',
-    user: new User()
+    user: new User(),
+    recaptcha_form: recaptcha.toHTML()
   });
 };
 

@@ -27,7 +27,6 @@ exports.load = function (req, res, next, id){
  */
 
 exports.create = function (req, res){
-  console.log("rating create");
   var rating = new Rating(req.body);                                //new rating with req.body info (rating model filled)
 
   rating.user = req.user;                                           //set user of the rating model to be the current user
@@ -36,8 +35,7 @@ exports.create = function (req, res){
 	    if (!err) {
 	  	  req.flash('success', 'Successfully created a rating!');     //no error, create the rating and redirect
 	  	  return res.redirect('/summoner_ratings/'+rating.summoner);
-	    }
-	    console.log(err);                                             //print error, flash appropriate error message
+	    }                                            //print error, flash appropriate error message
       if(err.message == 'Validation failed'){
         req.flash('error', err.errors.value.message);
       }
@@ -105,10 +103,10 @@ exports.update = function (req, res){
   rating = extend(rating, req.body);
 
   rating.save(function(err) {
-	  	if (!err) {
-        req.flash('info', 'Review Updated');
-	  		return res.redirect('/summoner_ratings/'+rating.summoner);
-	  	}
+  	if (!err) {
+      req.flash('info', 'Review Updated');
+  		return res.redirect('/summoner_ratings/'+rating.summoner);
+  	}
 
 		res.render('ratings/ratings', {
 		  	title: 'Edit Rating',

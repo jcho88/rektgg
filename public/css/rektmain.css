@@ -94,6 +94,11 @@
 	margin-top: 150px;
 }
 
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}
+
 @media (min-width: 300px) and (max-width: 500px) {
 
   .searchfield input {
