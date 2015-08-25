@@ -1,53 +1,3 @@
-// jQuery.validator.addMethod('passwordMatch', function(value, element) {
-
-//     // The two password inputs
-//     var password = $("#password").val();
-//     var confirmPassword = $("#password_confirm").val();
-
-//     // Check for equality with the password inputs
-//     if (password != confirmPassword ) {
-//         return false;
-//     } else {
-//         return true;
-//     }
-
-// }, "Your Passwords Must Match");
-
-// // ==========================================================================
-// // Registration Form : jquery validation
-// // http://jqueryvalidation.org/validate
-
-// $('#register-form').validate({
-
-//     // rules
-//     rules: {
-//         password: {
-//             required: true,
-//             minlength: 3
-//         },
-//         password_confirm: {
-//             required: true,
-//             minlength: 3,
-//             passwordMatch: true // set this on the field you're trying to match
-//         }
-//     },
-
-//     // messages
-//     messages: {
-//         password: {
-//             required: "What is your password?",
-//             minlength: "Your password must contain more than 3 characters"
-//         },
-//         password_confirm: {
-//             required: "You must confirm your password",
-//             minlength: "Your password must contain more than 3 characters",
-//             passwordMatch: "Your Passwords Must Match" // custom message for mismatched passwords
-//         }
-//     }
-// });//end validate
-
-
-
 (function($,W,D)
 {
     var JQUERY4U = {};
@@ -77,11 +27,11 @@
                     agree: "required"
                 },
                 messages: {
-                    name: "Please enter your firstname",
-                    username: "Please enter your lastname",
+                    name: "Please enter your name",
+                    username: "Please enter your username",
                     password: {
                         required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
+                        minlength: "Your password must be at least 6 characters long"
                     },
                     email: "Please enter a valid email address",
                     agree: "Please accept our policy"
