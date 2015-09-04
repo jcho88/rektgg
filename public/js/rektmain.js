@@ -21,7 +21,7 @@
                     },
                     password_confirm: {
                         required: true,
-                        minlength: 5,
+                        minlength: 6,
                         equalTo: "#password"
                     },
                     agree: "required"
@@ -33,6 +33,7 @@
                         required: "Please provide a password",
                         minlength: "Your password must be at least 6 characters long"
                     },
+                    password_confirm: "Please re-type your password",
                     email: "Please enter a valid email address",
                     agree: "Please accept our policy"
                 },
