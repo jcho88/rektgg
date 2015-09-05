@@ -477,14 +477,29 @@
 }
 
 .matches-summoner {
+    margin-left: 10px;
     height: 55px;
     width: 55px;
 }
 
 .matches {
    display: table;
-   width: 100%; 
+   width: 100%;
    font-size: 11px;
+   border-style: solid;
+   border-color: #6699FF;
+   border-width: 2px;
+   background: #b6daf2;
+}
+
+.matches-defeat {
+  display: table;
+  width: 100%; 
+  font-size: 11px;
+  border-style: solid;
+  border-color: #FF6666;
+  border-width: 2px;
+  background: #ebc6c3;
 }
 
 .matches-row  {
@@ -501,7 +516,7 @@
 }
 
 .match-img, .match-stats-1, .match-stats-2 {
-    width: 80px;
+    width: 100px;
 }
 
 .match-trinket {
@@ -517,9 +532,9 @@
 }
 
 .match-team {
-    width: 50%;
+    width: 40%;
     display: inline-block;
-    overflow: hidden;
+/*    overflow: hidden;*/
 }
 
 .summoner-img {
