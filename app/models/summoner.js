@@ -179,7 +179,9 @@ var loadData = function(summoner, cb) {
 
   summoner.getAvgRating(function(err, rating) {
     if(!rating) return cb(err, summoner);
-    summoner.average = rating[0].average;
+    if(rating[0] != null) {
+      summoner.average = rating[0].average;
+    }
     cb(err, summoner);
   });
 }

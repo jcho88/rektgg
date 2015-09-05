@@ -35,11 +35,19 @@
             {% set itemLink5 = endpoint + "/item/" + game.stats.item5 + ".png" %}
             {% set itemLink6 = endpoint + "/item/" + game.stats.item6 + ".png" %}
 
+            {% set spellLink1 = endpoint + "/spell/" + game.spell1 + ".png" %}
+            {% set spellLink2 = endpoint + "/spell/" + game.spell2 + ".png" %}
+
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
 			<div>
 				<span>{{ __(game.subType) }}</span>
+				{% if game.stats.win == 'true' %}
+					<span>Victory</span>
+				{% else %}
+					<span>Defeat</span>
+				{% endif %}
 			</div>
 			<div class="matches">
 				<div class="matches-row">

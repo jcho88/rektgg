@@ -497,14 +497,19 @@
 
 .match-img, .match-spells, .match-stats-1, .match-stats-2, .match-items, .match-trinket, .match-summoners {
     display: table-cell;
+    vertical-align: middle;
 }
 
 .match-img, .match-stats-1, .match-stats-2 {
     width: 80px;
 }
 
-.match-trinket, .match-spells {
-    width: 40px;
+.match-trinket {
+    width: 100px;
+}
+
+.match-spells {
+    width: 60px;
 }
 
 .match-summoners {
