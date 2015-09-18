@@ -16,13 +16,6 @@
          <br></br>
          <br></br>
 
-         <div class="row">
-            <div class="col-xs-12 col-sm-12">
-               <textarea class="form-control" rows="3" placeholder="Say something..."></textarea>                        
-            </div>
-         </div>
-         <hr>
-
          {% for game in summoner.games %}
 
             {% set champLink = endpoint + "/champion_square/" + game.championId + ".png" %}
@@ -35,13 +28,25 @@
             {% set itemLink5 = endpoint + "/item/" + game.stats.item5 + ".png" %}
             {% set itemLink6 = endpoint + "/item/" + game.stats.item6 + ".png" %}
 
+            {% set spellLink1 = endpoint + "/spell/" + game.spell1 + ".png" %}
+            {% set spellLink2 = endpoint + "/spell/" + game.spell2 + ".png" %}
+
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
 			<div>
 				<span>{{ __(game.subType) }}</span>
+				{% if game.stats.win == 'true' %}
+					<span>Victory</span>
+				{% else %}
+					<span>Defeat</span>
+				{% endif %}
 			</div>
+			{% if game.stats.win == 'true' %}
 			<div class="matches">
+			{% else %}
+			<div class="matches-defeat">
+			{% endif %}
 				<div class="matches-row">
 					<div class="match-img">
 						<img src= {{ champLink }} class="matches-summoner img-circle">

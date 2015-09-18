@@ -477,14 +477,29 @@
 }
 
 .matches-summoner {
+    margin-left: 10px;
     height: 55px;
     width: 55px;
 }
 
 .matches {
    display: table;
-   width: 100%; 
+   width: 100%;
    font-size: 11px;
+   border-style: solid;
+   border-color: #009933;
+   border-width: 2px;
+   background: #CCFFCC;
+}
+
+.matches-defeat {
+  display: table;
+  width: 100%; 
+  font-size: 11px;
+  border-style: solid;
+  border-color: #FF6666;
+  border-width: 2px;
+  background: #ebc6c3;
 }
 
 .matches-row  {
@@ -497,14 +512,19 @@
 
 .match-img, .match-spells, .match-stats-1, .match-stats-2, .match-items, .match-trinket, .match-summoners {
     display: table-cell;
+    vertical-align: middle;
 }
 
 .match-img, .match-stats-1, .match-stats-2 {
     width: 80px;
 }
 
-.match-trinket, .match-spells {
-    width: 40px;
+.match-trinket {
+    width: 100px;
+}
+
+.match-spells {
+    width: 60px;
 }
 
 .match-summoners {
@@ -512,9 +532,9 @@
 }
 
 .match-team {
-    width: 50%;
+    width: 40%;
     display: inline-block;
-    overflow: hidden;
+/*    overflow: hidden;*/
 }
 
 .summoner-img {

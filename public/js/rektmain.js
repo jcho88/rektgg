@@ -1,22 +1,58 @@
-$(document).ready(function() {
-    $('#submit').click(function(event){
+(function($,W,D)
+{
+    var JQUERY4U = {};
 
-        data = $('#password').val();
-        var len = data.length;
+    JQUERY4U.UTIL =
+    {
+        setupFormValidation: function()
+        {
+            //form validation rules
+            $("#register-form").validate({
+                rules: {
+                    name: "required",
+                    username: "required",
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    password_confirm: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#password"
+                    },
+                    agree: "required"
+                },
+                messages: {
+                    name: "Please enter your name",
+                    username: "Please enter your username",
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 6 characters long"
+                    },
+                    password_confirm: "Please re-type your password",
+                    email: "Please enter a valid email address",
+                    agree: "Please accept our policy"
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        }
+    }
 
-        if(len < 1) {
-            alert("Password cannot be blank");
-            // Prevent form submission
-            event.preventDefault();
-        }
-         
-        if($('#password').val() != $('#password_confirm').val()) {
-            alert("Password and Confirm Password don't match");
-            // Prevent form submission
-            event.preventDefault();
-        }
-         
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function($) {
+        JQUERY4U.UTIL.setupFormValidation();
     });
+
+})(jQuery, window, document);
+
+jQuery.extend(jQuery.validator.messages, {
+    equalTo: "Passwords do not match!"
 });
 
 
