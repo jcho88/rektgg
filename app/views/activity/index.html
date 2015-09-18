@@ -54,7 +54,7 @@
                              <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                         {% endif %}
-                        <i>{{listOfPost.commetsList.length}} comments</i>
+                        <i><a href= "http://localhost:3000/activity/{{wallId}}/{{listOfPost.id}}">{{listOfPost.commetsList.length}} comments</a></i>
                     </div>
                 </div>
                 
@@ -69,7 +69,7 @@
                 {% endautoescape %}
               </ul>
             {% endif %}  
-                        
+
         </div> <!-- content sidebar -->
 </div>
 {% endblock %}

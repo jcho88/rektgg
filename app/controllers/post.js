@@ -122,12 +122,12 @@ var getAllPostLocal   = function (page, option, userId, res){
 		if(err){
 			res.redirect('/')
 		}
-		Post.count().exec(function (err, count) {
-			console.log(count)
+		Post.count().find({userWallId : userID }).exec(function (err, count) {
+			console.log(count.length)
 			res.render("activity/index",{ 
 				listOfPost: listOfPost,
 				page: option.page + 1,
-				pages: Math.ceil(count / option.perPage),
+				pages: Math.ceil(count.length / option.perPage),
 				wallId: userID}
 				);		
 		});

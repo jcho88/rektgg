@@ -65,14 +65,14 @@ exports.index = function (req, res){
 
   Rating.list(options, function (err, ratings) {                    //call list function in model
     if (err) return res.render('500');
-    Rating.count().exec(function (err, count) {                     //Returns the count of documents that would match a find() query. 
+    Rating.count().find(options.criteria).exec(function (err, count) {                     //Returns the count of documents that would match a find() query. 
       res.render('ratings/ratings', {                               //The db.collection.count() method does not perform the find() operation
         title: 'Ratings',                                           //but instead counts and returns the number of results that match a query.
         rating: new Rating(),
         summoner: req.summoner,                                     //pass in the summoner information
         ratings: ratings,
         page: page + 1,
-        pages: Math.ceil(count / perPage)
+        pages: Math.ceil(count.length / perPage)
       });
     });
   });
