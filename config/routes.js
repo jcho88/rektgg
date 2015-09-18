@@ -126,11 +126,15 @@ module.exports = function (app, passport) {
 //   }
 
 // );
-
+  //user wall page
   app.get('/activity/:userid', post.index);
-  app.post('/activity/post', post.createPost)
+  app.post('/activity/post', auth.requiresLogin, post.createPost)
   app.post('/activity/deletePost', post.deletePost)
+  //comment page
   app.get('/activity/:userid/:postId', post.getPost)
+  app.post('/activity/comment', auth.requiresLogin, post.createPostComment); 
+  app.post('/activity/deleteComment', post.deletePostComment);
+
 
   app.get('/getallpost', post.getAllPost);
   app.post('/testpost', post.createPost);

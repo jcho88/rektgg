@@ -355,7 +355,7 @@
 
 /******************************** Review Comments ********************************/
 
-/*.post .post-footer {
+.post .post-footer {
   border-top: 1px solid #ddd;
   padding: 15px;
 }
@@ -398,7 +398,7 @@
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
-}*/
+}
 
 @media (min-width: 300px) and (max-width: 500px) {
 

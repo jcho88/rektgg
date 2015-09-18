@@ -42,12 +42,14 @@ PostSchema.statics = {
       .exec(cb);
   },
 
-  getAllPost: function (WallId, cb) {
+  getAllPost: function (options, WallId, cb) {
 
     this.find({userWallId : WallId })
       .populate('ownerId')
       .populate('commetsList.authorId')
       .populate('userWallId')
+      .limit(options.perPage)
+      .skip(options.perPage * options.page)
       .sort({'created_at': -1})
       .exec(cb);
   },      
@@ -86,8 +88,8 @@ PostSchema.statics = {
   getPost: function (postId, cb) {
     console.log(postId)
     this.findOne({'_id': postId})
-           
-
+    .populate('ownerId')       
+    .populate('commetsList.authorId') 
       .exec(cb);
   },    
 }

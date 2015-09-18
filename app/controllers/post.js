@@ -52,25 +52,37 @@ exports.deletePost = function (req, res){
 
 	if(req.user){
 		var postID = req.body.postId
-		var userID = req.user._id;	
+		var userID = req.user._id;
+		var authorId = req.body.postOwner
+
 		console.log(req.body.postId)
-		Post.deletePost(userID, postID, function (err, numOfDocRemoved){
+		if(req.user._id.toString().localeCompare(authorId.toString()) == 0){
+			Post.deletePost(userID, postID, function (err, numOfDocRemoved){
 
-			//console.log(numOfDocRemoved);
+				//console.log(numOfDocRemoved);
 
-			if(numOfDocRemoved == 1){
-				console.log("Post deleted")
-				res.redirect('back')						
+				if(numOfDocRemoved == 1){
+					console.log("Post deleted")
+					res.redirect('back')						
 
-			}else{ // creating a new doc for user's friend
-				console.log("Post not deleted")
-			}//else
-		});//deleteFriend
+				}else{ // creating a new doc for user's friend
+					console.log("Post not deleted")
+				}//else
+			});//deletePost
+
+		}else{
+			
+			console.log("You are not allow to delete this Post")
+			req.flash('info', 'You are not authorized')
+      		return res.redirect('back')
+		}	
 
 	}//if
 	else{
 		//route to somewhere
 		console.log("user not login (coner case)")
+		req.flash('info', 'You are not authorized')
+      	return res.redirect('back')
 	}//else	
 
 }
@@ -101,21 +113,24 @@ exports.getAllPost = function (req, res){
 }
 
 
-var getAllPostLocal   = function (userId, res){
+var getAllPostLocal   = function (page, option, userId, res){
 
 	var userID = userId;
 	console.log("in get All Post")
-	Post.getAllPost(userID, function (err, listOfPost){
+	Post.getAllPost(option, userID, function (err, listOfPost){
 		
 		if(err){
 			res.redirect('/')
 		}
-
-		res.render("activity/index",{ 
-			listOfPost: listOfPost,
-			wallId: userID}
-			);		
-
+		Post.count().exec(function (err, count) {
+			console.log(count)
+			res.render("activity/index",{ 
+				listOfPost: listOfPost,
+				page: option.page + 1,
+				pages: Math.ceil(count / option.perPage),
+				wallId: userID}
+				);		
+		});
 
 	});	
 	//check the privacy of the user
@@ -126,40 +141,49 @@ var getAllPostLocal   = function (userId, res){
 
 exports.index = function (req, res){
 
+	console.log(req.param('page'))
+	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
+	var perPage = 10;                                                 //set max reviews per page to be 10
 
-	 async.series([
-	 	function(callback) {	//check if user verified
-	        Summoner.hasUser(req.params.userid, function (err, summonerId){
+	var options = {                                                   //set options to be called into list function
+	perPage: perPage,
+	page: page,
+	//criteria : {summoner: req.summoner._id}
+	};
 
-	        	if(err){
-	        		//flash
-	        	}else{
-	        		console.log("summonerId");
-	        		console.log(summonerId);
-	        		callback();
-	        	}
+	async.series([
+		function(callback) {	//check if user verified
+	    Summoner.hasUser(req.params.userid, function (err, summonerId){
 
-			});
-	    }
-        ],
-        function(err) {
-            if (err) return next(err);
+	    	if(err){
+	    		//flash
+	    	}else{
+	    		console.log("summonerId");
+	    		console.log(summonerId);
+	    		callback();
+	    	}
 
-			User.searchById(req.params.userid, function (err, userInfo){
+		});
+	}
+	],
+	function(err) {
+	    if (err) return next(err);
 
-				//console.log(userInfo)		
+		User.searchById(req.params.userid, function (err, userInfo){
 
-				if(err){
-					res.redirect('/')
-				}else{
+			//console.log(userInfo)		
 
-					getAllPostLocal(req.params.userid, res);
+			if(err){
+				res.redirect('/')
+			}else{
 
-				}		
+				getAllPostLocal(page, options, req.params.userid, res);
+
+			}		
 
 
-			});
-        });
+		});
+	});
 
 }
 
@@ -196,7 +220,7 @@ exports.getPost = function (req, res){
 					res.redirect('/')
 				}else{
 
-					if(summoner_ID_info == null || postInfo == null){
+					if(postInfo == null){
 						res.redirect('/')
 					}else{
 						res.render("activity/comment",{ 
@@ -265,6 +289,7 @@ exports.createPostComment = function (req, res){
 			
 			if(numofDocChnaged == 1){	
 				console.log("comment created")
+				res.redirect('back')
 			}else{
 				console.log("Didnt create comment")
 			}
@@ -326,20 +351,25 @@ exports.deletePostComment = function (req, res){
 
 				if(numofDocChnaged == 1){
 					console.log("comment deleted")
+					res.redirect('back')
 				}else{
 					console.log("Didnt create delete")
 				}
 
 			});//deletePostComment
 		}else{
-
+			
 			console.log("You are not allow to delete this comment")
+			req.flash('info', 'You are not authorized')
+      		return res.redirect('back')
 		}	
 
 	}//if
 	else{
 		//route to somewhere
 		console.log("user not login (coner case)")
+		req.flash('info', 'You are not authorized')
+      	return res.redirect('back')
 	}//else
 
 

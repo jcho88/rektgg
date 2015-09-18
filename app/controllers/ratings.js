@@ -52,6 +52,7 @@ exports.create = function (req, res){
  */
 
 exports.index = function (req, res){
+  console.log(req.param('page'))
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
   var perPage = 10;                                                 //set max reviews per page to be 10
 

@@ -1,6 +1,79 @@
 {% extends '../layouts/profile.html' %}
 
 {% block content %}
+{% set createComment = '/activity/comment' %}
+{% set deleteComment = '/activity/deleteComment' %}
+   <!-- views/partials/activity.html -->  
 
+   <div id="contentCol">
+      <div class="content-sidebar">
+
+            <div class="panel panel-white post panel-shadow">
+
+	            <div class="post-heading">
+	                <div class="pull-left image">
+	                    <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+	                </div>
+	                <div class="pull-left meta">
+	                    <div class="title h5">
+	                        <a href="#"><b>{{postInfo.ownerId.username}}</b></a>
+	                        made a post.
+	                    </div>
+	                    <h6 class="text-muted time">{{postInfo.created_at.toLocaleDateString()}} {{postInfo.created_at.toLocaleTimeString()}}</h6>
+	                </div>
+	            </div> 
+	            <div class="post-description"> 
+	                <p>{{postInfo.message}}</p>
+	                <div class="stats">
+	                    <a href="#" class="btn btn-default stat-item">
+	                        <i class="fa fa-thumbs-up icon"></i>2
+	                    </a>
+	                    <a href="#" class="btn btn-default stat-item">
+	                        <i class="fa fa-share icon"></i>12
+	                    </a>
+	                </div>
+	            </div>
+	            <div class="post-footer">
+	            	<form method="post" action={{createComment}}>
+		                <div class="input-group"> 
+		                	<input name="postId" type="hidden" value="{{postInfo.id}}"> 
+							<input name="wallId" type="hidden" value="{{postInfo.userWallId}}"> 
+		                    <input name="message" class="form-control" placeholder="Add a comment" type="text">
+		                    <span class="input-group-addon">
+		                    	<button class="fa fa-edit" type="submit"></button>
+		                    </span>
+		                   
+		                </div>
+	            	</form>
+	                <ul class="comments-list">
+	                    <li class="comment">
+	                    	{% for commentInfo in postInfo.commetsList %} 
+	                        <a class="pull-left" href="#">
+	                            <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+	                        </a>
+	                        
+	                        <div class="comment-body">
+	                            <div class="comment-heading">
+	                                <h4 class="user">{{commentInfo.authorId.username}}</h4>
+	                                <h5 class="time">{{commentInfo.created_at.toLocaleDateString()}} {{commentInfo.created_at.toLocaleTimeString()}}</h5>
+	                            </div>
+	                            <p>{{commentInfo.message}}</p>
+	                            {% if not (commentInfo.authorId.id != req.user.id) %}
+		 						<form method="post" action={{deleteComment}} style=" display: inline-block">
+		                             <input name="postId" type="hidden" value="{{postInfo.id}}"> 
+		                             <input name="commentId" type="hidden" value="{{commentInfo.id}}"> 
+									 <input name="authorId" type="hidden" value="{{commentInfo.authorId.id}}">  
+		                             <button class="btn btn-danger" type="submit">Delete</button>
+		                        </form>
+		                        {% endif %}
+	                        </div>
+	                      	{% endfor %}  
+	                    </li>
+	                </ul>
+
+        		</div>
+			</div>
+      </div> <!-- content sidebar -->
+  	</div> <!-- content column -->
 
 {% endblock %}
