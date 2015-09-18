@@ -3,8 +3,10 @@
 {% block content %}
 {% set createComment = '/activity/comment' %}
 {% set deleteComment = '/activity/deleteComment' %}
-   <!-- views/partials/activity.html -->  
+{% set startSlice = page-1 %}
+{% set commets = postInfo.commetsList.slice(startSlice*10,page*10) %}
 
+   <!-- views/partials/activity.html -->  
    <div id="contentCol">
       <div class="content-sidebar">
 
@@ -47,7 +49,7 @@
 	            	</form>
 	                <ul class="comments-list">
 	                    <li class="comment">
-	                    	{% for commentInfo in postInfo.commetsList %} 
+	                    	{% for commentInfo in commets %} 
 	                        <a class="pull-left" href="#">
 	                            <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
 	                        </a>
@@ -73,6 +75,15 @@
 
         		</div>
 			</div>
+
+            {% if (pages > 1) %}
+              <ul class="pagination">
+                {% autoescape false %}
+                  {{ createPagination(pages, page) }}
+                {% endautoescape %}
+              </ul>
+            {% endif %}  
+
       </div> <!-- content sidebar -->
   	</div> <!-- content column -->
 

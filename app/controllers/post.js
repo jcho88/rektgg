@@ -189,6 +189,18 @@ exports.index = function (req, res){
 
 exports.getPost = function (req, res){
 
+
+	console.log(req.param('page'))
+	var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
+	var perPage = 10;                                                 //set max reviews per page to be 10
+
+	var options = {                                                   //set options to be called into list function
+	perPage: perPage,
+	page: page,
+	};
+
+	var comments
+
 	var summoner_ID_info;
 
 	 async.series([
@@ -211,10 +223,10 @@ exports.getPost = function (req, res){
         ],
         function(err) {
             if (err) return next(err);
-
+            console.log(req.params.postId)
 			Post.getPost(req.params.postId, function (err, postInfo){
 
-				console.log(postInfo)		
+				//console.log(postInfo)		
 
 				if(err){
 					res.redirect('/')
@@ -223,8 +235,14 @@ exports.getPost = function (req, res){
 					if(postInfo == null){
 						res.redirect('/')
 					}else{
+						postInfo.commetsList.sort(function(a,b) {  return  new Date(b.created_at).getTime() - new Date(a.created_at).getTime();});
+						comments = postInfo.commetsList.slice(10,20)
+						console.log(comments)	
 						res.render("activity/comment",{ 
-						postInfo: postInfo}
+						page: page + 1,
+						pages: Math.ceil(postInfo.commetsList.length / perPage),	
+						postInfo: postInfo,
+						comments: comments}
 						);	
 					}
 

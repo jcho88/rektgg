@@ -39,26 +39,26 @@ RatingSchema.path('value').required(true, 'Please give the summoner a rating fro
  * Pre-remove hook
  */
 
-// RatingSchema.pre("save", function(next) {
-//   var self = this;
-//   if(this.isNew){                                                                                          //only pre-hook for the save on create method
-//     mongoose.models["Rating"].findOne({user: this.user, summoner: this.summoner}, function(err, results) { //find if a user of the current user with a summoner of the current summoner is in the rating database
-//       if (err) {
-//         next(error);
-//       }
-//       else if (results) {
-//         self.invalidate('error', 'User may not vote for a summoner more than once');
-//         next(new Error("user may not vote for a summoner more than once"));
-//       }
-//       else {
-//         next();
-//       }
-//     })
-//   }
-//   else{
-//     next();
-//   }
-// })
+RatingSchema.pre("save", function(next) {
+  var self = this;
+  if(this.isNew){                                                                                          //only pre-hook for the save on create method
+    mongoose.models["Rating"].findOne({user: this.user, summoner: this.summoner}, function(err, results) { //find if a user of the current user with a summoner of the current summoner is in the rating database
+      if (err) {
+        next(error);
+      }
+      else if (results) {
+        self.invalidate('error', 'User may not vote for a summoner more than once');
+        next(new Error("user may not vote for a summoner more than once"));
+      }
+      else {
+        next();
+      }
+    })
+  }
+  else{
+    next();
+  }
+})
 
 /**
  * Methods

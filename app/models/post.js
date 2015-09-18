@@ -89,8 +89,8 @@ PostSchema.statics = {
     console.log(postId)
     this.findOne({'_id': postId})
     .populate('ownerId')       
-    .populate('commetsList.authorId') 
-      .exec(cb);
+    .populate('commetsList.authorId')
+    .exec(cb);
   },    
 }
 
