@@ -28,34 +28,30 @@
                       <div class="clearfix"></div>
                       <ul class="nav nav-tabs">
                       
-                        {% set matchesRoute = "/summonerSearch?summonerName=" + summoner._name %}
+                        {% set matchesRoute = "/summoners/" + summoner._id %}
                         {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
                         {% set activityRoute = "/activity/" + user._id %}
 
                         {% if summoner %}
-                          {% if (isActive('summoner')) %}
+                          {% if (isActive('summoners') || isActive('summonerSearch')) %}
                             <li class="active">
                               <a>
                                 Matches
                               </a>
                             </li>
-                            {% else %}
+                            <li class="">
+                              <a href={{ reviewRoute }}>
+                                Reviews
+                              </a>
+                            </li>
+                          {% elseif (isActive('ratings')) %}
                             <li class="">
                               <a href= {{ matchesRoute }}>
                                 Matches
                               </a>
                             </li>
-                          {% endif %}
-
-                          {% if (isActive('ratings')) %}
                             <li class="active">
                               <a>
-                                Reviews
-                              </a>
-                            </li>
-                            {% else %}
-                            <li class="">
-                              <a href={{ reviewRoute }}>
                                 Reviews
                               </a>
                             </li>
