@@ -34,17 +34,25 @@
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
-			<div>
-				<span>{{ __(game.subType) }}</span>
+			{% if game.stats.win == 'true' %}
+			<div class="match-header">
+				<span><b>&nbsp{{ __(game.subType) }} - </b></span>
 				{% if game.stats.win == 'true' %}
 					<span>Victory</span>
 				{% else %}
 					<span>Defeat</span>
 				{% endif %}
 			</div>
-			{% if game.stats.win == 'true' %}
 			<div class="matches">
 			{% else %}
+			<div class="match-header-defeat">
+				<span><b>&nbsp{{ __(game.subType) }} - </b></span>
+				{% if game.stats.win == 'true' %}
+					<span>Victory</span>
+				{% else %}
+					<span>Defeat</span>
+				{% endif %}
+			</div>
 			<div class="matches-defeat">
 			{% endif %}
 				<div class="matches-row">

@@ -271,8 +271,7 @@
 
 .content-sidebar {
   padding: 20px;
-  background: #b2cecf;
-  /*background: #7f8c8d;*/
+  background: #DAE2EA;
   min-height: 410px;
 }
 
@@ -427,8 +426,11 @@
 
 .champions {
    display: table;
+   background: #b2cecf;
    width: 100%;
    font-size: 11px;
+   padding: 5px;
+   margin-bottom: 2px;
 }
 
 .champions-row  {
@@ -437,6 +439,7 @@
 
 .champions-img, .champions-info, .champions-played {
     display: table-cell;
+    vertical-align: middle;  
 }
 
 .champions-ratio {
@@ -472,34 +475,46 @@
     }
 }
 
-.matches-header {
-    display: table-header-group;
-}
-
 .matches-summoner {
     margin-left: 10px;
     height: 55px;
     width: 55px;
 }
 
+.match-header {
+    font-family: "Verdana";
+    font-size: 12px;
+
+    border-color: #009933;
+    border-width: 1px;
+    background: #66FF99;
+}
+
+.match-header-defeat {
+    font-family: "Verdana";
+    font-size: 12px;
+
+    border-color: #CC4040;
+    border-width: 1px;
+    background: #FF6666;
+}
+
 .matches {
-   display: table;
-   width: 100%;
-   font-size: 11px;
-   border-style: solid;
-   border-color: #009933;
-   border-width: 2px;
-   background: #CCFFCC;
+  display: table;
+  width: 100%;
+  font-size: 11px;
+  background: #CCFFCC;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .matches-defeat {
   display: table;
   width: 100%; 
   font-size: 11px;
-  border-style: solid;
-  border-color: #FF6666;
-  border-width: 2px;
   background: #ebc6c3;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .matches-row  {
