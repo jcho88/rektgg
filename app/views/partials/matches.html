@@ -4,13 +4,6 @@
 
    <div id="contentCol">
       <div class="content-sidebar">
-<!--          <div class="row hidden-xs hidden-sm">
-            <a href="#" class="btn btn-info" id="toggle-link">
-               <i class="fa fa-arrow-left"></i>
-               Hide menu
-            </a>
-            <hr class="hr-sep">
-         </div> -->
 
          <button type="button" class="btn btn-success" style="float: right;">Refresh</button>
          <br></br>
@@ -64,7 +57,7 @@
 						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
 					</div>
 					<div class="match-stats-1">
-						<div>{{ KDA.toFixed(1) }} KDA</div>
+						<div><b>{{ KDA.toFixed(1) }} KDA</b></div>
 						<span>{{ game.stats.championsKilled }} / </span>
 						<span>{{ game.stats.numDeaths }} / </span>
 						<span>{{ game.stats.assists }}</span>
