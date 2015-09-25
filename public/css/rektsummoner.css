@@ -558,3 +558,46 @@
 }
 
 .match-summoners { white-space: nowrap; }
+
+/******************************** Friends ********************************/
+
+.list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+}
+
+.list-group-item {
+  margin: 5px;
+}
+
+.list-group-item img {
+    height:80px; 
+    width:80px;
+}
+
+.prj-name {
+    color:#5bc0de;    
+}
+
+.break{
+    width:100%;
+    margin:20px;
+}
+
+.name {
+    color:#5bc0de;    
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .list-content {
+    min-height: 0px;
+  }
+
+  .list-group-item {
+    margin: 5px;
+  }
+
+}
