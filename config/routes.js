@@ -110,6 +110,7 @@ module.exports = function (app, passport) {
   app.param('summonerId', summoners.load);
   app.get('/summonerSearch?:query', summoners.search); //show summoner
   app.get('/summoners/:summonerId', summoners.show); //show summoner
+  app.get('/summoners/refresh', summoners.refresh); //show summoner
 
   //add friend routes
   app.post('/addfriend', friends.addFriend);//post
@@ -136,13 +137,13 @@ module.exports = function (app, passport) {
   app.post('/activity/deleteComment', post.deletePostComment);
 
 
-  app.get('/getallpost', post.getAllPost);
-  app.post('/testpost', post.createPost);
-  app.post('/testdelete', post.deletePost);  
-  app.post('/testcomment', post.createPostComment); 
-  app.post('/testdeletecomment', post.deletePostComment);
-  app.post('/testeditcomment', post.editPostComment) 
-  app.post('/testeditPost', post.editPost)       
+  // app.get('/getallpost', post.getAllPost);
+  // app.post('/testpost', post.createPost);
+  // app.post('/testdelete', post.deletePost);  
+  // app.post('/testcomment', post.createPostComment); 
+  // app.post('/testdeletecomment', post.deletePostComment);
+  // app.post('/testeditcomment', post.editPostComment) 
+  // app.post('/testeditPost', post.editPost)       
 //end test post
 
   // home route

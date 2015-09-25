@@ -234,7 +234,17 @@ SummonerSchema.statics = {
 
     this.findOne({ownerID: userId})
     .exec(cb);
-  }
+  },
+  
+  searchSummByID: function (summonerID, cb) {
+
+      this.findOne({nameNoWhiteSpace : summonerName }, function(err, summoner) {
+        if (!summoner || err) return cb(err, null);
+        loadData(summoner, cb);
+      })   
+    }
+
+  
 
 
   /**

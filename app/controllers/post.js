@@ -235,9 +235,7 @@ exports.getPost = function (req, res){
 					if(postInfo == null){
 						res.redirect('/')
 					}else{
-						postInfo.commetsList.sort(function(a,b) {  return  new Date(b.created_at).getTime() - new Date(a.created_at).getTime();});
-						comments = postInfo.commetsList.slice(10,20)
-						console.log(comments)	
+						postInfo.commetsList.sort(function(a,b) {  return  new Date(b.created_at).getTime() - new Date(a.created_at).getTime();});	
 						res.render("activity/comment",{ 
 						page: page + 1,
 						pages: Math.ceil(postInfo.commetsList.length / perPage),	
