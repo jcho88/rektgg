@@ -73,4 +73,24 @@ $(function(){
     });
     $('.tip').tooltip();
 });
+
+$(document).ready(function(e){
+    $('.search-summoner .dropdown-menu').find('a').click(function(e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#","");
+        var concept = $(this).text();
+        $('.search-summoner span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
+    });
+});
+
+$(document).ready(function(e){
+    $('.search-region .dropdown-menu').find('a').click(function(e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#","");
+        var concept = $(this).text();
+        $('.search-region span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
+    });
+});
                                     
