@@ -57,9 +57,18 @@
 						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
 					</div>
 					<div class="match-stats-1">
-						<div><b>{{ KDA.toFixed(1) }} KDA</b></div>
+						{% if isNaN(KDA) %}
+							<div><b>Best KDA</b></div>
+						{% else %}
+							<div><b>{{ KDA.toFixed(1) }} KDA</b></div>
+						{% endif %}
+
 						<span>{{ game.stats.championsKilled }} / </span>
-						<span>{{ game.stats.numDeaths }} / </span>
+						{% if game.stats.numDeaths == 0 %}
+							<span> 0 / </span>
+						{% else %}
+							<span>{{ game.stats.numDeaths }} / </span>
+						{% endif %}
 						<span>{{ game.stats.assists }}</span>
 					</div>
 					<div class="match-stats-2">
