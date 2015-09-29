@@ -178,8 +178,14 @@
   margin-left: -2px;
 }
 
-.summoner_rating {
+.summoner-rating {
   margin-left: 40px;
+}
+
+.summoner-rating-count {
+  font-weight: bold;
+  vertical-align: middle;
+  margin-left: 2px;
 }
 
 /********************************* Most Played Champions *********************************/
@@ -417,6 +423,15 @@
 }
 
 /********************************* Most Played Champions *********************************/
+
+.most-played-box {
+  margin-bottom: 2px;
+  font-weight: bold;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  background: #F5F5F5;
+}
 
 .champions {
   display: table;

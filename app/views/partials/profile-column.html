@@ -17,18 +17,32 @@
                </button>
             </div>
             <div class="profile-usermenu">
+                {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
                 <ul class="nav">
                   <li class="active">
-                     <a href="#">
-                     <i class="glyphicon glyphicon-heart"></i>
-                     Summoner Rating {{ summoner.average.toFixed(1) }}</a>
+                     <a href={{ reviewRoute }}>
+                        <i class="glyphicon glyphicon-heart"></i>
+                        Summoner Rating
+                        {% if summoner.average == 0 %}
+                           0.0
+                        {% else %}
+                           {{ summoner.average.toFixed(1) }}
+                        {% endif %}
+                     </a>                
                   </li>
                   <li>
-                     <div class="summoner_rating">
+                     <div class="summoner-rating">
                         {% set count =  summoner.average %}
                         {% for i in Array(Math.ceil(count)) %}
                            <span><img src="../img/star.png"</img></span>
                         {% endfor %}
+                        <span class="summoner-rating-count">
+                           {% if summoner.count == 0 %}
+                              No Reviews
+                           {% else %}
+                              {{ summoner.count }} Reviews
+                           {% endif %}
+                        </span>
                      </div>
                   </li>
                   <li>
@@ -49,16 +63,29 @@
                </ul>
             </div>
 
-   			<!-- Most Played Champions -->
-            <b>Season 5 Most Played Champions</b> <br></br>
+            <!-- Most Played Champions -->
 
-			{% set champions = summoner.currentSeason.champions %}
-   			{% include '../partials/most-played.html' with champions %}
+            {% if summoner.currentSeason.champions != null %}
+   			   
+               <div class="most-played-box">
+                  Season 5 Most Played Champions
+                  {% set champions = summoner.currentSeason.champions %}
+                  {% include '../partials/most-played.html' with champions %}
+               </div>
 
-            <br></br><b>Season 4 Most Played Champions</b> <br></br>
+            {% endif %}
+            
+            <br></br>
 
-			{% set champions = summoner.pastSeason.champions %}
-			{% include '../partials/most-played.html' with champions %}
+            {% if summoner.pastSeason.champions != null %}
+
+               <div class="most-played-box">
+                  Season 4 Most Played Champions
+                  {% set champions = summoner.pastSeason.champions %}
+                  {% include '../partials/most-played.html' with champions %}                  
+               </div>
+
+            {% endif %}
 
          </div> <!-- profile sidebar -->
       </div> <!-- profile column -->

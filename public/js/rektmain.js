@@ -33,7 +33,7 @@
                         required: "Please provide a password",
                         minlength: "Your password must be at least 6 characters long"
                     },
-                    password_confirm: "Please re-type your password",
+                    password_confirm: "Passwords must match",
                     email: "Please enter a valid email address",
                     agree: "Please accept our policy"
                 },
