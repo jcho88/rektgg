@@ -21,8 +21,8 @@
             {% set itemLink5 = endpoint + "/item/" + game.stats.item5 + ".png" %}
             {% set itemLink6 = endpoint + "/item/" + game.stats.item6 + ".png" %}
 
-            {% set spellLink1 = endpoint + "/spell/" + game.spell1 + ".png" %}
-            {% set spellLink2 = endpoint + "/spell/" + game.spell2 + ".png" %}
+            {% set spellLink1 = endpoint + "/summoner_spell/" + game.spell1 + ".png" %}
+            {% set spellLink2 = endpoint + "/summoner_spell/" + game.spell2 + ".png" %}
 
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
@@ -53,8 +53,8 @@
 						<img src= {{ champLink }} class="matches-summoner img-circle">
 					</div>
 					<div class="match-spells">
-						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
-						<div class="spell-img">{% if game.stats.item0 %} <img src= {{ itemLink0 }}> {% endif %}</div>
+						<div class="spell-img"> <img src= {{ spellLink1 }}> </div>
+						<div class="spell-img"> <img src= {{ spellLink2 }}> </div>
 					</div>
 					<div class="match-stats-1">
 						{% if isNaN(KDA) %}

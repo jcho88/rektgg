@@ -184,7 +184,7 @@
 
 /********************************* Most Played Champions *********************************/
 
-#profile-champions {
+/*#profile-champions {
   font-size: 12px;
 }
 
@@ -249,7 +249,7 @@
 .championWinRate {
   font-size: 20px;
   margin-top: 0px;
-}
+}*/
 
 
 /******************************** Content *********************************/
@@ -416,29 +416,47 @@
 
 }
 
-/* Most played champions */
-
-.champion-img {
-    height: 50px;
-    width: 50px;
-}
+/********************************* Most Played Champions *********************************/
 
 .champions {
-   display: table;
-   background: #b2cecf;
-   width: 100%;
-   font-size: 11px;
-   padding: 5px;
-   margin-bottom: 2px;
+  display: table;
+  background: #b2cecf;
+  width: 100%;
+  font-size: 11px;
+  padding: 5px;
+  margin-bottom: 2px;
 }
 
 .champions-row  {
     display: table-row;
 }
 
-.champions-img, .champions-info, .champions-played {
+.champions-img {
+  margin-right: 5px;
+}
+
+.champion-img {
+    height: 50px;
+    width: 50px;
+}
+
+.champion-name {
+  font-weight: bold;
+}
+
+.champions-name, .champions-info, .champions-played {
     display: table-cell;
-    vertical-align: middle;  
+    vertical-align: middle;
+}
+
+.champions-name {
+  width: 35%;
+  text-align: left;
+}
+
+.champions-info, .champions-played {
+  width: 40%;
+  text-align: center;
 }
 
 .champions-ratio {
@@ -486,7 +504,7 @@
 
     border-color: #009933;
     border-width: 1px;
-    background: #66FF99;
+    background: #33CC66;
 }
 
 .match-header-defeat {
