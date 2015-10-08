@@ -19,31 +19,38 @@
             <div class="profile-usermenu">
 
                {% if summoner.league != null %}
-
                   <div class="rankedStats">
                      <span>{{ summoner.league[0].entries[0].wins }} W {{ summoner.league[0].entries[0].losses }} L</span>
                   </div>
+               {% endif %}
 
-                  {# Tiers #}
+               {# Tiers #}
 
+               {% if summoner.league != null %}
                   {% if summoner.league[0].tier == "BRONZE" %}
-                     <span><img src="../img/bronze.png"></img></span>
+                     <img src="../img/bronze.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "SILVER" %}
-                     <span><img src="../img/silver.png"></img></span>
+                     <img src="../img/silver.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "GOLD" %}
-                     <span><img src="../img/gold.png"></img></span>
+                     <img src="../img/gold.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "PLATINUM" %}
-                     <span><img src="../img/platinum.png"></img></span>
+                     <img src="../img/platinum.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "DIAMOND" %}
-                     <span><img src="../img/diamond.png"></img></span>
+                     <img src="../img/diamond.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "MASTER" %}
-                     <span><img src="../img/master.png"></img></span>
+                     <img src="../img/master.png" class="tierIcon"></img>
                   {% elseif summoner.league[0].tier == "CHALLENGER" %}
-                     <span><img src="../img/challenger.png"></img></span>
+                     <img src="../img/challenger.png" class="tierIcon"></img>
                   {% endif %}
+               {% else %}
+                  <center>
+                     <img src="../img/unranked.png" class="tierIcon"></img>
+                  </center>
+               {% endif %}
 
-                  {# Division #}
-
+               {# Division #}
+                  
+               {% if summoner.league != null %}
                   <div class="summonerStats">
 
                      {% if summoner.league[0].tier == "BRONZE" %}
@@ -62,13 +69,16 @@
                         <span class="divisionRank">Challenger {{ summoner.league[0].entries[0].division }} </span>
                      {% endif %}
                      
-                     <div>
-                        <span class="leaguePoints">{{ summoner.league[0].entries[0].leaguePoints }} LP</span>
-                     </div>
+                     {% if summoner.league != null %}
+                        <div>
+                           <span class="leaguePoints">{{ summoner.league[0].entries[0].leaguePoints }} LP</span>
+                        </div>
+                     {% endif %}
 
-                  {% endif %}
-
-               </div>
+                  </div>
+               {% else %}
+                  <div class="divisionUnranked">Unranked</div>
+               {% endif %}
 
             </div>
             <div class="profile-usermenu">

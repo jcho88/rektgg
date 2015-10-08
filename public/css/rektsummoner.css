@@ -198,6 +198,14 @@
   border-width: 1px;
   text-align: center;
   font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.tierIcon {
+  height: auto;
+  width: 150px;
+  margin-top: 10px;
+  overflow: hidden;
 }
 
 .summonerStats {
@@ -207,6 +215,13 @@
 .divisionRank {
   font-weight: bold;
   font-size: 12px;
+}
+
+.divisionUnranked {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
 }
 
 .leaguePoints {
