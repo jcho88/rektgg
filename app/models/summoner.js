@@ -171,6 +171,7 @@ var SummonerSchema = new Schema({
 		  	}]
   },
 
+  reFreshDate: {type : Date, default : Date.now},
   createdAt  : {type : Date, default : Date.now}
 
 });
@@ -238,11 +239,15 @@ SummonerSchema.statics = {
   
   searchSummByID: function (summonerID, cb) {
 
-      this.findOne({nameNoWhiteSpace : summonerName }, function(err, summoner) {
-        if (!summoner || err) return cb(err, null);
-        loadData(summoner, cb);
-      })   
-    }
+      this.findOne({id: summonerID})
+      .exec(cb);   
+  },
+
+  refresh: function (summonerID, cb) {
+
+      this.findOne({id: id})
+      .exec(cb);   
+  }
 
   
 
