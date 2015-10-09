@@ -111,7 +111,7 @@ module.exports = function (app, passport) {
   app.param('summonerId', summoners.load);
   app.get('/summonerSearch?:query', summoners.search); //show summoner
   app.get('/summoners/:summonerId', summoners.show); //show summoner
-  app.get('/summoners/refresh', summoners.refresh); //show summoner
+  app.post('/summoners/refresh', summoners.refresh); //show summoner
 
   //add friend routes
   app.post('/addfriend', friends.addFriend);//post
@@ -120,14 +120,14 @@ module.exports = function (app, passport) {
   //app.get('/isFriend', friends.isFriend);
 
 //test post
-//   app.get('/testactivity', function (req, res){
+  app.get('/testactivity', function (req, res){
 
-//     console.log("test show");
+    console.log("test show");
 
-//     res.render('testactivity');
-//   }
+    res.render('testactivity');
+  }
 
-// );
+);
   //user wall page
   app.get('/activity/:userid', post.index);
   app.post('/activity/post', auth.requiresLogin, post.createPost)
