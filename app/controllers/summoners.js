@@ -414,7 +414,7 @@ exports.refresh = function (req, res){
                     async.parallel([
                         getLeague,
                         getCurrentSeason,
-                        getPastSeason,                                    }
+                        getPastSeason,                                    
 
                         getGamesWrapper
                     ],
@@ -439,6 +439,7 @@ exports.refresh = function (req, res){
                                     if(summonerData.games[i].createDate == summonerCurrentData.games[i].createDate){
                                         index = i;
                                         break;
+                                    }
 
                                 }
                                 //test = summonerData.games.slice(0,4)
