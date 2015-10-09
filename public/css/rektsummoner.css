@@ -187,25 +187,45 @@
   margin-left: 40px;
 }
 
+.summoner-rating .img {
+  margin-top: 2px;
+}
+
 .summoner-rating-count {
   font-weight: bold;
-  vertical-align: middle;
   margin-left: 2px;
 }
 
 .rankedStats {
+  font-family: "Verdana";
   border-style: solid;
   border-width: 1px;
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.rankedStatsHeader {
   font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.rankedWins {
+  font-size: 11px;
+  color: #66C285;
+}
+
+.rankedLosses {
+  font-size: 11px;
+  color: #D15353;
+}
+
+.rankedWinRate {
+  font-size: 11px;
 }
 
 .tierIcon {
   height: auto;
   width: 150px;
-  margin-top: 10px;
-  overflow: hidden;
 }
 
 .summonerStats {

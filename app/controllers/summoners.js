@@ -167,6 +167,9 @@ exports.search = function (req, res){
         if (err) return next(err);
 
         if (summoner) {
+            var totalRanked = parseInt(summoner.league[0].entries[0].wins) + parseInt(summoner.league[0].entries[0].losses);
+            summoner.winRate = (parseInt(summoner.league[0].entries[0].wins) / totalRanked * 100).toFixed(0);
+
             summonerData = summoner;
 
             res.render('summoners/show', {
