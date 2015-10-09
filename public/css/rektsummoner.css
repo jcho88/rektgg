@@ -184,10 +184,11 @@
 }
 
 .summoner-rating {
+  margin-top: 5px;
   margin-left: 40px;
 }
 
-.summoner-rating .img {
+.summoner-rating-stars {
   margin-top: 2px;
 }
 
@@ -589,6 +590,11 @@
     border-color: #CC4040;
     border-width: 1px;
     background: #EBB3B3;
+}
+
+.match-date {
+  float: right;
+  margin-right: 5px;
 }
 
 .matches {

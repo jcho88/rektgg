@@ -27,6 +27,9 @@
 			{% set kPlusA = parseInt(game.stats.championsKilled) + parseInt(game.stats.assists) %}
 			{% set KDA = kPlusA/parseInt(game.stats.numDeaths) %}
 
+			{% set gameDate = parseInt(game.createDate) %}
+			{% set matchDate = gameDate %}
+
 			{% if game.stats.win == 'true' %}
 			<div class="match-header">
 				<span><b>&nbsp{{ __(game.subType) }} - </b></span>
@@ -35,6 +38,9 @@
 				{% else %}
 					<span>Defeat</span>
 				{% endif %}
+				<span class="match-date">
+					{{ matchDate|date('m-d-Y') }}
+				</span>
 			</div>
 			<div class="matches">
 			{% else %}
@@ -45,6 +51,9 @@
 				{% else %}
 					<span>Defeat</span>
 				{% endif %}
+				<span class="match-date">
+					{{ matchDate|date('m-d-Y') }}
+				</span>
 			</div>
 			<div class="matches-defeat">
 			{% endif %}
