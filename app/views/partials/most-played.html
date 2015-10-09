@@ -4,18 +4,23 @@
 
 {% for champion in champions %}
 
-   {% if count < 6 && champion.id != 0 %}
+   	{% if count < 6 && champion.id != 0 %}
 
-   {% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.id + ".png" %}
-   {% set avgKills = champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed %}
-   {% set avgAssists = champion.stats.totalAssists / champion.stats.totalSessionsPlayed %}
-   {% set avgDeaths = champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed %}
-   {% set kPlusA = avgKills + avgAssists %}
+   	{% set champLink = "https://rektgg.s3.amazonaws.com/champion_square/" + champion.id + ".png" %}
+   	{% set avgKills = champion.stats.totalChampionKills / champion.stats.totalSessionsPlayed %}
+   	{% set avgAssists = champion.stats.totalAssists / champion.stats.totalSessionsPlayed %}
+   	{% set avgDeaths = champion.stats.totalDeathsPerSession / champion.stats.totalSessionsPlayed %}
+   	{% set kPlusA = avgKills + avgAssists %}
 
 	<div class="champions">
 		<div class="champions-row">
 			<div class="champions-img">
 				<img class="champion-img img-circle" src= {{ champLink }}></img>
+			</div>
+			<div class="champions-name">
+				<div class="champion-name">
+					<span><script> getChampionName( {{ champion.id }} ) </script></span>
+				</div>
 				<span>{{ (champion.stats.totalMinionKills / champion.stats.totalSessionsPlayed).toFixed(1) }} CS </span>
 			</div>
 			<div class="champions-info">

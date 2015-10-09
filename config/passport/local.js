@@ -18,7 +18,7 @@ module.exports = new LocalStrategy({
   },
   function(email, password, done) {
     var options = {
-      criteria: { email: email },
+      criteria: { email: email.toLowerCase() },
       select: 'name username email hashed_password salt'
     };
     User.load(options, function (err, user) {

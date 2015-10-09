@@ -10,6 +10,7 @@ var home = require('home');
 var users = require('users');
 var articles = require('articles');
 var comments = require('comments');
+var testFriends = require('testFriends');
 
 var tags = require('tags');
 var auth = require('./middlewares/authorization');
@@ -148,6 +149,8 @@ module.exports = function (app, passport) {
 
   // home route
   app.get('/', home.index);
+
+  app.get('/friendList', testFriends.index);
 
   // comment routes
   app.param('commentId', comments.load);

@@ -15,7 +15,9 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-    {% include '../partials/footer.html' %}
+    <footer class="footer">
+      {% include '../partials/footer.html' %}
+    </footer>
   {% else %}
     <div class="full-width-container">
       <div class="page-header">
@@ -25,7 +27,9 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-    {% include '../partials/footer.html' %}
+    <footer class="footer">
+      {% include '../partials/footer.html' %}
+    </footer>
   {% endif %}
   
 

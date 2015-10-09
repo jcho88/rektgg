@@ -1,5 +1,22 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: auto;
+  background-color: #C7E4AF;
+}
+
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: #C1E1A6;
   border-color: #e7e7e7;
   font-family:"Helvetica Neue";
 }
@@ -73,6 +90,18 @@
 	margin-left: auto;	
 }
 
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .logofield img{
+    width: 60%;
+  }
+
+  .logofieldreg img {
+    width: 60%;
+  }
+
+}
+
 .regfield {
 	margin-top: 50px;
 	margin-right: auto;
@@ -83,14 +112,6 @@
 
 .regfield input {
 	width: 350px;
-}
-
-.footerfield {
-	margin-top: 350px;
-}
-
-.footerfieldreg {
-	margin-top: 150px;
 }
 
 .form-group.required .control-label:after { 

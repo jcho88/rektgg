@@ -11,12 +11,12 @@
 
 .cover-container {
     height:350px;
-    margin-top:-5px;
-    background-image:url(https://pbs.twimg.com/profile_banners/1029142980/1437721222/1500x500);
+    margin-top:-10px;
+    background-image:url(../img/lolbg.jpg);
     background-size:cover;
     position:relative;
     margin-bottom:25px;
-    background-position:center    
+    background-position:30% 20%;
 }
 
 .border-black75 {
@@ -120,7 +120,7 @@
 
 .profile-usertitle-name {
   color: #5a7391;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 7px;
 }
@@ -141,6 +141,11 @@
 .profile-usermenu {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.profile-usermenu img {
+  margin-top: -50px;
+  margin-bottom: -40px;
 }
 
 .profile-usermenu ul li {
@@ -178,13 +183,74 @@
   margin-left: -2px;
 }
 
-.summoner_rating {
+.summoner-rating {
   margin-left: 40px;
+}
+
+.summoner-rating .img {
+  margin-top: 2px;
+}
+
+.summoner-rating-count {
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.rankedStats {
+  font-family: "Verdana";
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.rankedStatsHeader {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.rankedWins {
+  font-size: 11px;
+  color: #66C285;
+}
+
+.rankedLosses {
+  font-size: 11px;
+  color: #D15353;
+}
+
+.rankedWinRate {
+  font-size: 11px;
+}
+
+.tierIcon {
+  height: auto;
+  width: 150px;
+}
+
+.summonerStats {
+  display: inline-block;
+}
+
+.divisionRank {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.divisionUnranked {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+
+.leaguePoints {
+  font-size: 14px;
 }
 
 /********************************* Most Played Champions *********************************/
 
-#profile-champions {
+/*#profile-champions {
   font-size: 12px;
 }
 
@@ -249,7 +315,7 @@
 .championWinRate {
   font-size: 20px;
   margin-top: 0px;
-}
+}*/
 
 
 /******************************** Content *********************************/
@@ -416,29 +482,56 @@
 
 }
 
-/* Most played champions */
+/********************************* Most Played Champions *********************************/
 
-.champion-img {
-    height: 50px;
-    width: 50px;
+.most-played-box {
+  margin-bottom: 2px;
+  font-weight: bold;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  background: #F5F5F5;
 }
 
 .champions {
-   display: table;
-   background: #b2cecf;
-   width: 100%;
-   font-size: 11px;
-   padding: 5px;
-   margin-bottom: 2px;
+  display: table;
+  background: #b2cecf;
+  width: 100%;
+  font-size: 11px;
+  padding: 5px;
+  margin-bottom: 2px;
 }
 
 .champions-row  {
     display: table-row;
 }
 
-.champions-img, .champions-info, .champions-played {
+.champions-img {
+  margin-right: 5px;
+}
+
+.champion-img {
+    height: 50px;
+    width: 50px;
+}
+
+.champion-name {
+  font-weight: bold;
+}
+
+.champions-name, .champions-info, .champions-played {
     display: table-cell;
-    vertical-align: middle;  
+    vertical-align: middle;
+}
+
+.champions-name {
+  width: 35%;
+  text-align: left;
+}
+
+.champions-info, .champions-played {
+  width: 40%;
+  text-align: center;
 }
 
 .champions-ratio {
@@ -486,7 +579,7 @@
 
     border-color: #009933;
     border-width: 1px;
-    background: #66FF99;
+    background: #72E2A1;
 }
 
 .match-header-defeat {
@@ -495,14 +588,14 @@
 
     border-color: #CC4040;
     border-width: 1px;
-    background: #FF6666;
+    background: #EBB3B3;
 }
 
 .matches {
   display: table;
   width: 100%;
   font-size: 11px;
-  background: #CCFFCC;
+  background: #E0FFE0;
   padding: 5px;
   margin-bottom: 7px;
 }
@@ -511,7 +604,7 @@
   display: table;
   width: 100%; 
   font-size: 11px;
-  background: #ebc6c3;
+  background: #F5D9D9;
   padding: 5px;
   margin-bottom: 7px;
 }
@@ -558,3 +651,46 @@
 }
 
 .match-summoners { white-space: nowrap; }
+
+/******************************** Friends ********************************/
+
+.list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+}
+
+.list-group-item {
+  margin: 5px;
+}
+
+.list-group-item img {
+    height:80px; 
+    width:80px;
+}
+
+.prj-name {
+    color:#5bc0de;    
+}
+
+.break{
+    width:100%;
+    margin:20px;
+}
+
+.name {
+    color:#5bc0de;    
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .list-content {
+    min-height: 0px;
+  }
+
+  .list-group-item {
+    margin: 5px;
+  }
+
+}

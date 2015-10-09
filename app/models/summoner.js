@@ -182,6 +182,7 @@ var loadData = function(summoner, cb) {
     if(!rating) return cb(err, summoner);
     if(rating[0] != null) {
       summoner.average = rating[0].average;
+      summoner.count = rating[0].count;
     }
     cb(err, summoner);
   });
@@ -194,7 +195,7 @@ SummonerSchema.methods = {
   getAvgRating: function(callback) {
       Rating.aggregate([
           { $match: { summoner: this._id } },
-          { $group: { _id: '$summoner', average: { $avg: '$value' } } }
+          { $group: { _id: '$summoner', average: { $avg: '$value' }, count: { $sum: 1 } } }
       ], function(err, result) {
           callback(err, result);
       })

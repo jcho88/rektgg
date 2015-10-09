@@ -17,21 +17,108 @@
                </button>
             </div>
             <div class="profile-usermenu">
+
+               {% if summoner.league != null %}
+
+                  <div class="rankedStats">
+                     <div class="rankedStatsHeader">
+                        Solo Queue
+                     </div>
+
+                     <span class="rankedWins">{{ summoner.league[0].entries[0].wins }} <b>W</b></span>
+                     <span class="rankedLosses">{{ summoner.league[0].entries[0].losses }} <b>L</b></span>
+                     <span class="rankedWinRate">(<b>{{ summoner.winRate }}</b>% Win Rate) </span>
+                  </div>
+
+               {% endif %}
+
+               {# Tiers #}
+
+               {% if summoner.league != null %}
+                  {% if summoner.league[0].tier == "BRONZE" %}
+                     <img src="../img/bronze.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "SILVER" %}
+                     <img src="../img/silver.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "GOLD" %}
+                     <img src="../img/gold.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "PLATINUM" %}
+                     <img src="../img/platinum.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "DIAMOND" %}
+                     <img src="../img/diamond.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "MASTER" %}
+                     <img src="../img/master.png" class="tierIcon"></img>
+                  {% elseif summoner.league[0].tier == "CHALLENGER" %}
+                     <img src="../img/challenger.png" class="tierIcon"></img>
+                  {% endif %}
+               {% else %}
+                  <center>
+                     <img src="../img/unranked.png" class="tierIcon"></img>
+                  </center>
+               {% endif %}
+
+               {# Division #}
+                  
+               {% if summoner.league != null %}
+                  <div class="summonerStats">
+
+                     {% if summoner.league[0].tier == "BRONZE" %}
+                        <span class="divisionRank">Bronze {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "SILVER" %}
+                        <span class="divisionRank">Silver {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "GOLD" %}
+                        <span class="divisionRank">Gold {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "PLATINUM" %}
+                        <span class="divisionRank">Platinum {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "DIAMOND" %}
+                        <span class="divisionRank">Diamond {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "MASTER" %}
+                        <span class="divisionRank">Master {{ summoner.league[0].entries[0].division }} </span>
+                     {% elseif summoner.league[0].tier == "CHALLENGER" %}
+                        <span class="divisionRank">Challenger {{ summoner.league[0].entries[0].division }} </span>
+                     {% endif %}
+                     
+                     {% if summoner.league != null %}
+                        <div>
+                           <span class="leaguePoints">{{ summoner.league[0].entries[0].leaguePoints }} LP</span>
+                        </div>
+                     {% endif %}
+
+                  </div>
+               {% else %}
+                  <div class="divisionUnranked">Unranked</div>
+               {% endif %}
+
+            </div>
+            <div class="profile-usermenu">
+                {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
                 <ul class="nav">
                   <li class="active">
-                     <a href="#">
-                     <i class="glyphicon glyphicon-heart"></i>
-                     Summoner Rating {{ summoner.average.toFixed(1) }}</a>
+                     <a href={{ reviewRoute }}>
+                        <i class="glyphicon glyphicon-heart"></i>
+                        Summoner Rating
+                        {% if summoner.average == 0 %}
+                           0.0
+                        {% else %}
+                           {{ summoner.average.toFixed(1) }}
+                        {% endif %}
+                     </a>                
                   </li>
-                  <li>
-                     <div class="summoner_rating">
-                        {% set count =  summoner.average %}
-                        {% for i in Array(Math.ceil(count)) %}
-                           <span><img src="../img/star.png"</img></span>
-                        {% endfor %}
-                     </div>
-                  </li>
-                  <li>
+
+                  <div class="summoner-rating">
+                     {% set count =  summoner.average %}
+                     {% for i in Array(Math.ceil(count)) %}
+                        <img src="../img/star.png"</img></span>
+                     {% endfor %}
+                     <span class="summoner-rating-count">
+                        {% if summoner.count == 0 %}
+                           No Reviews
+                        {% else %}
+                           {{ summoner.count }} Reviews
+                        {% endif %}
+                     </span>
+                  </div>
+
+                  {# <li>
                      <a href="#">
                      <i class="glyphicon glyphicon-user"></i>
                      Account Settings </a>
@@ -45,20 +132,33 @@
                      <a href="#">
                      <i class="glyphicon glyphicon-flag"></i>
                      Help </a>
-                  </li>
+                  </li> #}
                </ul>
             </div>
 
-   			<!-- Most Played Champions -->
-            <b>Season 5 Most Played Champions</b> <br></br>
+            <!-- Most Played Champions -->
 
-			{% set champions = summoner.currentSeason.champions %}
-   			{% include '../partials/most-played.html' with champions %}
+            {% if summoner.currentSeason.champions != null %}
+   			   
+               <div class="most-played-box">
+                  Season 5 Most Played Champions
+                  {% set champions = summoner.currentSeason.champions %}
+                  {% include '../partials/most-played.html' with champions %}
+               </div>
 
-            <br></br><b>Season 4 Most Played Champions</b> <br></br>
+            {% endif %}
+            
+            <br></br>
 
-			{% set champions = summoner.pastSeason.champions %}
-			{% include '../partials/most-played.html' with champions %}
+            {% if summoner.pastSeason.champions != null %}
+
+               <div class="most-played-box">
+                  Season 4 Most Played Champions
+                  {% set champions = summoner.pastSeason.champions %}
+                  {% include '../partials/most-played.html' with champions %}                  
+               </div>
+
+            {% endif %}
 
          </div> <!-- profile sidebar -->
       </div> <!-- profile column -->
