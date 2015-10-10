@@ -138,6 +138,11 @@
   margin-right: 5px;
 }
 
+.friend-btn {
+  background-color: #D14D4E;
+  color: #fff;
+}
+
 .profile-usermenu {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -257,19 +262,23 @@
 }
 
 .divisionRank {
+  color: #849FB2;
   font-weight: bold;
   font-size: 12px;
 }
 
 .divisionUnranked {
+  color: #728289;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
 }
 
 .leaguePoints {
-  font-size: 14px;
+  color: #7f8c8d;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .divisionName {
