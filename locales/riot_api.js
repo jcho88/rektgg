@@ -11,7 +11,7 @@
     "NORMAL_3x3": "Normal 3v3",
     "BOT_3x3": "Bot 3v3",
     "CAP_5x5": "Cap 5v3",
-    "ARAM_UNRANKED_5x5": "ARAM Unranked 5v5",
+    "ARAM_UNRANKED_5x5": "ARAM",
     "ONEFORALL_5x5": "One For All 5v5",
     "FIRSTBLOOD_1x1": "First Blood 1v1",
     "FIRSTBLOOD_2x2": "First Blood 2v2",
