@@ -242,9 +242,10 @@ exports.load = function (req, res, next, id){
 };
 
 exports.show = function (req, res){
+
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
   var perPage = 10; 
-  summoner.games.sort(function(a, b) {
+  req.summoner.games.sort(function(a, b) {
       return parseFloat(b.createDate) - parseFloat(a.createDate);
       });            
 
@@ -462,12 +463,23 @@ exports.refresh = function (req, res){
                                 summonerDataUpdate.games = {}
                             }else{ 
                                 // has new data to update.
-                                for(i=0; i < summonerData.games.length; i++){
-                                    if(summonerData.games[i].createDate == summonerCurrentData.games[i].createDate){
-                                        index = i;
-                                        break;
-                                    }
+                                var tempCurrentData = 0;
+                                if(summonerCurrentData.games.length < 10){
+                                    tempCurrentData = summonerCurrentData.games.length
+                                }else{
+                                    tempCurrentData = 10;
+                                }
 
+                                for(i=0; i < tempCurrentData; i++){
+                                    for(j =0; j<summonerData.games.length; j++){
+                                        if(summonerData.games[j].createDate == summonerCurrentData.games[i].createDate){
+                                            index = j;
+                                            break;
+                                        }
+                                    }
+                                  if(index != -1){
+                                        break;
+                                    }                                    
                                 }
                                 //test = summonerData.games.slice(0,4)
                                 //console.log(test)
@@ -477,6 +489,7 @@ exports.refresh = function (req, res){
                                     //console.log(summonerDataUpdate)
                                     //console.log("at index = -1")
                                 }else{
+                                    console.log("index in != -1 " + index)
                                     summonerDataUpdate.games = summonerData.games.slice(0,index)
                                     //console.log("at index != -1")
                                 }
