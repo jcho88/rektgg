@@ -138,6 +138,11 @@
   margin-right: 5px;
 }
 
+.friend-btn {
+  background-color: #D14D4E;
+  color: #fff;
+}
+
 .profile-usermenu {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -145,7 +150,7 @@
 
 .profile-usermenu img {
   margin-top: -50px;
-  margin-bottom: -40px;
+  margin-bottom: -45px;
 }
 
 .profile-usermenu ul li {
@@ -201,6 +206,8 @@
   font-family: "Verdana";
   border-style: solid;
   border-width: 1px;
+  border-color: #ccc;
+  background: #F5F5F5;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -208,6 +215,21 @@
 .rankedStatsHeader {
   font-weight: bold;
   font-size: 12px;
+}
+
+.unrankedInfo {
+  font-family: "Verdana";
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  background: #F5F5F5;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.unrankedInfoHeader {
+  font-weight: bold;
+  font-size: 12px;  
 }
 
 .rankedWins {
@@ -229,24 +251,38 @@
   width: 150px;
 }
 
+.unrankedIcon {
+  margin-top: 30px;
+}
+
 .summonerStats {
   display: inline-block;
+  vertical-align: middle;
+  margin-top: 30px;
 }
 
 .divisionRank {
+  color: #849FB2;
   font-weight: bold;
   font-size: 12px;
 }
 
 .divisionUnranked {
+  color: #728289;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
 }
 
 .leaguePoints {
-  font-size: 14px;
+  color: #7f8c8d;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.divisionName {
+  font-size: 12px;
 }
 
 /********************************* Most Played Champions *********************************/

@@ -11,7 +11,7 @@
                </div>
             </div>
             <div class="profile-userbuttons">
-               <button type="button" class="btn btn-info btn-sm">
+               <button type="button" class="btn btn-sm friend-btn">
                   <i class="fa fa-user-plus"></i>
                   Friend Request
                </button>
@@ -36,7 +36,15 @@
                      <span class="rankedWins">{{ summoner.league[0].entries[0].wins }} <b>W</b></span>
                      <span class="rankedLosses">{{ summoner.league[0].entries[0].losses }} <b>L</b></span>
                      <span class="rankedWinRate">(<b><script> getWinRate() </script></b>% Win Rate) </span>
-                     
+
+                  </div>
+
+               {% else %}
+
+                  <div class="unrankedInfo">
+                     <div class="unrankedInfoHeader">
+                        Summoner level {{ summoner.summonerLevel }}
+                     </div>
                   </div>
 
                {% endif %}
@@ -89,6 +97,10 @@
                      {% if summoner.league != null %}
                         <div>
                            <span class="leaguePoints">{{ summoner.league[0].entries[0].leaguePoints }} LP</span>
+                        </div>
+
+                        <div>
+                           <span class="divisionName"><p class="text-muted">{{ summoner.league[0].name }}</p></span>
                         </div>
                      {% endif %}
 
