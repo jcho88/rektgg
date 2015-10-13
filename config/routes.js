@@ -116,7 +116,7 @@ module.exports = function (app, passport) {
   //add friend routes
   app.post('/addfriend', friends.addFriend);//post
   app.post('/deletefriend', friends.deleteFriend);//delete
-  app.get('/getFriendList', friends.isFriend);
+  app.get('/friends/:username', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
 
 //test post
@@ -150,7 +150,7 @@ module.exports = function (app, passport) {
   // home route
   app.get('/', home.index);
 
-  app.get('/friendList', testFriends.index);
+  //app.get('/friendList', testFriends.index);
 
   // comment routes
   app.param('commentId', comments.load);

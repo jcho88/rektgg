@@ -30,9 +30,10 @@
                       <div class="clearfix"></div>
                       <ul class="nav nav-tabs">
                       
-                        {% set matchesRoute = "/summoners/" + summoner._id %}
+                        {% set matchesRoute = "/summoners/" + summoner.region + "/" + summoner._id %}
                         {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
-                        {% set activityRoute = "/activity/" + user._id %}
+                        {% set activityRoute = "/activity/" + req.user._id %}
+                        {% set friendsRoute = "/friends/" + req.user._id %}
 
                         {% if summoner %}
                           {% if (isActive('summoners') || isActive('summonerSearch')) %}
@@ -65,29 +66,24 @@
                                 Activity
                               </a>
                             </li>
-                            {% else %}
                             <li class="">
-                              <a href="#tab2" data-toggle="tab">
+                              <a href={{ friendsRoute }}>
+                                Friends
+                              </a>
+                            </li>
+                          {% elseif (isActive('friend')) %}
+                            <li class="">
+                              <a href= {{ activityRoute }}>
                                 Activity
                               </a>
                             </li>
-                          {% endif %}
-
-                          {% if (isActive('friends')) %}
                             <li class="active">
                               <a>
                                 Friends
                               </a>
                             </li>
-                            {% else %}
-                            <li class="">
-                              <a href="#tab2" data-toggle="tab">
-                                Friends
-                              </a>
-                            </li>
                           {% endif %}
                         {% endif %}
-
                       </ul>
 
                 {% block content %}{% endblock %}
