@@ -244,10 +244,17 @@ SummonerSchema.statics = {
       .exec(cb);   
   },
 
-  refresh: function (summonerID, cb) {
+  refresh: function (summonerID,summonerData,summonerDataUpdate, cb) {
 
-      this.findOne({id: id})
-      .exec(cb);   
+    this.update({id: summonerID },
+              { $pushAll: { 'games': summonerDataUpdate.games },  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
+               profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
+               league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
+
+              } },
+              {safe: true, upsert: true})
+
+      .exec(cb);
   }
 
   
