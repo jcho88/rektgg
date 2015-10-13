@@ -1,15 +1,21 @@
    <!-- views/partials/matches.html -->  
 
 	{% set endpoint = "https://rektgg.s3.amazonaws.com" %}
+	{% set refresh = '/summoners/refresh' %}
+	{% set startSlice = page-1 %}
+	{%set gamesArray = summoner.games.slice(startSlice*10,page*10) %}
 
    <div id="contentCol">
       <div class="content-sidebar">
-
-         <button type="button" class="btn btn-success" style="float: right;">Refresh</button>
+ 		<form method="post" action={{refresh}} style=" float: right;">
+             <input name="summonerId" type="hidden" value="{{summoner.id}}"> 
+             <button type="submit" class="btn btn-success" style="float: right;">Refresh</button>
+         </form>      		
+         
          <br></br>
          <br></br>
 
-         {% for game in summoner.games %}
+         {% for game in gamesArray %}
 
             {% set champLink = endpoint + "/champion_square/" + game.championId + ".png" %}
 
@@ -143,6 +149,14 @@
 			</div>
 
          {% endfor %}
+
+        {% if (pages > 1) %}
+          <ul class="pagination">
+            {% autoescape false %}
+              {{ createPagination(pages, page) }}
+            {% endautoescape %}
+          </ul>
+        {% endif %}          
 
       </div> <!-- content sidebar -->
    </div> <!-- content column -->
