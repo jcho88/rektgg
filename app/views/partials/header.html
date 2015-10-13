@@ -53,7 +53,8 @@
 
             {% if (req.isAuthenticated()) %}
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="../navbar/">My Profile</a></li>
+                {% set myProfileRoute = "/activity/" + req.user._id %}
+                <li><a href={{ myProfileRoute }}>My Profile</a></li>
                 {% if (isActive('user')) %}
                   <li><a href="../settings">Edit</a></li>
                 {% endif %}
