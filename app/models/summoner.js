@@ -20,7 +20,7 @@ var SummonerSchema = new Schema({
   region: {type : String, default : '', trim : true},
   isVerified: {type : Boolean, default : false , trim : true},
   ownerID: {type : String, default : '', trim : true},
-  fellowPlayerNames: {type : {}, default: {}},
+  //fellowPlayerNames: {type : {}, default: {}},
   //games where it display indivisual stats.
   games: [{
   			fellowPlayers: [{
