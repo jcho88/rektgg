@@ -286,6 +286,14 @@
   font-size: 12px;
 }
 
+@media all and (max-width:1380px) {
+
+    .divisionName {
+      font-size: 10px;
+    }
+
+}
+
 /********************************* Most Played Champions *********************************/
 
 /*#profile-champions {
