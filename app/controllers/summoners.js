@@ -17,6 +17,7 @@ exports.search = function (req, res){
     name = name.toString("utf8");
     name = name.replace(/\s/g, '');
     var summonerData = new Summoner()
+    var fellowPlayersNames = {};
 
     var statusCode = {};
     
@@ -142,7 +143,7 @@ exports.search = function (req, res){
                                 results = JSON.parse(body);
                                 
                                 // TODO: Don't store fellow player names inside the Summoner model
-                                _.extend(summonerData.fellowPlayerNames, results);
+                                _.extend(fellowPlayersNames, results);
                                 callback();
                             }
                 });
@@ -204,6 +205,13 @@ exports.search = function (req, res){
                     ],
                     function(err) {
                         if (err) return next(err);
+
+                    /*set games.fellowPlayers.name */    
+                    _.each(summonerData.games, function(game) {
+                        _.each(game.fellowPlayers, function(player) {
+                            player.name = fellowPlayersNames[player.summonerId]
+                        })
+                    })                        
                         summonerData.save(function(err, summoner) {
                           if(!err) {
                             summoner.games.sort(function(a, b) {
@@ -268,6 +276,7 @@ exports.refresh = function (req, res){
     var summonerID = req.body.summonerId;
 
     var summonerData = new Summoner();
+    var fellowPlayersNames = {};
     var summonerDataUpdate = {};
     var summonerCurrentData = {};
     var statusCode = {};
@@ -399,7 +408,7 @@ exports.refresh = function (req, res){
                                 results = JSON.parse(body);
                                 
                                 // TODO: Don't store fellow player names inside the Summoner model
-                                _.extend(summonerData.fellowPlayerNames, results);
+                                _.extend(fellowPlayersNames, results);
                                 callback();
                             }
                 });
@@ -448,16 +457,23 @@ exports.refresh = function (req, res){
                     ],
                     function(err) {
                         if (err) return next(err);
-                         console.log("summonerData.nameNoWhiteSpace " + summonerData.nameNoWhiteSpace )
+                        //console.log(summonerData.fellowPlayerNames)
+                    /*set games.fellowPlayers.name */    
+                        _.each(summonerData.games, function(game) {
+                            _.each(game.fellowPlayers, function(player) {
+                                player.name = fellowPlayersNames[player.summonerId]
+                            })
+                        }) 
+
                         if(statusCode.getGamesErr != true){
                             //console.log(summonerData.games[0])
-                            console.log(summonerCurrentData.games[0].createDate)
+                            //console.log(summonerCurrentData.games[0].createDate)
 
                             summonerCurrentData.games.sort(function(a, b) {
                                 return parseFloat(b.createDate) - parseFloat(a.createDate);
                                 });
 
-                            console.log(summonerCurrentData.games[0].createDate)
+                            //console.log(summonerCurrentData.games[0].createDate)
 
                             if(summonerCurrentData.games[0].createDate == summonerData.games[0].createDate){
                                 summonerDataUpdate.games = {}
