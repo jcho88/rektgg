@@ -14,10 +14,12 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('config');
 var I18n = require('i18n-2');
+var favicon = require('serve-favicon');
 
 var app = express();
 var port = process.env.PORT || 3000;
 
+app.use(favicon( __dirname + '/public/img/favicon.ico'));
 // Attach the i18n property to the express request object
 // And attach helper methods for use in templates
 I18n.expressBind(app, {

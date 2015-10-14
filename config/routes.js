@@ -219,6 +219,7 @@ module.exports = function (app, passport) {
     });
   });
 
+  app.get('/help', users.help);
 
   // article routes
   app.param('id', articles.load);

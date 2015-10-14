@@ -53,6 +53,7 @@
 
             {% if (req.isAuthenticated()) %}
               <ul class="nav navbar-nav navbar-right">
+                <li><a href="/help">Help</a></li>
                 {% set myProfileRoute = "/activity/" + req.user._id %}
                 <li><a href={{ myProfileRoute }}>My Profile</a></li>
                 {% if (isActive('user')) %}
@@ -64,7 +65,7 @@
               </ul>
             {% else %}
               <ul class="nav navbar-nav navbar-right">
-
+                <li><a href="/help">Help</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
                   <ul id="login-dp" class="dropdown-menu">

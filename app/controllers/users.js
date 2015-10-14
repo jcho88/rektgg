@@ -140,3 +140,11 @@ function login (req, res) {
   delete req.session.returnTo;
   res.redirect(redirectTo);
 };
+
+/**
+ * Help
+ */
+
+exports.help = function (req, res) {
+  res.render('partials/help')
+}
