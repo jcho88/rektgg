@@ -1,0 +1,27 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <center>
+      <div class="logofield">
+        <a href="/"><img src="img/logo.png"></a>
+      </div>
+    </center>
+    <div class="searchfield">
+      <center>
+        <legend>Forgot Password</legend>
+        <form method="post" role="form" class="inline">
+          <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+      
+          <div class="form-group">
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+          </div>
+
+          <button type="submit" class="btn btn-info">Reset Password</button>
+        </form>
+      </center>
+    </div>
+  </div>
+
+{% endblock %}

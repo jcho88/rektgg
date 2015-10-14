@@ -41,6 +41,18 @@
                     form.submit();
                 }
             });
+
+            $("#summoner-search").validate({
+                rules: {
+                    summonerName: "required"
+                },
+                messages: {
+                    summonerName: "Summoner name cannot be blank"
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
         }
     }
 

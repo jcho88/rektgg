@@ -32,7 +32,9 @@ var UserSchema = new Schema({
   profileImage: {type : String, default : '', trim : true},
   profileCoverImage: {type : String, default : '', trim : true},
   privacy: {type : String, default : 'P' , trim : true},
-  createdAt: {type : Date, default : Date.now} 
+  createdAt: {type : Date, default : Date.now},
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 /**

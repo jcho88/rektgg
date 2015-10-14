@@ -5,21 +5,25 @@
 
 // Note: We can require users, articles and other cotrollers because we have
 // set the NODE_PATH to be ./app/controllers (package.json # scripts # start)
-
+var mongoose = require('mongoose');
 var home = require('home');
 var users = require('users');
 var articles = require('articles');
 var comments = require('comments');
-var testFriends = require('testFriends');
 
 var tags = require('tags');
 var auth = require('./middlewares/authorization');
+var nodemailer = require('nodemailer');
+var async = require('async');
+var crypto = require('crypto');
+var User = mongoose.model('User')
 
 //for Rekt
 var summoners = require('summoners');
 var friends = require('friends');
 var ratings = require('ratings');
 var post = require('post');
+//var testFriends = require('testFriends');
 
 /**
  * Route middlewares
@@ -97,6 +101,125 @@ module.exports = function (app, passport) {
 
   app.param('userId', users.load);
 
+  // forgot password
+
+  app.get('/forgot', function(req, res) {
+    res.render('users/forgot', {
+      user: req.user
+    });
+  });
+
+  app.post('/forgot', function(req, res, next) {
+    async.waterfall([
+      function(done) {
+        crypto.randomBytes(20, function(err, buf) {
+          var token = buf.toString('hex');
+          done(err, token);
+        });
+      },
+      function(token, done) {
+        User.findOne({ email: req.body.email }, function(err, user) {
+          if (!user) {
+            req.flash('error', 'No account with that email address exists.');
+            return res.redirect('/forgot');
+          }
+
+          user.resetPasswordToken = token;
+          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+          user.save(function(err) {
+            done(err, token, user);
+          });
+        });
+      },
+      function(token, user, done) {
+        var smtpTransport = nodemailer.createTransport('SMTP', {
+          service: 'gmail',
+          auth: {
+              user: 'RektGGTemp@gmail.com',
+              pass: 'ronintyco'
+          }
+        });
+        var mailOptions = {
+          to: user.email,
+          from: 'RektGGTemp@gmail.com',
+          subject: 'RektGG Password Reset',
+          text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err) {
+          req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+          done(err, 'done');
+        });
+      }
+    ], function(err) {
+      if (err) return next(err);
+      res.redirect('/forgot');
+    });
+  });
+
+  // reset password
+
+  app.get('/reset/:token', function(req, res) {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+      if (!user) {
+        req.flash('error', 'Password reset token is invalid or has expired.');
+        return res.redirect('/forgot');
+      }
+      res.render('users/reset', {
+        user: req.user
+      });
+    });
+  });
+
+  app.post('/reset/:token', function(req, res) {
+    async.waterfall([
+      function(done) {
+        User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+          if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('back');
+          }
+
+          user.password = req.body.password;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+          user.save(function(err) {
+            req.logIn(user, function(err) {
+              done(err, user);
+            });
+          });
+        });
+      },
+      function(user, done) {
+        var smtpTransport = nodemailer.createTransport('SMTP', {
+          service: 'gmail',
+          auth: {
+              user: 'RektGGTemp@gmail.com',
+              pass: 'ronintyco'
+          }
+        });
+        var mailOptions = {
+          to: user.email,
+          from: 'RektGGTemp@gmail.com',
+          subject: 'Your password has been changed',
+          text: 'Hello,\n\n' +
+            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err) {
+          req.flash('success', 'Success! Your password has been changed.');
+          done(err);
+        });
+      }
+    ], function(err) {
+      res.redirect('/');
+    });
+  });
+
+
   // article routes
   app.param('id', articles.load);
   app.get('/articles', articles.index); //load all articles
@@ -116,7 +239,7 @@ module.exports = function (app, passport) {
   //add friend routes
   app.post('/addfriend', friends.addFriend);//post
   app.post('/deletefriend', friends.deleteFriend);//delete
-  app.get('/getFriendList', friends.isFriend);
+  app.get('/friends/:username', friends.isFriend);
   //app.get('/isFriend', friends.isFriend);
 
 //test post
@@ -150,7 +273,7 @@ module.exports = function (app, passport) {
   // home route
   app.get('/', home.index);
 
-  app.get('/friendList', testFriends.index);
+  //app.get('/friendList', testFriends.index);
 
   // comment routes
   app.param('commentId', comments.load);
