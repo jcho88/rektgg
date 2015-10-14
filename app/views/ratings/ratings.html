@@ -89,7 +89,8 @@
                 </div>
                 <div class="pull-left meta">
                     <div class="title h5">
-                        <a href="#"><b>{{ rating.user.username }}</b></a>
+                        {% set myProfileRoute = "/activity/" + rating.user._id %}
+                        <a href={{ myProfileRoute }}><b>{{ rating.user.username }}</b></a>
                         commented
                     </div>
                 	{% set count =  rating.value %}
