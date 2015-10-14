@@ -72,19 +72,31 @@
 						<div class="spell-img"> <img src= {{ spellLink2 }}> </div>
 					</div>
 					<div class="match-stats-1">
+						
 						{% if isNaN(KDA) %}
 							<div><b>Best KDA</b></div>
 						{% else %}
 							<div><b>{{ KDA.toFixed(1) }} KDA</b></div>
 						{% endif %}
 
-						<span>{{ game.stats.championsKilled }} / </span>
+						{% if game.stats.championsKilled == 0 %}
+							<span> 0 / </span>
+						{% else %}
+							<span>{{ game.stats.championsKilled }} / </span>
+						{% endif %}
+
 						{% if game.stats.numDeaths == 0 %}
 							<span> 0 / </span>
 						{% else %}
 							<span>{{ game.stats.numDeaths }} / </span>
 						{% endif %}
-						<span>{{ game.stats.assists }}</span>
+
+						{% if game.stats.assists == 0 %}
+							<span> 0 </span>
+						{% else %}
+							<span>{{ game.stats.assists }}</span>
+						{% endif %}
+
 					</div>
 					<div class="match-stats-2">
 						<div>Level: {{ game.stats.level}}</div>
