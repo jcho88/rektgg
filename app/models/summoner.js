@@ -16,7 +16,7 @@ var SummonerSchema = new Schema({
   profileIconId: {type : String, default : '', trim : true},
   revisionDate: {type : String, default : '', trim : true},
   summonerLevel: {type : String, default : '', trim : true},
-  id: {type : String, default : '', trim : true},
+  id: {type : String, default : '', trim : true, unique: true, dropDups: true},
   region: {type : String, default : '', trim : true},
   isVerified: {type : Boolean, default : false , trim : true},
   ownerID: {type : String, default : '', trim : true},
