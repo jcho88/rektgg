@@ -256,7 +256,7 @@ SummonerSchema.statics = {
                   $pushAll: { 'games': summonerDataUpdate.games }
                 },
                 {safe: true, upsert: true})
-
+      
       .exec(cb);
     }
     else {
