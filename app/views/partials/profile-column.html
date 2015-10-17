@@ -3,11 +3,15 @@
       <div class="col-md-3" id="profileCol">
          <div class="profile-sidebar">
             <div class="profile-userpic">
-               <img class="img-circle img-responsive" src="/img/avatar2.png">
+               <img class="img-circle img-responsive" src="/img/avatar1.png">
             </div>
             <div class="profile-usertitle">
                <div class="profile-usertitle-name">
-                  {{ summoner.name }}
+                  {% if summoner %}
+                     {{ summoner.name }}
+                  {% else %}
+                     {{ userName }}
+                  {% endif %}
                </div>
             </div>
             <div class="profile-userbuttons">
@@ -16,7 +20,7 @@
                   Friend Request
                </button>
             </div>
-            <div class="profile-usermenu">
+            <div class="profile-usermenu profile-stats">
 
                {% if summoner.league != null %}
 
@@ -37,6 +41,14 @@
                      <span class="rankedLosses">{{ summoner.league[0].entries[0].losses }} <b>L</b></span>
                      <span class="rankedWinRate">(<b><script> getWinRate() </script></b>% Win Rate) </span>
 
+                  </div>
+
+               {% elseif userName %}
+
+                  <div class="unrankedInfo">
+                     <div class="unrankedInfoHeader">
+                        User
+                     </div>
                   </div>
 
                {% else %}

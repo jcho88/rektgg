@@ -85,11 +85,12 @@
 			{% endif %}
 
                 <div class="pull-left image">
-                    <img src="../img/avatar.png" class="img-circle avatar" alt="user profile image">
+                    <img src="../img/avatar2.png" class="img-circle avatar" alt="user profile image">
                 </div>
                 <div class="pull-left meta">
                     <div class="title h5">
-                        <a href="#"><b>{{ rating.user.username }}</b></a>
+                        {% set myProfileRoute = "/activity/" + rating.user._id %}
+                        <a href={{ myProfileRoute }}><b>{{ rating.user.username }}</b></a>
                         commented
                     </div>
                 	{% set count =  rating.value %}
@@ -102,14 +103,14 @@
             <div class="post-description">
             	<font size="6"><bold>{{ rating.title }}</bold></font> 
                 <p>{{ rating.body }}</p>
-                <div class="stats">
+<!--                 <div class="stats">
                     <a href="#" class="btn btn-default stat-item">
                         <i class="fa fa-thumbs-up icon"></i>2
                     </a>
                     <a href="#" class="btn btn-default stat-item">
                         <i class="fa fa-share icon"></i>12
                     </a>
-                </div>
+                </div> -->
             </div>
 <!-- 	            <div class="post-footer">
                 <div class="input-group"> 

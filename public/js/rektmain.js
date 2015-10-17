@@ -84,6 +84,10 @@ $(function(){
         }
     });
     $('.tip').tooltip();
+
+    $('form').submit(function(){
+      $(this).find(':submit').attr('disabled','disabled');
+    });
 });
 
 $(document).ready(function(e){

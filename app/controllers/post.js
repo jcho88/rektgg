@@ -113,9 +113,10 @@ exports.getAllPost = function (req, res){
 }
 
 
-var getAllPostLocal   = function (page, option, userId, res){
+var getAllPostLocal   = function (page, option, userId, res, userInfo){
 
 	var userID = userId;
+	var userName = userInfo.username
 	console.log("in get All Post")
 	Post.getAllPost(option, userID, function (err, listOfPost){
 		
@@ -128,7 +129,8 @@ var getAllPostLocal   = function (page, option, userId, res){
 				listOfPost: listOfPost,
 				page: option.page + 1,
 				pages: Math.ceil(count.length / option.perPage),
-				wallId: userID}
+				wallId: userID,
+				userName: userName}
 				);		
 		});
 
@@ -177,7 +179,7 @@ exports.index = function (req, res){
 				res.redirect('/')
 			}else{
 
-				getAllPostLocal(page, options, req.params.userid, res);
+				getAllPostLocal(page, options, req.params.userid, res, userInfo);
 
 			}		
 
