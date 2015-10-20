@@ -96,7 +96,7 @@ $(document).ready(function(e){
         var param = $(this).attr("href").replace("#","");
         var concept = $(this).text();
         $('.search-summoner span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
+        $('.input-group #region').val(param);
     });
 });
 
@@ -106,7 +106,7 @@ $(document).ready(function(e){
         var param = $(this).attr("href").replace("#","");
         var concept = $(this).text();
         $('.search-region span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
+        $('.input-group #region').val(param);
     });
 });
 

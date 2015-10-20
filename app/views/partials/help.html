@@ -2,10 +2,85 @@
 
 {% block content %}
 
-<center>
-	<P>Welcome to Rekt GG</p>
-
-	<p>RektGG isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-</center>
+<div class="container">
+    <div class="row">
+	  <div class="col-sm-12">
+	    <h1 class="title-lg first-child text-center text-primary"><span>Welcome to RektGG</span></h1>
+	  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-sm-4 col-lg-3">
+	    <h3 class="title-block">About us</h3>
+	    <p>We are two league of legends fanatics who love everything about the game</p>
+	  </div>
+	  <div class="col-sm-8 col-lg-9">
+	    <h3 class="title-block second-child">General Questions</h3>
+	    <div class="panel-group" id="faqList">
+	      <div class="panel panel-default">
+	        <div class="panel-heading">
+	          <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#faqList" href="#questionOne" class="collapsed">
+	              Question 1
+	            </a>
+	          </h4>
+	        </div>
+	        <div id="questionOne" class="panel-collapse collapse" style="height: 0px;">
+	          <div class="panel-body">
+	            <p>Answer 1</p>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="panel panel-default">
+	        <div class="panel-heading">
+	          <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#faqList" href="#questionTwo" class="collapsed">
+	              Question 2
+	            </a>
+	          </h4>
+	        </div>
+	        <div id="questionTwo" class="panel-collapse collapse" style="height: 0px;">
+	          <div class="panel-body">
+	            <p>Answer 2</p> 
+	          </div>
+	        </div>
+	      </div>
+	      <div class="panel panel-default">
+	        <div class="panel-heading">
+	          <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#faqList" href="#questionThree" class="collapsed">
+	              Question 3
+	            </a>
+	          </h4>
+	        </div>
+	        <div id="questionThree" class="panel-collapse collapse" style="height: 0px;">
+	          <div class="panel-body">
+	            <p>Answer 3</p>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="panel panel-default">
+	        <div class="panel-heading">
+	          <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#faqList" href="#questionFour" class="">
+	              Question 4
+	            </a>
+	          </h4>
+	        </div>
+	        <div id="questionFour" class="panel-collapse collapse" style="">
+	          <div class="panel-body">
+	            <p>Answer 4</p>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="riotLicense">
+			<p>RektGG isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+		</div>
+	</div>
+</div>          
 
 {% endblock %}
