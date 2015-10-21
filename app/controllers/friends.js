@@ -81,7 +81,7 @@ var getFriendList = function (req, res) {
 		}			
 
 		if(listOfFriends.length > 0){
-			return listOfFriends;
+			return listOfFriends; //change to res render to display the names
 		}else{
 
 		}		
