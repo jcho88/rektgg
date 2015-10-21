@@ -61,6 +61,7 @@ exports.search = function (req, res){
                 }else{
                     results = JSON.parse(body);
                     summonerData.league = results[summonerData.id];
+                    console.log("in getLeague" + summonerData.league[0])
                     callback();
                 }
             });
@@ -326,6 +327,7 @@ exports.refresh = function (req, res){
                 }else{
                     results = JSON.parse(body);
                     summonerData.league = results[summonerData.id];
+                    console.log("in getLeague" + summonerData.league[0])
                     callback();
                 }
             });

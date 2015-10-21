@@ -16,7 +16,7 @@ var SummonerSchema = new Schema({
   profileIconId: {type : String, default : '', trim : true},
   revisionDate: {type : String, default : '', trim : true},
   summonerLevel: {type : String, default : '', trim : true},
-  id: {type : String, default : '', trim : true, unique: true, dropDups: true},
+  id: {type : String, default : '', trim : true},
   region: {type : String, default : '', trim : true},
   isVerified: {type : Boolean, default : false , trim : true},
   ownerID: {type : String, default : '', trim : true},
@@ -246,15 +246,13 @@ SummonerSchema.statics = {
 
   refresh: function (summonerID,summonerData,summonerDataUpdate, cb) {
 
-    console.log("in refresh and league = " + summonerData.league)
-
     this.update({id: summonerID },
               { $pushAll: { 'games': summonerDataUpdate.games },  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
                profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
-               "league.$": summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
+               league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
 
               } },
-              {safe: true})
+              {safe: true, upsert: true})
 
       .exec(cb);
   }
