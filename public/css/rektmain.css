@@ -157,6 +157,12 @@ body {
 
 }
 
+.riotLicense {
+  margin-top: 220px;
+  text-align: center;
+  bottom: 25px;
+}
+
 .button-green {
   	color: white;
   	border-radius: 4px;
