@@ -11,6 +11,7 @@ var async = require('async')
 var _ = require('underscore')
 
 exports.search = function (req, res){
+    console.log("in search")
     var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
     var perPage = 10; 
     var name = req.query.summonerName.toLowerCase();
@@ -23,7 +24,7 @@ exports.search = function (req, res){
     
     function getSummoner (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
-            console.log(response.statusCode)
+            //console.log(response.statusCode)
 
             if(response.statusCode == 404){
 
@@ -38,6 +39,7 @@ exports.search = function (req, res){
 
             }else{
                 results = JSON.parse(body);
+                console.log("Object.keys(results)[0] " + Object.keys(results)[0])
                 summonerData.nameNoWhiteSpace = Object.keys(results)[0];
                 summonerData.name = results[summonerData.nameNoWhiteSpace].name;
                 summonerData.id = results[summonerData.nameNoWhiteSpace].id;
@@ -166,8 +168,9 @@ exports.search = function (req, res){
             callback();
         });
     }
-
+    console.log("name in search" + name)
     Summoner.search(name, function (err, summoner) {
+        console.log("summoner " + summoner)
         if (err) return next(err);
 
         if (summoner) {
@@ -189,6 +192,7 @@ exports.search = function (req, res){
             });
         }
         else {
+            console.log("api call in search")
             // We need to call the Summoner API first since the other calls depend on this
             async.series([
                 getSummoner
@@ -226,6 +230,7 @@ exports.search = function (req, res){
                               });              
                           }
                           else {
+                            res.redirect('/')
                               // Redirect with error
                           }
                         });   
@@ -286,7 +291,7 @@ exports.refresh = function (req, res){
 
         function getSummoner (callback) {
         request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+summonerID+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
-            console.log(response.statusCode)
+            //console.log(response.statusCode)
 
             if(response.statusCode == 404){
 
@@ -302,7 +307,7 @@ exports.refresh = function (req, res){
             }else{
                 results = JSON.parse(body);
                 summonerData.nameNoWhiteSpace = Object.keys(results)[0];
-                console.log("Object.keys(results)[0] " + Object.keys(results)[0])
+                //console.log("Object.keys(results)[0] " + Object.keys(results)[0])
                 summonerData.name = results[summonerData.nameNoWhiteSpace].name;
                 summonerData.id = results[summonerData.nameNoWhiteSpace].id;
                 summonerData.region = 'North America'
@@ -310,7 +315,8 @@ exports.refresh = function (req, res){
                 summonerData.revisionDate = results[summonerData.nameNoWhiteSpace].revisionDate;
                 summonerData.summonerLevel = results[summonerData.nameNoWhiteSpace].summonerLevel;
                 summonerData.nameNoWhiteSpace = results[summonerData.nameNoWhiteSpace].name.toLowerCase();
-                summonerData.nameNoWhiteSpace.replace("\\s+","");
+                summonerData.nameNoWhiteSpace = summonerData.nameNoWhiteSpace.replace(/\s/g, '');
+
                 callback();
             }
         }); 
@@ -433,7 +439,7 @@ exports.refresh = function (req, res){
         });
     }
 
-
+    // -1 indicate that the summoner has no match history in our database
     var index = -1;
     //get document of the summoner to upsert/update the data.
     Summoner.searchSummByID(summonerID,  function (err, summoner) {
@@ -449,7 +455,9 @@ exports.refresh = function (req, res){
             ],
             function(err) {
                 // We can call these in any order
-                if(statusCode.noSummoner == true || statusCode.summonerError == true){ //error searching summoners
+                if(statusCode.noSummoner == true || statusCode.summonerError == true || statusCode.getFellowPlayerNamesErr == true || statusCode.getGamesErr == true || statusCode.getCurrentSeasonErr == true
+                    ||  statusCode.getLeagueErr == true){ //error searching summoners
+                    req.flash('Riot API Error')
                     res.redirect('/')
                 }else{
                     async.parallel([
@@ -476,43 +484,46 @@ exports.refresh = function (req, res){
                                 });
 
                             //console.log(summonerCurrentData.games[0].createDate)
-
-                            if(summonerCurrentData.games[0].createDate == summonerData.games[0].createDate){
-                                summonerDataUpdate.games = {}
-                            }else{ 
-                                // has new data to update.
-                                var tempCurrentData = 0;
-                                if(summonerCurrentData.games.length < 10){
-                                    tempCurrentData = summonerCurrentData.games.length
-                                }else{
-                                    tempCurrentData = 10;
-                                }
-
-                                for(i=0; i < tempCurrentData; i++){
-                                    for(j =0; j<summonerData.games.length; j++){
-                                        if(summonerData.games[j].createDate == summonerCurrentData.games[i].createDate){
-                                            index = j;
-                                            break;
-                                        }
+                            if(summonerCurrentData.games[0]){ //make sure there is data in the database if not take the data from api
+                                if(summonerCurrentData.games[0].createDate == summonerData.games[0].createDate){
+                                    summonerDataUpdate.games = {}
+                                }else{ 
+                                    // has new data to update.
+                                    var tempCurrentData = 0;
+                                    if(summonerCurrentData.games.length < 10){
+                                        tempCurrentData = summonerCurrentData.games.length
+                                    }else{
+                                        tempCurrentData = 10;
                                     }
-                                  if(index != -1){
-                                        break;
-                                    }                                    
-                                }
-                                //test = summonerData.games.slice(0,4)
-                                //console.log(test)
-                                if(index == -1){
 
-                                    summonerDataUpdate.games = summonerData.games;
-                                    //console.log(summonerDataUpdate)
-                                    //console.log("at index = -1")
-                                }else{
-                                    console.log("index in != -1 " + index)
-                                    summonerDataUpdate.games = summonerData.games.slice(0,index)
-                                    //console.log("at index != -1")
-                                }
+                                    for(i=0; i < tempCurrentData; i++){
+                                        for(j =0; j<summonerData.games.length; j++){
+                                            if(summonerData.games[j].createDate == summonerCurrentData.games[i].createDate){
+                                                index = j;
+                                                break;
+                                            }
+                                        }
+                                      if(index != -1){
+                                            break;
+                                        }                                    
+                                    }
+                                    //test = summonerData.games.slice(0,4)
+                                    //console.log(test)
+                                    if(index == -1){ //if the last 10 games were not in database.
+                                        summonerDataUpdate.games = summonerData.games;
+                                        //console.log(summonerDataUpdate)
+                                        //console.log("at index = -1")
+                                    }else{
+                                        console.log("index in != -1 " + index)
+                                        summonerDataUpdate.games = summonerData.games.slice(0,index)
+                                        //console.log("at index != -1")
+                                    }
 
-                            }//else
+                                }//else
+                           }else{
+                                summonerDataUpdate.games = summonerData.games;
+                           }
+
 
 
                             Summoner.refresh(summonerID, summonerData ,summonerDataUpdate, function (err, numOfDocRemoved){

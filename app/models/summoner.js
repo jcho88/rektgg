@@ -250,11 +250,14 @@ SummonerSchema.statics = {
 
     if (summonerDataUpdate.games == emptyObj ) {
       console.log("if")
-      console.log(summonerDataUpdate.games.length)
+      //console.log(summonerDataUpdate.games.length)
       this.update({id: summonerID },
                 { 
-                  $pushAll: { 'games': summonerDataUpdate.games }
-                },
+                  $pushAll: { 'games': summonerDataUpdate.games },  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
+                 profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
+                 league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
+                }},
+
                 {safe: true, upsert: true})
       
       .exec(cb);
