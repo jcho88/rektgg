@@ -63,7 +63,7 @@ exports.search = function (req, res){
                 }else{
                     results = JSON.parse(body);
                     summonerData.league = results[summonerData.id];
-                    console.log("in getLeague" + summonerData.league[0])
+                   // console.log("in getLeague" + summonerData.league[0])
                     callback();
                 }
             });
@@ -170,7 +170,7 @@ exports.search = function (req, res){
     }
     console.log("name in search" + name)
     Summoner.search(name, function (err, summoner) {
-        console.log("summoner " + summoner)
+        //console.log("summoner " + summoner)
         if (err) return next(err);
 
         if (summoner) {

@@ -247,10 +247,24 @@ SummonerSchema.statics = {
  refresh: function (summonerID,summonerData,summonerDataUpdate, cb) {
 
     var emptyObj = {};
-
-    if (summonerDataUpdate.games == emptyObj ) {
+    console.log("games to update " + summonerDataUpdate.games)
+    if (!summonerDataUpdate.games[0] ) {
       console.log("if")
       //console.log(summonerDataUpdate.games.length)
+      
+      this.update({id: summonerID },
+                { 
+                  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
+                 profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
+                 league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
+                  } 
+                },
+                {safe: true, upsert: true})
+
+      .exec(cb);      
+    }
+    else {
+      console.log("else")
       this.update({id: summonerID },
                 { 
                   $pushAll: { 'games': summonerDataUpdate.games },  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
@@ -261,19 +275,8 @@ SummonerSchema.statics = {
                 {safe: true, upsert: true})
       
       .exec(cb);
-    }
-    else {
-      console.log("else")
-      this.update({id: summonerID },
-                { 
-                  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
-                 profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
-                 league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
-                  } 
-                },
-                {safe: true, upsert: true})
 
-      .exec(cb);
+
     }
   }
 
