@@ -15,10 +15,20 @@
                </div>
             </div>
             <div class="profile-userbuttons">
-               <button type="button" class="btn btn-sm friend-btn">
-                  <i class="fa fa-user-plus"></i>
-                  Friend Request
-               </button>
+               {% if userName %}
+                  <button type="button" name={{ userName }} id="friendID" class="btn btn-sm friend-btn">
+                     <script>$("button").click(function() {
+                                  alert($(this).attr('id'));
+                                  alert($(this).attr('name'));
+                              });</script>
+                     <i class="fa fa-user-plus"></i>
+                     Friend Request
+                  </button>
+               {% else %}
+                  <button type="button" class="btn btn-sm friend-btn" onclick="location.href='/login'">
+                     Log in to add friend
+                  </button>
+               {% endif %}
             </div>
             <div class="profile-usermenu profile-stats">
 

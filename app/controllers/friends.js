@@ -23,7 +23,7 @@ var changeIsFriendValue = function (req, res, friendDocument) {
 		var myIsFriend
 		var friendIsFriend
 
-		MyFriend.search("123", function (err, myFriend) {// change the username. Need frontend to pass
+		MyFriend.search(req.body.name, function (err, myFriend) {// change the username. Need frontend to pass
 			if(myFriend){
 
 				Friend.checkIsFriend(myFriend._id, userID, function (err, checkFriend){
