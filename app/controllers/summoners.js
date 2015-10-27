@@ -12,9 +12,11 @@ var _ = require('underscore')
 
 exports.search = function (req, res){
     console.log("in search")
+    console.log(req.body)
     var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
     var perPage = 10; 
-    var name = req.query.summonerName.toLowerCase();
+    var name = req.body.summonerName.toLowerCase();
+    var region = req.body.region.toLowerCase();
     name = name.toString("utf8");
     name = name.replace(/\s/g, '');
     var summonerData = new Summoner()
@@ -23,7 +25,7 @@ exports.search = function (req, res){
     var statusCode = {};
     
     function getSummoner (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             //console.log(response.statusCode)
 
             if(response.statusCode == 404){
@@ -33,12 +35,14 @@ exports.search = function (req, res){
                 callback();
 
             }else if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
-                    || response.statusCode == 500 || response.statusCode == 503){
+                    || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 403){
 
                 statusCode.summonerError = true;
 
             }else{
                 results = JSON.parse(body);
+                console.log(response.statusCode)
+                console.log(body)
                 console.log("Object.keys(results)[0] " + Object.keys(results)[0])
                 summonerData.nameNoWhiteSpace = Object.keys(results)[0];
                 summonerData.name = results[summonerData.nameNoWhiteSpace].name;
@@ -55,7 +59,7 @@ exports.search = function (req, res){
     function getLeague (callback) {
 
        
-            request("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/"+summonerData.id+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+            request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v2.5/league/by-summoner/"+summonerData.id+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                  if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                     statusCode.getLeagueErr = true;
@@ -71,7 +75,7 @@ exports.search = function (req, res){
     }
 
     function getCurrentSeason(callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2015&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2015&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
 
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
@@ -89,7 +93,7 @@ exports.search = function (req, res){
     }
     
     function getPastSeason (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2014&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2014&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                 statusCode.getPastSeasonErr = true;
@@ -106,7 +110,7 @@ exports.search = function (req, res){
     }
     
     function getGames (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/"+summonerData.id+"/recent?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/game/by-summoner/"+summonerData.id+"/recent?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                 statusCode.getGamesErr = true;
@@ -137,7 +141,7 @@ exports.search = function (req, res){
         // Fetch summoner names, n at a time
         async.each(ids,
             function(idGroup, callback) {
-                request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+                request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                   if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                                 statusCode.getFellowPlayerNamesErr = true;
@@ -183,13 +187,15 @@ exports.search = function (req, res){
             summonerData = summoner;
             summoner.games.sort(function(a, b) {
                 return parseFloat(b.createDate) - parseFloat(a.createDate);
-                });            
+                });  
 
-            res.render('summoners/show', {
-                page: page + 1,
-                pages: Math.ceil(summoner.games.length / perPage),
-                summoner: summoner
-            });
+            res.redirect('/summoners/'+summoner.region+'/'+summoner.id);  
+
+            // res.render('summoners/show', {
+            //     page: page + 1,
+            //     pages: Math.ceil(summoner.games.length / perPage),
+            //     summoner: summoner
+            // });
         }
         else {
             console.log("api call in search")
@@ -223,11 +229,7 @@ exports.search = function (req, res){
                                 return parseFloat(b.createDate) - parseFloat(a.createDate);
                                 });            
 
-                              res.render('summoners/show', {
-                                  page: page + 1,
-                                  pages: Math.ceil(summoner.games.length / perPage),
-                                  summoner: summoner
-                              });              
+                              res.redirect('/summoners/'+summoner.region+'/'+summoner.id);              
                           }
                           else {
                             res.redirect('/')
@@ -247,7 +249,8 @@ exports.search = function (req, res){
  */
 
 exports.load = function (req, res, next, id){
-  Summoner.load(id, function (err, summoner) {
+    console.log("in load " + req.params.reg)
+    Summoner.load(id, req.params.reg, function (err, summoner) {
     // if (err) return next(err);
     if (!summoner) return next(new Error('not found'));
     req.summoner = summoner;
@@ -280,7 +283,7 @@ exports.show = function (req, res){
 exports.refresh = function (req, res){
     console.log("in refresh")
     var summonerID = req.body.summonerId;
-
+    var region = req.body.summonerReg;
     var summonerData = new Summoner();
     var fellowPlayersNames = {};
     var summonerDataUpdate = {};
@@ -290,7 +293,7 @@ exports.refresh = function (req, res){
 
 
         function getSummoner (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+summonerID+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.4/summoner/"+summonerID+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             //console.log(response.statusCode)
 
             if(response.statusCode == 404){
@@ -300,9 +303,10 @@ exports.refresh = function (req, res){
                 callback();
 
             }else if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
-                    || response.statusCode == 500 || response.statusCode == 503){
+                    || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 403){
 
                 statusCode.summonerError = true;
+                 callback();
 
             }else{
                 results = JSON.parse(body);
@@ -325,7 +329,7 @@ exports.refresh = function (req, res){
     function getLeague (callback) {
 
        
-            request("https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/"+summonerData.id+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+            request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v2.5/league/by-summoner/"+summonerData.id+"/entry?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                  if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                     statusCode.getLeagueErr = true;
@@ -341,7 +345,7 @@ exports.refresh = function (req, res){
     }
 
     function getCurrentSeason(callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2015&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2015&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
 
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
@@ -359,7 +363,7 @@ exports.refresh = function (req, res){
     }
     
     function getPastSeason (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2014&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/"+summonerData.id+"/ranked?season=SEASON2014&api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                 statusCode.getPastSeasonErr = true;
@@ -376,7 +380,7 @@ exports.refresh = function (req, res){
     }
     
     function getGames (callback) {
-        request("https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/"+summonerData.id+"/recent?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+        request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.3/game/by-summoner/"+summonerData.id+"/recent?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
             if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                 statusCode.getGamesErr = true;
@@ -407,7 +411,7 @@ exports.refresh = function (req, res){
         // Fetch summoner names, n at a time
         async.each(ids,
             function(idGroup, callback) {
-                request("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+                request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.4/summoner/"+idGroup+"/name?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
                   if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
                                     || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 404){
                                 statusCode.getFellowPlayerNamesErr = true;
@@ -441,6 +445,7 @@ exports.refresh = function (req, res){
 
     // -1 indicate that the summoner has no match history in our database
     var index = -1;
+    console.log("in refresh pat 2")
     //get document of the summoner to upsert/update the data.
     Summoner.searchSummByID(summonerID,  function (err, summoner) {
         //console.log("summonerData.nameNoWhiteSpace " + summonerData.nameNoWhiteSpace ) 
@@ -457,9 +462,11 @@ exports.refresh = function (req, res){
                 // We can call these in any order
                 if(statusCode.noSummoner == true || statusCode.summonerError == true || statusCode.getFellowPlayerNamesErr == true || statusCode.getGamesErr == true || statusCode.getCurrentSeasonErr == true
                     ||  statusCode.getLeagueErr == true){ //error searching summoners
+                    console.log("error")
                     req.flash('Riot API Error')
                     res.redirect('/')
                 }else{
+                    console.log("no error")
                     async.parallel([
                         getLeague,
                         getCurrentSeason,                                 

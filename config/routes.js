@@ -233,7 +233,7 @@ module.exports = function (app, passport) {
 
   //summoner routes
   app.param('summonerId', summoners.load);
-  app.get('/summonerSearch?:query', summoners.search); //show summoner
+  app.post('/summonerSearch', summoners.search); //show summoner
   app.get('/summoners/:reg/:summonerId', summoners.show); //show summoner
   app.post('/summoners/refresh', summoners.refresh); //show summoner
 

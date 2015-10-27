@@ -224,9 +224,13 @@ SummonerSchema.statics = {
     })   
   },
 
-  load: function (id, cb) {
+  load: function (id, reg, cb) {
 
-    this.findOne({ _id : id}, function(err, summoner) {
+    this.findOne({  
+      $and: [
+        {id : id },  
+        {region : reg}
+        ]}, function(err, summoner) {
       if (!summoner || err) return cb(err, null);
       loadData(summoner, cb);
     })
