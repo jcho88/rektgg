@@ -216,9 +216,12 @@ SummonerSchema.statics = {
    * @api private
    */
 
-  search: function (summonerName, cb) {
+  search: function (summonerName, reg, cb) {
 
-    this.findOne({nameNoWhiteSpace : summonerName }, function(err, summoner) {
+    this.findOne({ $and: [
+        {nameNoWhiteSpace : summonerName},  
+        {region : reg}
+        ]}, function(err, summoner) {
       if (!summoner || err) return cb(err, null);
       loadData(summoner, cb);
     })   
@@ -242,41 +245,77 @@ SummonerSchema.statics = {
     .exec(cb);
   },
   
-  searchSummByID: function (summonerID, cb) {
+  searchSummByID: function (summonerID, reg, cb) {
 
-      this.findOne({id: summonerID})
+      this.findOne({
+         $and: [
+        {id : summonerID },  
+        {region : reg}
+        ]
+      })
       .exec(cb);   
   },
+
+  searchSummByIDFind: function (summonerID, reg, cb) {
+
+      this.find({
+         $and: [
+        {id : summonerID },  
+        {region : reg}
+        ]
+      })
+      .exec(cb);   
+  },
+
+  nameChange: function (summonerData, cb) {
+
+    this.findOneAndUpdate(
+      { $and: [
+        {id : summonerData.id },  
+        {region : summonerData.region}
+        ]}, //query
+      { $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace }},
+      {upsert: false}
+    ).exec(cb); 
+
+  },
+  
+
 
  refresh: function (summonerID,summonerData,summonerDataUpdate, cb) {
 
     var emptyObj = {};
-    console.log("games to update " + summonerDataUpdate.games)
     if (!summonerDataUpdate.games[0] ) {
       console.log("if")
       //console.log(summonerDataUpdate.games.length)
       
-      this.update({id: summonerID },
+      this.update({$and: [
+        {id : summonerID },  
+        {region : summonerData.region}
+        ]},
                 { 
                   $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
                  profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
                  league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
                   } 
                 },
-                {safe: true, upsert: true})
+                {safe: true, upsert: false})
 
       .exec(cb);      
     }
     else {
       console.log("else")
-      this.update({id: summonerID },
+      this.update({$and: [
+        {id : summonerID },  
+        {region : summonerData.region}
+        ] },
                 { 
                   $pushAll: { 'games': summonerDataUpdate.games },  $set: { name: summonerData.name, nameNoWhiteSpace: summonerData.nameNoWhiteSpace,
                  profileIconId: summonerData.profileIconId , revisionDate: summonerData.revisionDate, summonerLevel: summonerData.summonerLevel,
                  league: summonerData.league, 'currentSeason.modifyDate': summonerData.currentSeason.modifyDate, 'currentSeason.champions': summonerData.currentSeason.champions
                 }},
 
-                {safe: true, upsert: true})
+                {safe: true, upsert: false})
       
       .exec(cb);
 

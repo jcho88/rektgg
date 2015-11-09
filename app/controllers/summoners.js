@@ -10,7 +10,10 @@ var request = require('request')
 var async = require('async')
 var _ = require('underscore')
 
+
+
 exports.search = function (req, res){
+    /*Local Variables*/
     console.log("in search")
     console.log(req.body)
     var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
@@ -21,8 +24,132 @@ exports.search = function (req, res){
     name = name.replace(/\s/g, '');
     var summonerData = new Summoner()
     var fellowPlayersNames = {};
-
     var statusCode = {};
+
+/*==================================================local Function of search==============================================================*/
+/*========================================================================================================================================*/
+
+/* A local function in search to check for namechanges and duplication after name change */
+    var checkNameChange = function (){
+
+        var nameChangeData = {};
+        var summonerChangedNameTaken = {};
+
+        Summoner.searchSummByIDFind(summonerData.id ,summonerData.region,  function (err, summoner) {
+            console.log("checkNameChange")
+            //console.log(summoner)
+            if(err){
+                console.log(err)
+                res.redirect('/')
+            }else if(summoner.length > 0){
+                async.parallel([
+                 function(callback) { 
+                        Summoner.nameChange(summonerData, function (err, summonerChangedName) {
+
+                            if(err){
+                                console.log("error in summonerChangedName")
+                            }
+                            //console.log("in first async")
+                            //console.log(summonerChangedName);
+                            callback();
+                        });
+                    },
+                 function(callback) { 
+                        request("https://"+ summonerData.region +".api.pvp.net/api/lol/"+ summonerData.region +"/v1.4/summoner/by-name/"+encodeURIComponent(summoner[0].name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
+                                    //console.log(response.statusCode)
+
+                                    if(response.statusCode == 404){
+
+                                        console.log("no such user")
+                                        nameChangeData.noSuchUserApi = true;
+                                        callback();
+
+                                    }else if(response.statusCode == 401 || response.statusCode == 400 || response.statusCode == 429
+                                            || response.statusCode == 500 || response.statusCode == 503 || response.statusCode == 403){
+
+                                        nameChangeData.noSuchUserApiError = true;
+
+                                    }else{
+                                        results = JSON.parse(body);
+                                        summonerChangedNameTaken.nameNoWhiteSpace = Object.keys(results)[0];
+                                        summonerChangedNameTaken.name = results[summonerChangedNameTaken.nameNoWhiteSpace].name;
+                                        summonerChangedNameTaken.id = results[summonerChangedNameTaken.nameNoWhiteSpace].id;
+                                        summonerChangedNameTaken.region = summonerData.region;
+                                        summonerChangedNameTaken.profileIconId = results[summonerChangedNameTaken.nameNoWhiteSpace].profileIconId;
+                                        summonerChangedNameTaken.revisionDate = results[summonerChangedNameTaken.nameNoWhiteSpace].revisionDate;
+                                        summonerChangedNameTaken.summonerLevel = results[summonerChangedNameTaken.nameNoWhiteSpace].summonerLevel;
+                                        callback();
+                                    }
+                                }); 
+                    }                                       
+                ],
+                 function(err) {
+
+                    if (err) return next(err);
+                    
+                    async.series([
+                        function(callback) { 
+                            if(nameChangeData.noSuchUserApi == true || nameChangeData.noSuchUserApiError == true){
+                                console.log("api error in nameChange")
+                                callback();
+                            }else{
+                                Summoner.nameChange(summonerChangedNameTaken, function (err, summonerChangedName) {
+
+                                    if(err){
+                                        console.log(err)
+                                        console.log("error in summonerChangedName")
+                                    }
+                                    //console.log("in first async")
+                                    callback();
+                                });
+                            }
+                        },
+
+                        ],
+                    function(err) {
+                        res.redirect('/summoners/'+summonerData.region+'/'+summonerData.id);
+
+                    });//series     
+
+                 });//async parallel
+                //this player changed name
+            }else{
+                    async.parallel([
+                        // We can call these in any order
+                        getLeague,
+                        getCurrentSeason,
+                        getPastSeason,
+                        getGamesWrapper
+                    ],
+                    function(err) {
+                        if (err) return next(err);
+
+                    /*set games.fellowPlayers.name */    
+                    _.each(summonerData.games, function(game) {
+                        _.each(game.fellowPlayers, function(player) {
+                            player.name = fellowPlayersNames[player.summonerId]
+                        })
+                    })                        
+                        summonerData.save(function(err, summoner) {
+                          if(!err) {
+                            summoner.games.sort(function(a, b) {
+                                return parseFloat(b.createDate) - parseFloat(a.createDate);
+                                });            
+
+                              res.redirect('/summoners/'+summoner.region+'/'+summoner.id);              
+                          }
+                          else {
+                            console.log(err)
+                            console.log("save err")
+                            res.redirect('/')
+                              // Redirect with error
+                          }
+                        });   
+                    })//parallel
+            }
+
+        });//searchSummByIDFind
+    }    
     
     function getSummoner (callback) {
         request("https://"+ region +".api.pvp.net/api/lol/"+ region +"/v1.4/summoner/by-name/"+encodeURIComponent(name)+"?api_key=cdb86ca1-a94c-47fe-bed8-359de39eb421", function(error, response, body) {
@@ -47,7 +174,7 @@ exports.search = function (req, res){
                 summonerData.nameNoWhiteSpace = Object.keys(results)[0];
                 summonerData.name = results[summonerData.nameNoWhiteSpace].name;
                 summonerData.id = results[summonerData.nameNoWhiteSpace].id;
-                summonerData.region = 'North America'
+                summonerData.region = region;
                 summonerData.profileIconId = results[summonerData.nameNoWhiteSpace].profileIconId;
                 summonerData.revisionDate = results[summonerData.nameNoWhiteSpace].revisionDate;
                 summonerData.summonerLevel = results[summonerData.nameNoWhiteSpace].summonerLevel;
@@ -172,30 +299,21 @@ exports.search = function (req, res){
             callback();
         });
     }
+    /*=====================================================End Local Function Search==========================================================*/
+    /*========================================================================================================================================*/
+    /*========================================================================================================================================*/
+
     console.log("name in search" + name)
-    Summoner.search(name, function (err, summoner) {
-        //console.log("summoner " + summoner)
+
+    /*Search Starts here*/
+
+    Summoner.search(name, region, function (err, summoner) {
+
         if (err) return next(err);
 
         if (summoner) {
-            
-            summoner.games.sort(function(a, b) {
-                return parseFloat(b.createDate) - parseFloat(a.createDate);
-                });
-
-
-            summonerData = summoner;
-            summoner.games.sort(function(a, b) {
-                return parseFloat(b.createDate) - parseFloat(a.createDate);
-                });  
 
             res.redirect('/summoners/'+summoner.region+'/'+summoner.id);  
-
-            // res.render('summoners/show', {
-            //     page: page + 1,
-            //     pages: Math.ceil(summoner.games.length / perPage),
-            //     summoner: summoner
-            // });
         }
         else {
             console.log("api call in search")
@@ -204,41 +322,16 @@ exports.search = function (req, res){
                 getSummoner
             ],
             function(err) {
-                // We can call these in any order
+               
                 if(statusCode.noSummoner == true || statusCode.summonerError == true){
+                    console.log("err in statuscode")
                     res.redirect('/')
                 }else{
-                    async.parallel([
-                        getLeague,
-                        getCurrentSeason,
-                        getPastSeason,
-                        getGamesWrapper
-                    ],
-                    function(err) {
-                        if (err) return next(err);
+                     console.log("after get summoner in search")
+                    checkNameChange();
 
-                    /*set games.fellowPlayers.name */    
-                    _.each(summonerData.games, function(game) {
-                        _.each(game.fellowPlayers, function(player) {
-                            player.name = fellowPlayersNames[player.summonerId]
-                        })
-                    })                        
-                        summonerData.save(function(err, summoner) {
-                          if(!err) {
-                            summoner.games.sort(function(a, b) {
-                                return parseFloat(b.createDate) - parseFloat(a.createDate);
-                                });            
-
-                              res.redirect('/summoners/'+summoner.region+'/'+summoner.id);              
-                          }
-                          else {
-                            res.redirect('/')
-                              // Redirect with error
-                          }
-                        });   
-                    })
                 }//else
-            });
+            });//series
         }
     });
 }
@@ -314,7 +407,7 @@ exports.refresh = function (req, res){
                 //console.log("Object.keys(results)[0] " + Object.keys(results)[0])
                 summonerData.name = results[summonerData.nameNoWhiteSpace].name;
                 summonerData.id = results[summonerData.nameNoWhiteSpace].id;
-                summonerData.region = 'North America'
+                summonerData.region = region;
                 summonerData.profileIconId = results[summonerData.nameNoWhiteSpace].profileIconId;
                 summonerData.revisionDate = results[summonerData.nameNoWhiteSpace].revisionDate;
                 summonerData.summonerLevel = results[summonerData.nameNoWhiteSpace].summonerLevel;
@@ -447,9 +540,10 @@ exports.refresh = function (req, res){
     var index = -1;
     console.log("in refresh pat 2")
     //get document of the summoner to upsert/update the data.
-    Summoner.searchSummByID(summonerID,  function (err, summoner) {
+    Summoner.searchSummByID(summonerID,region,  function (err, summoner) {
         //console.log("summonerData.nameNoWhiteSpace " + summonerData.nameNoWhiteSpace ) 
         if(err){
+            console.log(err)
             res.redirect('/')
         }else{
 
