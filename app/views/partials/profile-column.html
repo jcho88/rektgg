@@ -9,18 +9,16 @@
                <div class="profile-usertitle-name">
                   {% if summoner %}
                      {{ summoner.name }}
-                  {% else %}
+                  {% elseif userName %}
                      {{ userName }}
+                  {% else %}
+                     {{ req.user.username }}
                   {% endif %}
                </div>
             </div>
             <div class="profile-userbuttons">
-               {% if userName %}
+               {% if req.user %}
                   <button type="button" name={{ userName }} id="friendID" class="btn btn-sm friend-btn">
-                     <script>$("button").click(function() {
-                                  alert($(this).attr('id'));
-                                  alert($(this).attr('name'));
-                              });</script>
                      <i class="fa fa-user-plus"></i>
                      Friend Request
                   </button>
@@ -53,11 +51,11 @@
 
                   </div>
 
-               {% elseif userName %}
+               {% elseif summoner.games %}
 
                   <div class="unrankedInfo">
                      <div class="unrankedInfoHeader">
-                        User
+                        Summoner level {{ summoner.summonerLevel }}
                      </div>
                   </div>
 
@@ -65,7 +63,7 @@
 
                   <div class="unrankedInfo">
                      <div class="unrankedInfoHeader">
-                        Summoner level {{ summoner.summonerLevel }}
+                        User
                      </div>
                   </div>
 

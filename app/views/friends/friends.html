@@ -14,89 +14,63 @@
 				     </li>
 				</ul>
 
+				{% set count = 0 %}
+
+            	{% for friend in friends %}
+
             	<div class="col-md-6 col-sm-6 col-xs-6">
 
             		<div class="row list-group">
-				      <div class="list-group-item text-left">
-				        <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
-				        <label class="name">
-				            xPeke<br>
-				        </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
-				      </div>
-				      <div class="list-group-item text-left">
-				          <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-				        <label class="name">
-				          Bjergsen
-				        </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
-				      </div>
-				      <div class="list-group-item text-left">
-				          <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
-				          <label class="name">
-				            Sjokz
-				          </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
+				      	<div class="list-group-item text-left">
+				        	<img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+				        	<label class="name">
+				            	friend1<br>
+				        	</label>
+				        	<label class="pull-right">
+				            	<a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+				            	{% if not (friend.user.id != req.user.id) %}
+				            		<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+				            	{% endif %}
+				        	</label>
+				        	<div class="break"></div>
 				      </div>
 				    </div>
+
 				</div>
 
-				<div class="col-md-6 col-sm-6 col-xs-6">
+				{% if count < 10 && friend.id != null %}
 
-            		<div class="row list-group">
-				      <div class="list-group-item text-left">
-				        <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
-				        <label class="name">
-				            Sneaky<br>
-				        </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
-				      </div>
-				      <div class="list-group-item text-left">
-				          <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-				        <label class="name">
-				          Meteos
-				        </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
-				      </div>
-				      <div class="list-group-item text-left">
-				          <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
-				          <label class="name">
-				            Doublelift
-				          </label>
-				        <label class="pull-right">
-				            <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-				            <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-				            <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
-				        </label>
-				        <div class="break"></div>
-				      </div>
-				    </div>
-				</div>
+					<div class="col-md-6 col-sm-6 col-xs-6">
+
+	            		<div class="row list-group">
+					      	<div class="list-group-item text-left">
+					        	<img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+					        	<label class="name">
+					            	friend2<br>
+					        	</label>
+					        	<label class="pull-right">
+					            	<a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+					            	{% if not (friend.user.id != req.user.id) %}
+					            		<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+					            	{% endif %}
+					        	</label>
+					        	<div class="break"></div>
+					      </div>
+						</div>
+
+					</div>
+
+				{% endif %}
+
+				{% endfor %}
+
+				{% if (pages > 1) %}
+			      <ul class="pagination">
+			        {% autoescape false %}
+			          {{ createPagination(pages, page) }}
+			        {% endautoescape %}
+			      </ul>
+			    {% endif %}
 
 			</div>
 		</div>

@@ -30,10 +30,10 @@
                       <div class="clearfix"></div>
                       <ul class="nav nav-tabs">
                       
-                        {% set matchesRoute = "/summoners/" + summoner.region + "/" + summoner._id %}
-                        {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
-                        {% set activityRoute = "/activity/" + req.user._id %}
-                        {% set friendsRoute = "/friends/" + req.user._id %}
+                        {% set matchesRoute = "/summoners/" + summoner.region + "/" + summoner.id %}
+                        {% set reviewRoute = "/summoner_ratings/" + summoner.region + "/" + summoner.id %}
+                        {% set activityRoute = "/activity/" + user._id %}
+                        {% set friendsRoute = "/friends/" + userName %}
 
                         {% if summoner %}
                           {% if (isActive('summoners') || isActive('summonerSearch')) %}

@@ -86,7 +86,11 @@ RatingSchema.statics = {
 
   load: function (id, cb) {
     console.log("rating model load");
-    this.findOne({ _id : id })  //summoner id in model summoner is ._id
+    this.findOne({  
+      $and: [
+        {id : id },  
+        {region : reg}
+        ]})  //summoner id in model summoner is ._id
       .populate('summoner')     // in future change to just summoner info (name, profile pic, e.g...)
       .populate('user')
       .exec(cb);

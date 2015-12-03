@@ -69,8 +69,9 @@ Created by: Steve Chen
 Description: This function is to get a list of user's friend, and populate return an array.
 Return: An array of friends with refs to their user schema
 */
-var getFriendList = function (req, res) {
+// var getFriendList = function (req, res) {
 
+exports.isFriend = function(req, res) {
 
 	var userID = req.user._id;
 	console.log("hi")
@@ -80,11 +81,16 @@ var getFriendList = function (req, res) {
 		    console.log(listOfFriends[i]);
 		}			
 
-		if(listOfFriends.length > 0){
-			return listOfFriends; //change to res render to display the names
-		}else{
+		res.render('friends/friends', {
+			user: req.user
+		});
 
-		}		
+		// if(listOfFriends.length > 0){
+
+		// 	return listOfFriends; //change to res render to display the names
+		// }else{
+
+		// }		
 
 
 	});
@@ -102,7 +108,7 @@ exports.addFriend = function (req, res){
 	//isFriend(req,res)
 	if(req.user){
 		var userID = req.user._id;
-		MyFriend.search("123", function (err, myFriend) { // change the username. Need frontend to pass
+		MyFriend.search(req.body.name, function (err, myFriend) { // change the username. Need frontend to pass
 			if(myFriend){
 
 				Friend.checkFriend(userID, myFriend._id, function (err, checkFriend){
@@ -160,7 +166,7 @@ exports.deleteFriend = function (req, res){
 
 	if(req.user){
 		var userID = req.user._id;
-		MyFriend.search("w", function (err, myFriend) {// change the username. Need frontend to pass
+		MyFriend.search(req.body.name, function (err, myFriend) {// change the username. Need frontend to pass
 			if(myFriend){
 
 				Friend.deleteFriend(userID, myFriend._id, function (err, numOfDocRemoved){
@@ -186,4 +192,4 @@ exports.deleteFriend = function (req, res){
 	}//else
 }
 
-exports.isFriend = getFriendList
+// exports.isFriend = getFriendList
