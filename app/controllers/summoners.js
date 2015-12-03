@@ -42,6 +42,7 @@ exports.search = function (req, res){
                 console.log(err)
                 res.redirect('/')
             }else if(summoner.length > 0){
+                //TODO: search to see if there is an exisiting name before changing the new summoner name.
                 async.parallel([
                  function(callback) { 
                         Summoner.nameChange(summonerData, function (err, summonerChangedName) {
@@ -109,7 +110,7 @@ exports.search = function (req, res){
                     function(err) {
                         res.redirect('/summoners/'+summonerData.region+'/'+summonerData.id);
 
-                    });//series     
+                     });//series     
 
                  });//async parallel
                 //this player changed name
