@@ -34,7 +34,9 @@ exports.create = function (req, res){
   rating.save(function(err) {                                       //save the rating
 	    if (!err) {
 	  	  req.flash('success', 'Successfully created a rating!');     //no error, create the rating and redirect
-	  	  return res.redirect('/summoner_ratings/'+rating.summoner);
+        console.log("in rating create")
+	  	  // return res.redirect('/summoner_ratings/'+rating.summoner);
+        return res.redirect('back');
 	    }                                            //print error, flash appropriate error message
       if(err.message == 'Validation failed'){
         req.flash('error', err.errors.value.message);
@@ -52,7 +54,7 @@ exports.create = function (req, res){
  */
 
 exports.index = function (req, res){
-
+  // console.log("in index")
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;   //if param('page') > 0, then param('page') or 1
   var perPage = 10;                                                 //set max reviews per page to be 10
 
@@ -64,6 +66,7 @@ exports.index = function (req, res){
 
 
   Rating.list(options, function (err, ratings) {                    //call list function in model
+    // console.log("in list")
     if (err) return res.render('500');
     Rating.count().find(options.criteria).exec(function (err, count) {                     //Returns the count of documents that would match a find() query. 
       res.render('ratings/ratings', {                               //The db.collection.count() method does not perform the find() operation
@@ -106,7 +109,8 @@ exports.update = function (req, res){
   rating.save(function(err) {
   	if (!err) {
       req.flash('info', 'Review Updated');
-  		return res.redirect('/summoner_ratings/'+rating.summoner);
+  		// return res.redirect('/summoner_ratings/'+rating.summoner);
+      return res.redirect('back');
   	}
 
 		res.render('ratings/ratings', {

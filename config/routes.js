@@ -288,8 +288,8 @@ module.exports = function (app, passport) {
 
   // rating routes
   app.param('ratingId', ratings.load);
-  app.get('/summoner_ratings/:summonerId', ratings.index); //load all ratings
-  app.post('/summoner_ratings/:summonerId', auth.requiresLogin, ratings.create); //create rating
+  app.get('/summoner_ratings/:reg/:summonerId', ratings.index); //load all ratings
+  app.post('/summoner_ratings/:reg/:summonerId', auth.requiresLogin, ratings.create); //create rating
   app.get('/ratings/:ratingId/edit', ratingAuth, ratings.edit); //takes you to form to edit rating
   app.put('/ratings/:ratingId', ratingAuth, ratings.update); //updates the rating
   app.delete('/ratings/:ratingId', ratingAuth, ratings.destroy); //delete rating

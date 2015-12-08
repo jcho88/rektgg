@@ -131,7 +131,7 @@
 
             </div>
             <div class="profile-usermenu">
-                {% set reviewRoute = "/summoner_ratings/" + summoner._id %}
+                {% set reviewRoute = "/summoner_ratings/" + summoner.region + "/" + summoner.id %}
                 <ul class="nav">
                   <li class="active">
                      <a href={{ reviewRoute }}>

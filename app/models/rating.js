@@ -85,7 +85,7 @@ RatingSchema.statics = {
    */
 
   load: function (id, cb) {
-    console.log("rating model load");
+    // console.log("rating model load");
     this.findOne({ _id : id })  //summoner id in model summoner is ._id
       .populate('summoner')     // in future change to just summoner info (name, profile pic, e.g...)
       .populate('user')
@@ -101,6 +101,7 @@ RatingSchema.statics = {
    */
 
   list: function (options, cb) {
+    // console.log("rating model list");
     var criteria = options.criteria || {}
 
     this.find(criteria)
