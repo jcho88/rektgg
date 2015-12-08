@@ -28,7 +28,7 @@ exports.load = function (req, res, next, id){
 
 exports.create = function (req, res){
   var rating = new Rating(req.body);                                //new rating with req.body info (rating model filled)
-
+  console.log(rating)
   rating.user = req.user;                                           //set user of the rating model to be the current user
 
   rating.save(function(err) {                                       //save the rating
