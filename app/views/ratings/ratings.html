@@ -3,8 +3,10 @@
 
 {% block content %}
 
+    {% set reviewHome = "/summoner_ratings/" + summoner.region + "/" + summoner.id %}
+
 	{% if rating.isNew %}
-    	{% set action = "/summoner_ratings/" + summoner._id %}
+    	{% set action = "/summoner_ratings/" + summoner.region + "/" + summoner.id %}
   	{% else %}
     	{% set action = '/ratings/' + rating._id %}
   	{% endif %}
@@ -54,7 +56,8 @@
 
 	            	<div class="form-group" style="float: right;">
 
-			            	<a href='javascript:history.go(-1)' class="btn btn-link">Cancel</a>
+                            <a href={{reviewHome}} class="btn btn-link">Back</a>
+<!-- 			            	<a href='javascript:history.go(-1)' class="btn btn-link">Cancel</a> -->
 			            	<button class="btn btn-primary" type="submit">Submit</button>
 			            	&nbsp;
 
