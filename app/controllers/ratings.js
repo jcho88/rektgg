@@ -36,7 +36,7 @@ exports.create = function (req, res){
 	  	  req.flash('success', 'Successfully created a rating!');     //no error, create the rating and redirect
         console.log("in rating create")
 	  	  // return res.redirect('/summoner_ratings/'+rating.summoner);
-        return res.redirect('back');
+        return res.redirect('/summoner_ratings/'+req.body.summoner_region+'/'+req.body.summoner_id);
 	    }                                            //print error, flash appropriate error message
       if(err.message == 'Validation failed'){
         req.flash('error', err.errors.value.message);
@@ -104,13 +104,14 @@ exports.update = function (req, res){
 
   // make sure no one changes the user
   delete req.body.user;
+  console.log(req.body)
   rating = extend(rating, req.body);
 
   rating.save(function(err) {
   	if (!err) {
       req.flash('info', 'Review Updated');
-  		// return res.redirect('/summoner_ratings/'+rating.summoner);
-      return res.redirect('back');
+  		return res.redirect('/summoner_ratings/'+req.body.summoner_region+'/'+req.body.summoner_id);
+    
   	}
 
 		res.render('ratings/ratings', {
