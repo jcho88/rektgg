@@ -279,8 +279,21 @@ SummonerSchema.statics = {
     ).exec(cb); 
 
   },
-  
+/*
+ AsknameChange: function (summonerData, cb) {
+    var randomName = "pleaseRefresh" + Math.floor((Math.random() * 100) + 1)
+    this.findOneAndUpdate(
+      { $and: [
+        {id : summonerData.name },  
+        {region : summonerData.region}
+        ]}, //query
+      { $set: { name: randomName, nameNoWhiteSpace: randomName }},
+      {upsert: false}
+    ).exec(cb); 
 
+  },  
+  
+*/
 
  refresh: function (summonerID,summonerData,summonerDataUpdate, cb) {
 

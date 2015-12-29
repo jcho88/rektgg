@@ -34,7 +34,7 @@ exports.search = function (req, res){
 
         var nameChangeData = {};
         var summonerChangedNameTaken = {};
-
+        console.log("sum id " + summonerData.id)
         Summoner.searchSummByIDFind(summonerData.id ,summonerData.region,  function (err, summoner) {
             console.log("checkNameChange")
             //console.log(summoner)
@@ -311,7 +311,7 @@ exports.search = function (req, res){
     Summoner.search(name, region, function (err, summoner) {
 
         if (err) return next(err);
-
+        //console.log("summoner : \n" + summoner.length)
         if (summoner) {
 
             res.redirect('/summoners/'+summoner.region+'/'+summoner.id);  
