@@ -43,9 +43,24 @@
             {% if (!isActive('/')) %}
             <center>
               <form class="navbar-form navbar-left" action="/summonerSearch" method="post" accept-charset="UTF-8" id="summoner-search">
-                <div class="form-group">
+                <div class="input-group">
                   <input type="hidden" name="region" value="na" id="region">
                   <input type="text" class="form-control" name="summonerName" id="summoner" placeholder="Search">
+                  <div class="input-group-btn search-region">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span id="search_concept">NA </span> <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li><a href="#NA">NA</a></li>
+                      <li><a href="#EUW">EUW</a></li>
+                      <li><a href="#EUNE">EUNE</a></li>
+                      <li><a href="#BR">BR</a></li>
+                      <li><a href="#TR">TR</a></li>
+                      <li><a href="#RU">RU</a></li>
+                      <li><a href="#LAN">LAN</a></li>
+                      <li><a href="#LAS">LAS</a></li>
+                      <li><a href="#OCE">OCE</a></li>
+                    </ul>
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>

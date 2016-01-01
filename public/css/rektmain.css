@@ -158,9 +158,19 @@ body {
 }
 
 .riotLicense {
-  margin-top: 220px;
+  margin-top: 520px;
   text-align: center;
   bottom: 25px;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+
+  .riotLicense {
+    margin-top: 50px;
+    text-align: center;
+    bottom: 25px;
+  }
+
 }
 
 .button-green {

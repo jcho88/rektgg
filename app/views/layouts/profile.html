@@ -33,7 +33,7 @@
                         {% set matchesRoute = "/summoners/" + summoner.region + "/" + summoner.id %}
                         {% set reviewRoute = "/summoner_ratings/" + summoner.region + "/" + summoner.id %}
                         {% set activityRoute = "/activity/" + user._id %}
-                        {% set friendsRoute = "/friends/" + userName %}
+                        {# {% set friendsRoute = "/friends/" + userName %} #}
 
                         {% if summoner %}
                           {% if (isActive('summoners') || isActive('summonerSearch')) %}
@@ -66,13 +66,13 @@
                                 Activity
                               </a>
                             </li>
-                            <li class="">
+<!--                             <li class="">
                               <a href={{ friendsRoute }}>
                                 Friends
                               </a>
-                            </li>
-                          {% elseif (isActive('friend')) %}
-                            <li class="">
+                            </li> -->
+                          {# {% elseif (isActive('friend')) %}
+<!--                             <li class="">
                               <a href= {{ activityRoute }}>
                                 Activity
                               </a>
@@ -81,7 +81,8 @@
                               <a>
                                 Friends
                               </a>
-                            </li>
+                            </li> -->
+                          {% endif %} #}
                           {% endif %}
                         {% endif %}
                       </ul>
