@@ -5,6 +5,15 @@
 	{% set startSlice = page-1 %}
 	{%set gamesArray = summoner.games.slice(startSlice*10,page*10) %}
 
+    
+    {% if summoner.average == 0 %}
+       <title>{{summoner.name}} - -/5 Summoner Rating - Review and Stats for League Of Legend</title>
+    {% else %}
+       <title>{{summoner.name}} - {{summoner.average}}/5 Summoner Rating - Review and Stats for League Of Legend</title>
+    {% endif %}	
+
+  	
+
    <div id="contentCol">
       <div class="content-sidebar">
  		<form method="post" action={{refresh}} style=" float: right;">

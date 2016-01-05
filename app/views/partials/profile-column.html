@@ -1,9 +1,17 @@
 <!-- views/partials/profile-column.html -->     
 
+   {% set profileIcon = "https://s3-us-west-2.amazonaws.com/rektgg/profileicon/" + summoner.profileIconId + ".png" %}
+
       <div class="col-md-3" id="profileCol">
          <div class="profile-sidebar">
             <div class="profile-userpic">
-               <img class="img-circle img-responsive" src="https://s3-us-west-2.amazonaws.com/rektgg/others/avatar1.png">
+                  {% if summoner %}
+                     <img class="img-circle img-responsive" src={{profileIcon}}>
+                  {% elseif userName %}
+                     <img class="img-circle img-responsive" src="https://s3-us-west-2.amazonaws.com/rektgg/others/avatar1.png">
+                  {% else %}
+                     <img class="img-circle img-responsive" src="https://s3-us-west-2.amazonaws.com/rektgg/others/avatar1.png">
+                  {% endif %}                            
             </div>
             <div class="profile-usertitle">
                <div class="profile-usertitle-name">
@@ -23,7 +31,7 @@
                      <p>{{ summoner.region }}</p>
                   </div>
                {% endif %}
-
+<!--
                {% if req.user %}
                   <button type="button" name={{ userName }} id="friendID" class="btn btn-sm friend-btn">
                      <i class="fa fa-user-plus"></i>
@@ -34,6 +42,7 @@
                      Log in to add friend
                   </button>
                {% endif %}
+-->               
             </div>
             <div class="profile-usermenu profile-stats">
 
