@@ -40,7 +40,7 @@ exports.create = function (req, res){
         return res.redirect('/summoner_ratings/'+req.body.summoner_region+'/'+req.body.summoner_id);
 	    }                                            //print error, flash appropriate error message
       if(err.message == 'Validation failed'){
-        req.flash('error', err.message);
+        req.flash('error', err.message.value.message);
       }
       else {      
         if (err.errors.role) {

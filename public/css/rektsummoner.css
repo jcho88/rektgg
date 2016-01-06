@@ -163,7 +163,7 @@
 
 .profile-usermenu img {
   margin-top: -50px;
-  margin-bottom: -45px;
+  margin-bottom: -30px;
 }
 
 .profile-usermenu ul li {
@@ -237,7 +237,7 @@
   border-color: #ccc;
   background: #F5F5F5;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .rankedStatsHeader {
@@ -313,7 +313,7 @@
   font-size: 12px;
 }
 
-@media all and (max-width:1380px) {
+/*@media all and (max-width:1380px) {*/
 
     .profile-stats {
       text-align: center;
@@ -323,7 +323,7 @@
       font-size: 10px;
     }
 
-}
+/*}*/
 
 /********************************* Most Played Champions *********************************/
 
