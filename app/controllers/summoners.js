@@ -29,7 +29,7 @@ exports.search = function (req, res){
 /*==================================================local Function of search==============================================================*/
 /*========================================================================================================================================*/
 
-/* A local function in search to check for namechanges and duplication after name change */
+/* average local function in search to check for namechanges and duplication after name change */
     var checkNameChange = function (){
 
         var nameChangeData = {};
@@ -326,7 +326,7 @@ exports.search = function (req, res){
                
                 if(statusCode.noSummoner == true || statusCode.summonerError == true){
                     console.log("err in statuscode")
-                    res.redirect('/')
+                    res.render('summonernotfound')
                 }else{
                      console.log("after get summoner in search")
                     checkNameChange();

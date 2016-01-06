@@ -19,7 +19,8 @@ var RatingSchema = new Schema({
   body: {type : String, default : '', trim : true},			  //the review
   value: {type: Number},						                      //value of rating
 	summoner: {type : Schema.ObjectId, ref : 'Summoner'},		//summoner being reviewed
-	user: {type : Schema.ObjectId, ref : 'User'},				    //user reviewing summoner
+	user: {type : Schema.ObjectId, ref : 'User'},
+  role: {type : String, default : '', trim : true},				    //user reviewing summoner
 	// comments: [{												                  //comments for the review
  //    	body: { type : String, default : '' },
  //    	user: { type : Schema.ObjectId, ref : 'User' },
@@ -33,7 +34,9 @@ var RatingSchema = new Schema({
  * Validations
  */
 
-RatingSchema.path('value').required(true, 'Please give the summoner a rating from 1-5 stars'); //a rating value 
+RatingSchema.path('role').required(true, 'Please provide the role this summoner played');
+RatingSchema.path('value').required(true, 'Please give the summoner a rating from 1-5 stars'); //a rating value
+RatingSchema.path('body').required(true, 'Please give a short explanation of your rating'); //rating body
 
 /**
  * Pre-remove hook

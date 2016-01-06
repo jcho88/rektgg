@@ -7,9 +7,9 @@
 
     
     {% if summoner.average == 0 %}
-       <title>{{summoner.name}} - -/5 Summoner Rating - Review and Stats for League Of Legend</title>
+       <title>{{summoner.name}} - -/5 Carry Rating - Review and Stats for League Of Legends</title>
     {% else %}
-       <title>{{summoner.name}} - {{summoner.average}}/5 Summoner Rating - Review and Stats for League Of Legend</title>
+       <title>{{summoner.name}} - {{summoner.average}}/5 Carry Rating - Review and Stats for League Of Legends</title>
     {% endif %}	
 
   	
@@ -140,8 +140,12 @@
 									{% if player.teamId == '100' %}
 										{% set playerLink = endpoint + "/champion_square/" + player.championId + ".png" %}
 										<div>
-											<img src= {{ playerLink }} class="summoner-img">
-											<span class="fellowPlayerName">{{ player.name }}</span>
+											<!--<form action="/summonerSearch" method="post" accept-charset="UTF-8" role="form">
+												<input type="hidden" name="region" value={{summoner.region}} id="region"> 
+	                  							<input type="hidden" name="summonerName" id="summoner" value="player.name">	-->
+												<img src= {{ playerLink }} class="summoner-img">
+												<span class="fellowPlayerName">{{ player.name }}</span>
+											
 										</div>
 									{% endif %}
 								{% endfor %}

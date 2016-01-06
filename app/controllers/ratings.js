@@ -30,6 +30,7 @@ exports.create = function (req, res){
   var rating = new Rating(req.body);                                //new rating with req.body info (rating model filled)
   console.log(rating)
   rating.user = req.user;                                           //set user of the rating model to be the current user
+  var flag = 0;
 
   rating.save(function(err) {                                       //save the rating
 	    if (!err) {
@@ -39,10 +40,24 @@ exports.create = function (req, res){
         return res.redirect('/summoner_ratings/'+req.body.summoner_region+'/'+req.body.summoner_id);
 	    }                                            //print error, flash appropriate error message
       if(err.message == 'Validation failed'){
-        req.flash('error', err.errors.value.message);
-      }
-      else {
         req.flash('error', err.message);
+      }
+      else {      
+        if (err.errors.role) {
+          req.flash('error', err.errors.role.message);
+          flag = 1;
+        }
+        if (err.errors.value) {
+          req.flash('error', err.errors.value.message);
+          flag = 1;
+        }
+        if (err.errors.body) {
+          req.flash('error', err.errors.body.message);
+          flag = 1;
+        }
+        if(flag == 0){
+          req.flash('error', err.message);
+        }
       }
     	res.redirect('back');                                         //redirect to previous page
 	});

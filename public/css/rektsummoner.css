@@ -180,6 +180,13 @@
   font-weight: 400;
 }
 
+/* bootstrap nav list a override */
+.rankingList>li>a {
+    position: relative;
+    display: block;
+    padding: 3px 15px;
+}
+
 .profile-usermenu ul li a i {
   margin-right: 8px;
   font-size: 14px;
@@ -443,7 +450,7 @@
 }
 
 .post .post-heading {
-  height: 95px;
+  height: 65px;
   padding: 20px 15px;
 }
 .post .post-heading .avatar {

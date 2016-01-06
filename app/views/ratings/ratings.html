@@ -32,10 +32,18 @@
 						<label for="title" class="control-label">Title</label>
 	            		<input type="text" name="title" value="{{ rating.title }}" placeholder="Enter the title" class="form-control" id="title">
 	            	</div>
-	            	<br>
 
-	            	<div class="form-group">
-	            	<label for="rating" class="control-label">Rating (1-5)</label>
+                    <div class="form-group required">
+                        <label for="rating" class="control-label">Role</label>
+                        &nbsp&nbsp&nbsp&nbsp<input type="radio" name="role" value="Top" id="role"><b><font color="darkgray">Top</font></b> &nbsp&nbsp
+                        <input type="radio" name="role" value="Jungle" id="role"><b><font color="green">Jungle</font></b> &nbsp&nbsp
+                        <input type="radio" name="role" value="Mid" id="role"><b><font color="blue">Mid</font></b> &nbsp&nbsp
+                        <input type="radio" name="role" value="ADC" id="role"><b><font color="red">ADC</font></b> &nbsp&nbsp
+                        <input type="radio" name="role" value="Support" id="role"><b><font color="purple">Support</font></b> &nbsp&nbsp
+                    </div>
+
+	            	<div class="form-group required">
+	            	<label for="rating" class="control-label">Carry Rating (1-5)</label>
 		            	<div class="form-group">
 		            		<div class="stars">
 							    <input class="star star-5" id="star-5" type="radio" value="5" name="value"/>
@@ -52,7 +60,7 @@
 		            	</div>
 	            	</div>
 
-	            	<div class="form-group">
+	            	<div class="form-group required">
 	            		<label for="review" class="control-label">Body</label>
 	            		<textarea rows="5" name="body" placeholder="Write a review" id="desc" cols="30" rows="10" class="form-control">{{ rating.body }}</textarea>
 	            	</div>
@@ -91,17 +99,28 @@
 			{% endif %}
 
                 <div class="pull-left image">
-                    <img src="../img/avatar2.png" class="img-circle avatar" alt="user profile image">
+                    <img src="https://s3-us-west-2.amazonaws.com/rektgg/others/avatar1.png" class="img-circle avatar" alt="user profile image">
                 </div>
                 <div class="pull-left meta">
                     <div class="title h5">
                         {% set myProfileRoute = "/activity/" + rating.user._id %}
                         <a href={{ myProfileRoute }}><b>{{ rating.user.username }}</b></a>
-                        commented
+                        commented on <b><font color="#5a7391">{{ summoner.name }}</font></b>'s role: 
+                        {% if rating.role == "Top" %}
+                            <b><font color="darkgray">{{ rating.role }}</font></b>
+                        {% elseif rating.role == "Jungle" %}
+                            <b><font color="green">{{ rating.role }}</font></b>
+                        {% elseif rating.role == "Mid" %}
+                            <b><font color="blue">{{ rating.role }}</font></b>
+                        {% elseif rating.role == "ADC" %}
+                            <b><font color="red">{{ rating.role }}</font></b>
+                        {% elseif rating.role == "Support" %}
+                            <b><font color="purple">{{ rating.role }}</font></b>
+                        {% endif %}
                     </div>
                 	{% set count =  rating.value %}
                     {% for i in Array(count) %}
-                    	<span><img src="../img/star.png"</img></span>
+                    	<span><img src="https://s3-us-west-2.amazonaws.com/rektgg/others/star.png"</img></span>
                     {% endfor %}
                     <span class="text-muted time" style="font-size:10px">{{ rating.createdAt.toISOString()|date('M d, Y') }}</span>
                 </div>
